@@ -7,12 +7,23 @@
 //
 
 import UIKit
+import MapKit
+
+public protocol LocationPickerDelegate {
+    func locationDidSelect(mapItem: MKMapItem)
+}
 
 public class LocationPicker: UIViewController {
+    
+    public var delegate: LocationPickerDelegate?
+    
+    private var selectedMapItem: MKMapItem?
     
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
 
+    
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,8 +35,15 @@ public class LocationPicker: UIViewController {
         layoutViews()
     }
     
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let mapItem = selectedMapItem {
+            delegate?.locationDidSelect(mapItem)
+        }
+    }
+    
     private func layoutViews() {
-        view.translatesAutoresizingMaskIntoConstraints = false
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -40,5 +58,5 @@ public class LocationPicker: UIViewController {
         tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
         tableView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
     }
-
+    
 }

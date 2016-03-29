@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8ba-yY-obQ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Location Picker-->
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LocationPicker" customModule="LocationPicker" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LocationPickerExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +16,82 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfY-5R-8rm">
+                                <rect key="frame" x="185" y="323" width="231" height="30"/>
+                                <state key="normal" title="Present Location Picker via codes"/>
+                                <connections>
+                                    <action selector="presentLocationPickerButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dPH-W1-oMW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30v-yE-BNj">
+                                <rect key="frame" x="146" y="361" width="310" height="30"/>
+                                <state key="normal" title="Push Location Picker to Navigation Controller"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghW-a7-332">
+                                <rect key="frame" x="173.5" y="285" width="254" height="30"/>
+                                <state key="normal" title="Show Location Picker via push segue"/>
+                                <connections>
+                                    <segue destination="KBY-6g-MsR" kind="show" id="9Jv-IY-vZM"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ghW-a7-332" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1Ed-YG-lJh"/>
+                            <constraint firstItem="DfY-5R-8rm" firstAttribute="centerX" secondItem="ghW-a7-332" secondAttribute="centerX" id="SX1-z9-4hh"/>
+                            <constraint firstItem="DfY-5R-8rm" firstAttribute="top" secondItem="ghW-a7-332" secondAttribute="bottom" constant="8" symbolic="YES" id="WcN-da-Kau"/>
+                            <constraint firstItem="30v-yE-BNj" firstAttribute="centerX" secondItem="DfY-5R-8rm" secondAttribute="centerX" id="cUP-5h-73n"/>
+                            <constraint firstItem="DfY-5R-8rm" firstAttribute="centerY" secondItem="ghW-a7-332" secondAttribute="centerY" id="iDH-Nx-bZS"/>
+                            <constraint firstItem="30v-yE-BNj" firstAttribute="top" secondItem="DfY-5R-8rm" secondAttribute="bottom" constant="8" symbolic="YES" id="khc-Iy-ruU"/>
+                            <constraint firstItem="ghW-a7-332" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yi0-sM-je5"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="iDH-Nx-bZS"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="8p0-gq-VJw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="981" y="327"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hiP-wL-ilc">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vTP-wQ-k2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="8ba-yY-obQ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LGi-kB-F8I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zjy-br-EJR"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="241" y="327"/>
+        </scene>
+        <!--Location Picker-->
+        <scene sceneID="Ytx-Nl-UKq">
+            <objects>
+                <viewController id="KBY-6g-MsR" customClass="LocationPicker" customModule="LocationPicker" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="35C-CO-NNQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="2lU-Q0-BPr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pGo-uX-1AZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WI2-vo-uOO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZKj-Pp-whX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1735" y="327"/>
         </scene>
     </scenes>
 </document>
