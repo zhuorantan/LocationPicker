@@ -32,7 +32,7 @@
                                 <rect key="frame" x="173.5" y="285" width="254" height="30"/>
                                 <state key="normal" title="Show Location Picker via push segue"/>
                                 <connections>
-                                    <segue destination="KBY-6g-MsR" kind="show" id="9Jv-IY-vZM"/>
+                                    <segue destination="KBY-6g-MsR" kind="show" identifier="LocationPicker" id="9Jv-IY-vZM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -61,7 +61,6 @@
         <!--Navigation Controller-->
         <scene sceneID="hiP-wL-ilc">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vTP-wQ-k2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="8ba-yY-obQ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LGi-kB-F8I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -71,6 +70,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zjy-br-EJR"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vTP-wQ-k2N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="241" y="327"/>
         </scene>

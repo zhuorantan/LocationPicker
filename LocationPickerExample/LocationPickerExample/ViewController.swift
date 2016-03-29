@@ -8,8 +8,9 @@
 
 import UIKit
 import LocationPicker
+import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, LocationPickerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +20,8 @@ class ViewController: UIViewController {
     
     @IBAction func presentLocationPickerButtonDidTap(sender: UIButton) {
         let locationPicker = LocationPicker()
+        locationPicker.delegate = self
+        
         let navigationController = UINavigationController(rootViewController: locationPicker)
         locationPicker.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(doneButtonDidTap(_:)))
         presentViewController(navigationController, animated: true, completion: nil)
@@ -27,15 +30,25 @@ class ViewController: UIViewController {
     func doneButtonDidTap(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func locationDidSelect(mapItem: MKMapItem) {
+        locationPicked(mapItem)
+    }
+    
+    func locationPicked(mapItem: MKMapItem) {
+        
+    }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "LocationPicker" {
+            let locationPicker = segue.destinationViewController as! LocationPicker
+            locationPicker.completion = { selectedMapItem in
+                self.locationPicked(selectedMapItem)
+            }
+        }
     }
-    */
 
 }

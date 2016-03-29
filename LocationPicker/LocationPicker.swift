@@ -9,13 +9,17 @@
 import UIKit
 import MapKit
 
-public protocol LocationPickerDelegate {
-    func locationDidSelect(mapItem: MKMapItem)
+@objc public protocol LocationPickerDelegate {
+    optional func locationDidSelect(mapItem: MKMapItem)
+    optional func historyLocationAtIndex(index: Int) -> MKMapItem
 }
 
 public class LocationPicker: UIViewController {
     
+    public var completion: ((MKMapItem) -> Void)?
     public var delegate: LocationPickerDelegate?
+    
+    
     
     private var selectedMapItem: MKMapItem?
     
@@ -26,12 +30,8 @@ public class LocationPicker: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = UIColor.whiteColor()
         
-        view.addSubview(searchBar)
-        view.addSubview(tableView)
-        
+        setupViews()
         layoutViews()
     }
     
@@ -39,8 +39,18 @@ public class LocationPicker: UIViewController {
         super.viewWillDisappear(animated)
         
         if let mapItem = selectedMapItem {
-            delegate?.locationDidSelect(mapItem)
+            completion?(mapItem)
+            delegate?.locationDidSelect?(mapItem)
         }
+    }
+    
+    
+    
+    private func setupViews() {
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        
+        view.backgroundColor = UIColor.whiteColor()
     }
     
     private func layoutViews() {
