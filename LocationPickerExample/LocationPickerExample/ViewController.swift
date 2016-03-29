@@ -31,11 +31,19 @@ class ViewController: UIViewController, LocationPickerDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func locationDidSelect(mapItem: MKMapItem) {
-        locationPicked(mapItem)
+    func showLocation(mapItem: MKMapItem) {
+        
     }
     
-    func locationPicked(mapItem: MKMapItem) {
+    
+    
+    // Location Picker Delegate
+    
+    func locationDidSelect(mapItem: MKMapItem) {
+        showLocation(mapItem)
+    }
+    
+    func deleteHistoryLocation(mapItem: MKMapItem, AtIndex index: Int) {
         
     }
 
@@ -46,7 +54,7 @@ class ViewController: UIViewController, LocationPickerDelegate {
         if segue.identifier == "LocationPicker" {
             let locationPicker = segue.destinationViewController as! LocationPicker
             locationPicker.completion = { selectedMapItem in
-                self.locationPicked(selectedMapItem)
+                self.showLocation(selectedMapItem)
             }
         }
     }

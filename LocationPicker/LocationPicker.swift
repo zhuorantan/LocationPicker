@@ -12,12 +12,32 @@ import MapKit
 @objc public protocol LocationPickerDelegate {
     optional func locationDidSelect(mapItem: MKMapItem)
     optional func historyLocationAtIndex(index: Int) -> MKMapItem
+    optional func deleteHistoryLocation(mapItem: MKMapItem, AtIndex index: Int)
 }
+
+
 
 public class LocationPicker: UIViewController {
     
     public var completion: ((MKMapItem) -> Void)?
     public var delegate: LocationPickerDelegate?
+    public var historyLocationList: [MKMapItem]?
+    
+    
+    
+    // Configurations
+    
+    public var mapViewDraggable = true
+    public var historyLocationEditable = true
+    
+    public var currentLocationColor = UIColor.blackColor()
+    public var searchResultLocationColor = UIColor.blackColor()
+    public var historyLocationColor = UIColor.blackColor()
+    public var pinColor = UIColor.blackColor()
+    
+    public var currentLocationImage = UIImage()
+    public var searchResultLocationImage = UIImage()
+    public var historyLocationImage = UIImage()
     
     
     
@@ -45,6 +65,13 @@ public class LocationPicker: UIViewController {
     }
     
     
+    
+    public func setThemeColor(color: UIColor) {
+        currentLocationColor = color
+        searchResultLocationColor = color
+        historyLocationColor = color
+        pinColor = color
+    }
     
     private func setupViews() {
         view.addSubview(searchBar)
