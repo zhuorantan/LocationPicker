@@ -10,10 +10,10 @@ import UIKit
 import MapKit
 
 @objc public protocol LocationPickerDelegate {
-    optional func locationDidSelect(mapItem: MKMapItem)
-    optional func locationDidPick(mapItem: MKMapItem)
-    optional func historyLocationAtIndex(index: Int) -> MKMapItem
-    optional func deleteHistoryLocation(mapItem: MKMapItem, AtIndex index: Int)
+    optional func locationDidSelect(locationItem: LocationItem)
+    optional func locationDidPick(locationItem: LocationItem)
+    optional func historyLocationAtIndex(index: Int) -> LocationItem
+    optional func deleteHistoryLocation(locationItem: LocationItem, AtIndex index: Int)
 }
 
 
@@ -22,13 +22,13 @@ public class LocationPicker: UIViewController {
     
     // MARK: - Completion handler
     
-    public var selectCompletion: ((MKMapItem) -> Void)?
-    public var pickCompletion: ((MKMapItem) -> Void)?
+    public var selectCompletion: ((LocationItem) -> Void)?
+    public var pickCompletion: ((LocationItem) -> Void)?
     
     // MARK: Optional varaiables
     
     public var delegate: LocationPickerDelegate?
-    public var historyLocationList: [MKMapItem]?
+    public var historyLocationList: [LocationItem]?
     public var doneButtonItem: UIBarButtonItem?
     
     // MARK: Configurations
@@ -48,7 +48,7 @@ public class LocationPicker: UIViewController {
     
     
     
-    private var selectedMapItem: MKMapItem?
+    private var selectedLocationItem: LocationItem?
     
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
@@ -64,8 +64,8 @@ public class LocationPicker: UIViewController {
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if let mapItem = selectedMapItem {
-            locationDidPick(mapItem)
+        if let locationItem = selectedLocationItem {
+            locationDidPick(locationItem)
         }
     }
     
@@ -80,17 +80,17 @@ public class LocationPicker: UIViewController {
     
     
     
-    public func locationDidSelect(mapItem: MKMapItem) {
+    public func locationDidSelect(locationItem: LocationItem) {
         enableDoneButton()
-        selectCompletion?(mapItem)
-        delegate?.locationDidSelect?(mapItem)
-        NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: mapItem)
+        selectCompletion?(locationItem)
+        delegate?.locationDidSelect?(locationItem)
+        NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: locationItem)
     }
     
-    public func locationDidPick(mapItem: MKMapItem) {
-        pickCompletion?(mapItem)
-        delegate?.locationDidSelect?(mapItem)
-        NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: mapItem)
+    public func locationDidPick(locationItem: LocationItem) {
+        pickCompletion?(locationItem)
+        delegate?.locationDidSelect?(locationItem)
+        NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
     }
     
     

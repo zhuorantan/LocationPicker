@@ -11,6 +11,7 @@
 		022888821CA9398D00D7E11A /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022888771CA9398D00D7E11A /* LocationPicker.framework */; };
 		022888871CA9398D00D7E11A /* LocationPickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022888861CA9398D00D7E11A /* LocationPickerTests.swift */; };
 		022889121CA939FB00D7E11A /* LocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889111CA939FB00D7E11A /* LocationPicker.swift */; };
+		022889281CABDAF500D7E11A /* LocationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889271CABDAF500D7E11A /* LocationItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		022888881CA9398D00D7E11A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationPickerExample.xcodeproj; path = LocationPickerExample/LocationPickerExample.xcodeproj; sourceTree = "<group>"; };
 		022889111CA939FB00D7E11A /* LocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPicker.swift; sourceTree = "<group>"; };
+		022889271CABDAF500D7E11A /* LocationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				0228887A1CA9398D00D7E11A /* LocationPicker.h */,
 				022889111CA939FB00D7E11A /* LocationPicker.swift */,
+				022889271CABDAF500D7E11A /* LocationItem.swift */,
 				0228887C1CA9398D00D7E11A /* Info.plist */,
 			);
 			path = LocationPicker;
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				022889121CA939FB00D7E11A /* LocationPicker.swift in Sources */,
+				022889281CABDAF500D7E11A /* LocationItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

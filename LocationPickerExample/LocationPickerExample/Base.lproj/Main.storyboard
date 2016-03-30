@@ -25,8 +25,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30v-yE-BNj">
-                                <rect key="frame" x="194" y="361" width="213" height="30"/>
-                                <state key="normal" title="Push Location Picker via codes"/>
+                                <rect key="frame" x="162" y="361" width="277" height="30"/>
+                                <state key="normal" title="Push Location Picker subclass via codes"/>
                                 <connections>
                                     <action selector="pushLocationPickerButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1A9-B0-fZ9"/>
                                 </connections>

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MapKit
 import LocationPicker
 
 class ViewController: UIViewController, LocationPickerDelegate {
@@ -34,17 +33,17 @@ class ViewController: UIViewController, LocationPickerDelegate {
     @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
         let locationPicker = LocationPicker()
         
-        locationPicker.selectCompletion = { selectedMapItem in
+        locationPicker.selectCompletion = { selectedLocationItem in
             
         }
-        locationPicker.pickCompletion = { pickedMapItem in
-            self.showLocation(pickedMapItem)
+        locationPicker.pickCompletion = { pickedLocationItem in
+            self.showLocation(pickedLocationItem)
         }
         navigationController!.pushViewController(locationPicker, animated: true)
     }
     
     
-    func showLocation(mapItem: MKMapItem) {
+    func showLocation(locationItem: LocationItem) {
         
     }
     
@@ -54,8 +53,8 @@ class ViewController: UIViewController, LocationPickerDelegate {
     
     
     
-    func locationDidPick(mapItem: MKMapItem) {
-        showLocation(mapItem)
+    func locationDidPick(locationItem: LocationItem) {
+        showLocation(locationItem)
     }
 
 }

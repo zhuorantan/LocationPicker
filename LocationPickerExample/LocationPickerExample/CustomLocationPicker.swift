@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MapKit
 import LocationPicker
 
 class CustomLocationPicker: LocationPicker {
@@ -17,12 +16,12 @@ class CustomLocationPicker: LocationPicker {
 
     }
     
-    override func locationDidSelect(mapItem: MKMapItem) {
+    override func locationDidSelect(locationItem: LocationItem) {
         
     }
     
-    override func locationDidPick(mapItem: MKMapItem) {
-        (parentViewController! as! ViewController).showLocation(mapItem)
+    override func locationDidPick(locationItem: LocationItem) {
+        (parentViewController! as! ViewController).showLocation(locationItem)
     }
 
 }
