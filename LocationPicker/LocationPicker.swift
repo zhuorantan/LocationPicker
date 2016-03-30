@@ -10,17 +10,19 @@ import UIKit
 import MapKit
 
 @objc public protocol LocationPickerDelegate {
+    
     optional func locationDidSelect(locationItem: LocationItem)
     optional func locationDidPick(locationItem: LocationItem)
     optional func historyLocationAtIndex(index: Int) -> LocationItem
-    optional func deleteHistoryLocation(locationItem: LocationItem, AtIndex index: Int)
+    optional func historyLocationDidDelete(locationItem: LocationItem, AtIndex index: Int)
+    
 }
 
 
 
 public class LocationPicker: UIViewController {
     
-    // MARK: - Completion handler
+    // MARK: - Completion handlers
     
     public var selectCompletion: ((LocationItem) -> Void)?
     public var pickCompletion: ((LocationItem) -> Void)?
@@ -48,17 +50,33 @@ public class LocationPicker: UIViewController {
     
     
     
-    private var selectedLocationItem: LocationItem?
+    // MARK: - UI Elements
     
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
+    private let mapView = MKMapView()
+    
+    // MARK: Attributes
+    
+    private var selectedLocationItem: LocationItem?
+    
+    private var mapViewHeightConstraint: NSLayoutConstraint!
+    private var mapViewHeight: CGFloat {
+        get {
+            return view.frame.width / 3 * 2
+        }
+    }
 
     
+    
+    // MARK: - View Controller
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        layoutViews()
+        toggleMapView()
     }
     
     public override func viewWillDisappear(animated: Bool) {
@@ -71,6 +89,45 @@ public class LocationPicker: UIViewController {
     
     
     
+    // MARK: Initializations
+    
+    private func setupViews() {
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        view.addSubview(mapView)
+        
+        view.backgroundColor = UIColor.whiteColor()
+        
+    }
+    
+    private func layoutViews() {
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let margins = view.layoutMarginsGuide
+        
+        searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
+        searchBar.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: -view.layoutMargins.left * 2).active = true
+        searchBar.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: view.layoutMargins.right * 2).active = true
+        
+        tableView.topAnchor.constraintEqualToAnchor(searchBar.bottomAnchor).active = true
+        tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
+        tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
+        
+        mapView.topAnchor.constraintEqualToAnchor(tableView.bottomAnchor).active = true
+        mapView.leadingAnchor.constraintEqualToAnchor(tableView.leadingAnchor).active = true
+        mapView.trailingAnchor.constraintEqualToAnchor(tableView.trailingAnchor).active = true
+        mapView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
+        
+        mapViewHeightConstraint = mapView.heightAnchor.constraintEqualToConstant(0)
+        mapViewHeightConstraint.active = true
+    }
+    
+    
+    
+    // MARK: - Customs
+    
     public func setThemeColor(color: UIColor) {
         currentLocationColor = color
         searchResultLocationColor = color
@@ -79,6 +136,8 @@ public class LocationPicker: UIViewController {
     }
     
     
+    
+    // MARK: - Callbacks
     
     public func locationDidSelect(locationItem: LocationItem) {
         enableDoneButton()
@@ -95,34 +154,19 @@ public class LocationPicker: UIViewController {
     
     
     
-    private func setupViews() {
-        view.addSubview(searchBar)
-        view.addSubview(tableView)
-        
-        view.backgroundColor = UIColor.whiteColor()
-        
-        
-        
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let margins = view.layoutMarginsGuide
-        
-        searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
-        searchBar.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: -view.layoutMargins.left * 2).active = true
-        searchBar.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: view.layoutMargins.right * 2).active = true
-        
-        tableView.topAnchor.constraintEqualToAnchor(searchBar.bottomAnchor).active = true
-        tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
-        tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
-        tableView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
-    }
-    
-    
+    // MARK: - UI Mainipulations
     
     private func enableDoneButton() {
         if let doneButtonItem = doneButtonItem {
             doneButtonItem.enabled = true
+        }
+    }
+    
+    private func toggleMapView() {
+        if mapViewHeightConstraint.constant == 0 {
+            mapViewHeightConstraint.constant = mapViewHeight
+        } else {
+            mapViewHeightConstraint.constant = 0
         }
     }
     
