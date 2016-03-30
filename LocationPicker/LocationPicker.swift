@@ -9,17 +9,6 @@
 import UIKit
 import MapKit
 
-@objc public protocol LocationPickerDelegate {
-    
-    optional func locationDidSelect(locationItem: LocationItem)
-    optional func locationDidPick(locationItem: LocationItem)
-    optional func historyLocationAtIndex(index: Int) -> LocationItem
-    optional func historyLocationDidDelete(locationItem: LocationItem, AtIndex index: Int)
-    
-}
-
-
-
 public class LocationPicker: UIViewController {
     
     // MARK: - Completion handlers
