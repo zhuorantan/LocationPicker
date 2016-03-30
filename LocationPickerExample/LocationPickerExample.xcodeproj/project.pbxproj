@@ -16,6 +16,7 @@
 		022889141CA93A1D00D7E11A /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022889131CA93A1D00D7E11A /* LocationPicker.framework */; };
 		022889151CA93A1D00D7E11A /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 022889131CA93A1D00D7E11A /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0228891A1CAA43A900D7E11A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889191CAA43A900D7E11A /* ViewController.swift */; };
+		022889221CABCC6000D7E11A /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889211CABCC6000D7E11A /* CustomLocationPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		022888F91CA939DE00D7E11A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022889131CA93A1D00D7E11A /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LocationPicker.framework; path = "/Users/Jerome/Library/Developer/Xcode/DerivedData/LocationPicker-chpqhihsisflzudurzcjvdngjitt/Build/Products/Debug-iphonesimulator/LocationPicker.framework"; sourceTree = "<absolute>"; };
 		022889191CAA43A900D7E11A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		022889211CABCC6000D7E11A /* CustomLocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			children = (
 				022888D71CA939DE00D7E11A /* AppDelegate.swift */,
 				022889191CAA43A900D7E11A /* ViewController.swift */,
+				022889211CABCC6000D7E11A /* CustomLocationPicker.swift */,
 				022888DB1CA939DE00D7E11A /* Main.storyboard */,
 				022888DE1CA939DE00D7E11A /* Assets.xcassets */,
 				022888E01CA939DE00D7E11A /* LaunchScreen.storyboard */,
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0228891A1CAA43A900D7E11A /* ViewController.swift in Sources */,
+				022889221CABCC6000D7E11A /* CustomLocationPicker.swift in Sources */,
 				022888D81CA939DE00D7E11A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +506,7 @@
 				022888FE1CA939DE00D7E11A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		022888FF1CA939DE00D7E11A /* Build configuration list for PBXNativeTarget "LocationPickerExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +515,7 @@
 				022889011CA939DE00D7E11A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		022889021CA939DE00D7E11A /* Build configuration list for PBXNativeTarget "LocationPickerExampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +524,7 @@
 				022889041CA939DE00D7E11A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -25,11 +25,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30v-yE-BNj">
-                                <rect key="frame" x="146" y="361" width="310" height="30"/>
-                                <state key="normal" title="Push Location Picker to Navigation Controller"/>
+                                <rect key="frame" x="194" y="361" width="213" height="30"/>
+                                <state key="normal" title="Push Location Picker via codes"/>
+                                <connections>
+                                    <action selector="pushLocationPickerButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1A9-B0-fZ9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghW-a7-332">
-                                <rect key="frame" x="173.5" y="285" width="254" height="30"/>
+                                <rect key="frame" x="173" y="285" width="254" height="30"/>
                                 <state key="normal" title="Show Location Picker via push segue"/>
                                 <connections>
                                     <segue destination="KBY-6g-MsR" kind="show" identifier="LocationPicker" id="9Jv-IY-vZM"/>
@@ -74,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="241" y="327"/>
         </scene>
-        <!--Location Picker-->
+        <!--Custom Location Picker-->
         <scene sceneID="Ytx-Nl-UKq">
             <objects>
-                <viewController id="KBY-6g-MsR" customClass="LocationPicker" customModule="LocationPicker" sceneMemberID="viewController">
+                <viewController id="KBY-6g-MsR" customClass="CustomLocationPicker" customModule="LocationPickerExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="35C-CO-NNQ"/>
                         <viewControllerLayoutGuide type="bottom" id="2lU-Q0-BPr"/>

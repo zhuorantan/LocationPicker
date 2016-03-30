@@ -11,6 +11,7 @@ import MapKit
 
 @objc public protocol LocationPickerDelegate {
     optional func locationDidSelect(mapItem: MKMapItem)
+    optional func locationDidPick(mapItem: MKMapItem)
     optional func historyLocationAtIndex(index: Int) -> MKMapItem
     optional func deleteHistoryLocation(mapItem: MKMapItem, AtIndex index: Int)
 }
@@ -19,16 +20,22 @@ import MapKit
 
 public class LocationPicker: UIViewController {
     
-    public var completion: ((MKMapItem) -> Void)?
+    // MARK: - Completion handler
+    
+    public var selectCompletion: ((MKMapItem) -> Void)?
+    public var pickCompletion: ((MKMapItem) -> Void)?
+    
+    // MARK: Optional varaiables
+    
     public var delegate: LocationPickerDelegate?
     public var historyLocationList: [MKMapItem]?
+    public var doneButtonItem: UIBarButtonItem?
     
-    
-    
-    // Configurations
+    // MARK: Configurations
     
     public var mapViewDraggable = true
     public var historyLocationEditable = true
+    public var divideSection = false
     
     public var currentLocationColor = UIColor.blackColor()
     public var searchResultLocationColor = UIColor.blackColor()
@@ -52,15 +59,13 @@ public class LocationPicker: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        layoutViews()
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         if let mapItem = selectedMapItem {
-            completion?(mapItem)
-            delegate?.locationDidSelect?(mapItem)
+            locationDidPick(mapItem)
         }
     }
     
@@ -73,14 +78,31 @@ public class LocationPicker: UIViewController {
         pinColor = color
     }
     
+    
+    
+    public func locationDidSelect(mapItem: MKMapItem) {
+        enableDoneButton()
+        selectCompletion?(mapItem)
+        delegate?.locationDidSelect?(mapItem)
+        NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: mapItem)
+    }
+    
+    public func locationDidPick(mapItem: MKMapItem) {
+        pickCompletion?(mapItem)
+        delegate?.locationDidSelect?(mapItem)
+        NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: mapItem)
+    }
+    
+    
+    
     private func setupViews() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
         
         view.backgroundColor = UIColor.whiteColor()
-    }
-    
-    private func layoutViews() {
+        
+        
+        
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -94,6 +116,14 @@ public class LocationPicker: UIViewController {
         tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
         tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
         tableView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
+    }
+    
+    
+    
+    private func enableDoneButton() {
+        if let doneButtonItem = doneButtonItem {
+            doneButtonItem.enabled = true
+        }
     }
     
 }

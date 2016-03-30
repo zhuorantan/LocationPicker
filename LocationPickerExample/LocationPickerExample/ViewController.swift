@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import LocationPicker
 import MapKit
+import LocationPicker
 
 class ViewController: UIViewController, LocationPickerDelegate {
 
@@ -20,43 +20,42 @@ class ViewController: UIViewController, LocationPickerDelegate {
     
     @IBAction func presentLocationPickerButtonDidTap(sender: UIButton) {
         let locationPicker = LocationPicker()
-        locationPicker.delegate = self
+        locationPicker.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(dismissLocationPicker(_:)))
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(dismissLocationPicker(_:)))
+        doneButton.enabled = false
+        locationPicker.doneButtonItem = doneButton
+        locationPicker.navigationItem.rightBarButtonItem = doneButton
         
         let navigationController = UINavigationController(rootViewController: locationPicker)
-        locationPicker.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(doneButtonDidTap(_:)))
         presentViewController(navigationController, animated: true, completion: nil)
     }
     
-    func doneButtonDidTap(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
+        let locationPicker = LocationPicker()
+        
+        locationPicker.selectCompletion = { selectedMapItem in
+            
+        }
+        locationPicker.pickCompletion = { pickedMapItem in
+            self.showLocation(pickedMapItem)
+        }
+        navigationController!.pushViewController(locationPicker, animated: true)
     }
+    
     
     func showLocation(mapItem: MKMapItem) {
         
     }
     
+    func dismissLocationPicker(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
-    // Location Picker Delegate
     
-    func locationDidSelect(mapItem: MKMapItem) {
+    func locationDidPick(mapItem: MKMapItem) {
         showLocation(mapItem)
-    }
-    
-    func deleteHistoryLocation(mapItem: MKMapItem, AtIndex index: Int) {
-        
-    }
-
-    
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "LocationPicker" {
-            let locationPicker = segue.destinationViewController as! LocationPicker
-            locationPicker.completion = { selectedMapItem in
-                self.showLocation(selectedMapItem)
-            }
-        }
     }
 
 }
