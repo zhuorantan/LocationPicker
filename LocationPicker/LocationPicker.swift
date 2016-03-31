@@ -181,7 +181,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     public func locationDidPick(locationItem: LocationItem) {
         pickCompletion?(locationItem)
-        delegate?.locationDidSelect?(locationItem)
+        delegate?.locationDidPick?(locationItem)
         NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
     }
     

@@ -38,13 +38,29 @@
                                     <segue destination="KBY-6g-MsR" kind="show" identifier="LocationPicker" id="9Jv-IY-vZM"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBU-oa-4H0">
+                                <rect key="frame" x="242.5" y="227" width="115" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJg-Ui-iH7">
+                                <rect key="frame" x="235" y="256" width="131" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ghW-a7-332" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1Ed-YG-lJh"/>
+                            <constraint firstItem="HJg-Ui-iH7" firstAttribute="top" secondItem="yBU-oa-4H0" secondAttribute="bottom" constant="8" symbolic="YES" id="FV1-Dn-x3t"/>
+                            <constraint firstItem="HJg-Ui-iH7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Gki-F4-kTd"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerX" secondItem="ghW-a7-332" secondAttribute="centerX" id="SX1-z9-4hh"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="top" secondItem="ghW-a7-332" secondAttribute="bottom" constant="8" symbolic="YES" id="WcN-da-Kau"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="centerX" secondItem="DfY-5R-8rm" secondAttribute="centerX" id="cUP-5h-73n"/>
+                            <constraint firstItem="ghW-a7-332" firstAttribute="top" secondItem="HJg-Ui-iH7" secondAttribute="bottom" constant="8" symbolic="YES" id="eVN-PJ-g0Q"/>
+                            <constraint firstItem="yBU-oa-4H0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hM4-Wn-mHZ"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerY" secondItem="ghW-a7-332" secondAttribute="centerY" id="iDH-Nx-bZS"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="top" secondItem="DfY-5R-8rm" secondAttribute="bottom" constant="8" symbolic="YES" id="khc-Iy-ruU"/>
                             <constraint firstItem="ghW-a7-332" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yi0-sM-je5"/>
@@ -56,6 +72,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="8p0-gq-VJw"/>
+                    <connections>
+                        <outlet property="locationAddressLabel" destination="HJg-Ui-iH7" id="6uB-xC-h3R"/>
+                        <outlet property="locationNameLabel" destination="yBU-oa-4H0" id="yau-sb-AaO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -77,10 +97,10 @@
             </objects>
             <point key="canvasLocation" x="241" y="327"/>
         </scene>
-        <!--Custom Location Picker-->
+        <!--Location Picker-->
         <scene sceneID="Ytx-Nl-UKq">
             <objects>
-                <viewController id="KBY-6g-MsR" customClass="CustomLocationPicker" customModule="LocationPickerExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KBY-6g-MsR" customClass="LocationPicker" customModule="LocationPicker" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="35C-CO-NNQ"/>
                         <viewControllerLayoutGuide type="bottom" id="2lU-Q0-BPr"/>
