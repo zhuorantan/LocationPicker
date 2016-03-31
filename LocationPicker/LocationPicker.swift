@@ -155,7 +155,8 @@ public class LocationPicker: UIViewController {
     private func showMapViewCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
         mapViewHeightConstraint.constant = mapViewHeight
         
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
+        let revisedCoordinate = wgs2gcj(coordinate)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(revisedCoordinate, 0 , distance)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
