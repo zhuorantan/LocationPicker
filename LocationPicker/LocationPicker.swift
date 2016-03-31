@@ -65,7 +65,8 @@ public class LocationPicker: UIViewController {
         
         setupViews()
         layoutViews()
-        toggleMapView()
+        showMapViewCenterCoordinate(CLLocationCoordinate2D(latitude: 31.31527778, longitude: 121.3825), WithDistance: 1000)
+        
     }
     
     public override func viewWillDisappear(animated: Bool) {
@@ -151,12 +152,15 @@ public class LocationPicker: UIViewController {
         }
     }
     
-    private func toggleMapView() {
-        if mapViewHeightConstraint.constant == 0 {
-            mapViewHeightConstraint.constant = mapViewHeight
-        } else {
-            mapViewHeightConstraint.constant = 0
-        }
+    private func showMapViewCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
+        mapViewHeightConstraint.constant = mapViewHeight
+        
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    private func closeMapView() {
+        mapViewHeightConstraint.constant = 0
     }
     
 }

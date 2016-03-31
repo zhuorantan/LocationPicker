@@ -12,8 +12,6 @@ public class LocationItem: NSObject {
     
     public let mapItem: MKMapItem
     
-    public let createTime: NSDate?
-    
     
     
     public var name: String {
@@ -35,15 +33,12 @@ public class LocationItem: NSObject {
     
     public init(mapItem: MKMapItem) {
         self.mapItem = mapItem
-        self.createTime = NSDate()
     }
     
     
-    public init(createTime: NSDate?, name: String, coordinate: (latitude: Double, longitude: Double), addressDictionary: [String: AnyObject]) {
-        self.createTime = createTime
-        
-        let coordinate = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let placeMark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary)
+    public init(coordinate: (latitude: Double, longitude: Double), addressDictionary: [String: AnyObject]) {
+        let coordinateObject = coordinateObjectFromTuple(coordinate)
+        let placeMark = MKPlacemark(coordinate: coordinateObject, addressDictionary: addressDictionary)
         self.mapItem = MKMapItem(placemark: placeMark)
     }
 }

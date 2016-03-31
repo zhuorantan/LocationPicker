@@ -1,5 +1,5 @@
 //
-//  LocationPickerProtocol.swift
+//  Protocol.swift
 //  LocationPicker
 //
 //  Created by Jerome Tan on 3/30/16.
@@ -18,6 +18,6 @@ import Foundation
 @objc public protocol LocationPickerDataSource {
     
     optional func historyLocationAtIndex(index: Int) -> LocationItem
-    optional func deleteHistoryLocation(locationItem: LocationItem, AtIndex index: Int)
+    optional func commitistoryLocationDeletion(locationItem: LocationItem, AtIndex index: Int)
     
 }
