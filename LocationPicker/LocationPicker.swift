@@ -19,10 +19,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: Optional varaiables
     
     public var delegate: LocationPickerDelegate?
+    public var dataSource: LocationPickerDataSource?
     public var historyLocationList: [LocationItem]?
     public var doneButtonItem: UIBarButtonItem?
     
     // MARK: Configurations
+    
+    public var currentLocationText = "Current Location"
+    public var searchBarPlaceholder = "Search for convenient location"
     
     public var defaultMapViewDistance: Double = 1000
     public var searchRegionDistance: Double = 10000
@@ -51,6 +55,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: Attributes
     
     private var selectedLocationItem: LocationItem?
+    private var searchResultList = [LocationItem]()
     
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
@@ -64,6 +69,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     private var isMapViewOpen: Bool {
         get {
             return mapViewHeightConstraint.constant != 0
+        }
+    }
+    
+    private var historyLocationCount: Int {
+        get {
+            return historyLocationList?.count ?? dataSource?.numberOfHistoryLocations() ?? 0
         }
     }
 
@@ -107,8 +118,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         view.backgroundColor = UIColor.whiteColor()
         
+        searchBar.delegate = self
+        searchBar.placeholder = searchBarPlaceholder
+        
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .OnDrag
         
         mapView.zoomEnabled = false
         mapView.rotateEnabled = false
@@ -155,7 +170,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: - Callbacks
     
     public func locationDidSelect(locationItem: LocationItem) {
-        enableDoneButton()
+        if let doneButtonItem = doneButtonItem {
+            doneButtonItem.enabled = true
+        }
+        
         selectCompletion?(locationItem)
         delegate?.locationDidSelect?(locationItem)
         NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: locationItem)
@@ -169,6 +187,41 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
+    // MARK: - Search Bar Delegate
+    
+    public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.characters.count > 0 {
+            let localSearchRequest = MKLocalSearchRequest()
+            localSearchRequest.naturalLanguageQuery = searchText
+            
+            if let currentCoordinate = locationManager.location?.coordinate {
+                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchRegionDistance, searchRegionDistance)
+            }
+            MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
+                guard error == nil else { return }
+                guard let localSearchResponse = localSearchResponse else { return }
+                guard localSearchResponse.mapItems.count > 0 else { return }
+                
+                self.searchResultList = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                self.tableView.reloadData()
+            })
+        } else {
+            searchResultList.removeAll()
+            tableView.reloadData()
+            closeMapView()
+            
+            if let doneButtonItem = doneButtonItem {
+                doneButtonItem.enabled = false
+            }
+        }
+    }
+    
+    public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+    
+    
     // MAKR: Table View Delegate and Data Source
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -176,7 +229,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 1 + searchResultList.count + historyLocationCount
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -184,29 +237,32 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         if indexPath.row == 0 {
             cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-            cell.textLabel?.text = "CurrentLocation"
+            cell.textLabel?.text = currentLocationText
+        } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
+            let index = indexPath.row - 1
+            
+            cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.textLabel?.text = searchResultList[index].name
         }
         
         return cell
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        searchBar.endEditing(true)
         if indexPath.row == 0 {
             if let currentLocation = locationManager.location {
                 reverseGeocodeLocation(currentLocation)
             }
+        } else {
+            let locationItem = searchResultList[indexPath.row - 1]
+            selectLocationItem(locationItem)
         }
     }
     
     
     
     // MARK: - UI Mainipulations
-    
-    private func enableDoneButton() {
-        if let doneButtonItem = doneButtonItem {
-            doneButtonItem.enabled = true
-        }
-    }
     
     private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
         print("map center changed.")
@@ -222,6 +278,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
+    // MARK: - Location Manager Delegate
+    
     public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error)
     }
@@ -232,6 +290,19 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             let currentLocation = locations[0]
             reverseGeocodeLocation(currentLocation)
         }
+    }
+    
+    
+    
+    // MARK: Location Handlers
+    
+    private func selectLocationItem(locationItem: LocationItem) {
+        selectedLocationItem = locationItem
+        searchBar.text = locationItem.name
+        let coordinate = coordinateObjectFromTuple(locationItem.coordinate)
+        showMapViewWithCenterCoordinate(coordinate, WithDistance: self.defaultMapViewDistance)
+        
+        locationDidSelect(locationItem)
     }
     
     private func reverseGeocodeLocation(location: CLLocation) {
@@ -245,9 +316,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             
             if !self.searchBar.isFirstResponder() {
                 let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
-                self.selectedLocationItem = LocationItem(mapItem: mapItem)
-                self.searchBar.text = mapItem.name
-                self.showMapViewWithCenterCoordinate(mapItem.placemark.coordinate, WithDistance: self.defaultMapViewDistance)
+                self.selectLocationItem(LocationItem(mapItem: mapItem))
             }
         })
     }

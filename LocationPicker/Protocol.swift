@@ -17,7 +17,8 @@ import Foundation
 
 @objc public protocol LocationPickerDataSource {
     
-    optional func historyLocationAtIndex(index: Int) -> LocationItem
+    func numberOfHistoryLocations() -> Int
+    func historyLocationAtIndex(index: Int) -> LocationItem
     optional func commitistoryLocationDeletion(locationItem: LocationItem, AtIndex index: Int)
     
 }
