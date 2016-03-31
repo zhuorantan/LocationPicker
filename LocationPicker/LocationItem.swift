@@ -19,26 +19,36 @@ public class LocationItem: NSObject {
             return mapItem.name ?? ""
         }
     }
+    
     public var coordinate: (latitude: Double, longitude: Double) {
         get {
             let coordinate = mapItem.placemark.coordinate
             return (coordinate.latitude, coordinate.longitude)
         }
     }
+    
     public var addressDictionary: [NSObject: AnyObject]? {
         get {
             return mapItem.placemark.addressDictionary
         }
     }
     
+    public var formattedAddressString: String? {
+        get {
+            return (addressDictionary?["FormattedAddressLines"] as? [String])?[0]
+        }
+    }
+    
+    
+    
     public init(mapItem: MKMapItem) {
         self.mapItem = mapItem
     }
-    
     
     public init(coordinate: (latitude: Double, longitude: Double), addressDictionary: [String: AnyObject]) {
         let coordinateObject = coordinateObjectFromTuple(coordinate)
         let placeMark = MKPlacemark(coordinate: coordinateObject, addressDictionary: addressDictionary)
         self.mapItem = MKMapItem(placemark: placeMark)
     }
+    
 }

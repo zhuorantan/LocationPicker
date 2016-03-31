@@ -28,9 +28,9 @@ class CustomLocationPicker: LocationPicker {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-//    override func locationDidSelect(locationItem: LocationItem) {
-//        
-//    }
+    override func locationDidSelect(locationItem: LocationItem) {
+        
+    }
     
     override func locationDidPick(locationItem: LocationItem) {
         viewController.showLocation(locationItem)

@@ -53,7 +53,7 @@ class ViewController: UIViewController, LocationPickerDelegate {
     
     func showLocation(locationItem: LocationItem) {
         locationNameLabel.text = locationItem.name
-        locationAddressLabel.text = (locationItem.addressDictionary!["FormattedAddressLines"] as! [String])[0]
+        locationAddressLabel.text = locationItem.formattedAddressString
     }
     
     
