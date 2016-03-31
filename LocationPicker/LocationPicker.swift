@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-public class LocationPicker: UIViewController {
+public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     // MARK: - Completion handlers
     
@@ -23,6 +23,9 @@ public class LocationPicker: UIViewController {
     public var doneButtonItem: UIBarButtonItem?
     
     // MARK: Configurations
+    
+    public var defaultMapViewDistance: Double = 1000
+    public var searchRegionDistance: Double = 10000
     
     public var mapViewDraggable = true
     public var historyLocationEditable = true
@@ -49,10 +52,18 @@ public class LocationPicker: UIViewController {
     
     private var selectedLocationItem: LocationItem?
     
+    private let locationManager = CLLocationManager()
+    private let geocoder = CLGeocoder()
+    
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
         get {
             return view.frame.width / 3 * 2
+        }
+    }
+    private var isMapViewOpen: Bool {
+        get {
+            return mapViewHeightConstraint.constant != 0
         }
     }
 
@@ -63,9 +74,9 @@ public class LocationPicker: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLocationManager()
         setupViews()
         layoutViews()
-        showMapViewCenterCoordinate(CLLocationCoordinate2D(latitude: 31.31527778, longitude: 121.3825), WithDistance: 1000)
         
     }
     
@@ -81,6 +92,14 @@ public class LocationPicker: UIViewController {
     
     // MARK: Initializations
     
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 10
+        locationManager.requestLocation()
+    }
+    
     private func setupViews() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
@@ -88,6 +107,12 @@ public class LocationPicker: UIViewController {
         
         view.backgroundColor = UIColor.whiteColor()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        mapView.zoomEnabled = false
+        mapView.rotateEnabled = false
+        mapView.pitchEnabled = false
     }
     
     private func layoutViews() {
@@ -144,6 +169,37 @@ public class LocationPicker: UIViewController {
     
     
     
+    // MAKR: Table View Delegate and Data Source
+    
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell!
+        
+        if indexPath.row == 0 {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.textLabel?.text = "CurrentLocation"
+        }
+        
+        return cell
+    }
+    
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 0 {
+            if let currentLocation = locationManager.location {
+                reverseGeocodeLocation(currentLocation)
+            }
+        }
+    }
+    
+    
+    
     // MARK: - UI Mainipulations
     
     private func enableDoneButton() {
@@ -152,16 +208,48 @@ public class LocationPicker: UIViewController {
         }
     }
     
-    private func showMapViewCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
+    private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
+        print("map center changed.")
         mapViewHeightConstraint.constant = mapViewHeight
         
-        let revisedCoordinate = wgs2gcj(coordinate)
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(revisedCoordinate, 0 , distance)
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
     private func closeMapView() {
         mapViewHeightConstraint.constant = 0
+    }
+    
+    
+    
+    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error)
+    }
+    
+    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("current location updated.")
+        if tableView.indexPathForSelectedRow?.row == 0 {
+            let currentLocation = locations[0]
+            reverseGeocodeLocation(currentLocation)
+        }
+    }
+    
+    private func reverseGeocodeLocation(location: CLLocation) {
+        geocoder.cancelGeocode()
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placeMarks, error) -> Void in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            guard let placeMarks = placeMarks else { return }
+            
+            if !self.searchBar.isFirstResponder() {
+                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
+                self.selectedLocationItem = LocationItem(mapItem: mapItem)
+                self.searchBar.text = mapItem.name
+                self.showMapViewWithCenterCoordinate(mapItem.placemark.coordinate, WithDistance: self.defaultMapViewDistance)
+            }
+        })
     }
     
 }
