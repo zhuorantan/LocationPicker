@@ -1,15 +1,15 @@
 //
-//  LocationPickerExampleTests.swift
-//  LocationPickerExampleTests
+//  DemoTests.swift
+//  DemoTests
 //
-//  Created by Jerome Tan on 3/28/16.
+//  Created by Jerome Tan on 4/1/16.
 //  Copyright © 2016 Jerome Tan. All rights reserved.
 //
 
 import XCTest
-@testable import LocationPickerExample
+@testable import Demo
 
-class LocationPickerExampleTests: XCTestCase {
+class DemoTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

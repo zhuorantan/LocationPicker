@@ -17,6 +17,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		020C1FAB1CAD8B6F007B243F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 020C1F741CAD8B6E007B243F;
+			remoteInfo = Demo;
+		};
+		020C1FAD1CAD8B6F007B243F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 020C1F881CAD8B6E007B243F;
+			remoteInfo = DemoTests;
+		};
+		020C1FAF1CAD8B6F007B243F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 020C1F931CAD8B6E007B243F;
+			remoteInfo = DemoUITests;
+		};
 		022888831CA9398D00D7E11A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0228886E1CA9398D00D7E11A /* Project object */;
@@ -24,37 +45,16 @@
 			remoteGlobalIDString = 022888761CA9398D00D7E11A;
 			remoteInfo = LocationPicker;
 		};
-		0228890B1CA939DF00D7E11A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 022888D41CA939DE00D7E11A;
-			remoteInfo = LocationPickerExample;
-		};
-		0228890D1CA939DF00D7E11A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 022888E81CA939DE00D7E11A;
-			remoteInfo = LocationPickerExampleTests;
-		};
-		0228890F1CA939DF00D7E11A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 022888F31CA939DE00D7E11A;
-			remoteInfo = LocationPickerExampleUITests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Demo.xcodeproj; path = Demo/Demo.xcodeproj; sourceTree = "<group>"; };
 		022888771CA9398D00D7E11A /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocationPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0228887A1CA9398D00D7E11A /* LocationPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationPicker.h; sourceTree = "<group>"; };
 		0228887C1CA9398D00D7E11A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022888811CA9398D00D7E11A /* LocationPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		022888861CA9398D00D7E11A /* LocationPickerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerTests.swift; sourceTree = "<group>"; };
 		022888881CA9398D00D7E11A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationPickerExample.xcodeproj; path = LocationPickerExample/LocationPickerExample.xcodeproj; sourceTree = "<group>"; };
 		022889111CA939FB00D7E11A /* LocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPicker.swift; sourceTree = "<group>"; };
 		022889271CABDAF500D7E11A /* LocationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
 		022889291CAC297E00D7E11A /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -80,10 +80,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020C1FA61CAD8B6E007B243F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				020C1FAC1CAD8B6F007B243F /* Demo.app */,
+				020C1FAE1CAD8B6F007B243F /* DemoTests.xctest */,
+				020C1FB01CAD8B6F007B243F /* DemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0228886D1CA9398D00D7E11A = {
 			isa = PBXGroup;
 			children = (
-				022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */,
+				020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */,
 				022888791CA9398D00D7E11A /* LocationPicker */,
 				022888851CA9398D00D7E11A /* LocationPickerTests */,
 				022888781CA9398D00D7E11A /* Products */,
@@ -119,16 +129,6 @@
 				022888881CA9398D00D7E11A /* Info.plist */,
 			);
 			path = LocationPickerTests;
-			sourceTree = "<group>";
-		};
-		022889061CA939DE00D7E11A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0228890C1CA939DF00D7E11A /* LocationPickerExample.app */,
-				0228890E1CA939DF00D7E11A /* LocationPickerExampleTests.xctest */,
-				022889101CA939DF00D7E11A /* LocationPickerExampleUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,8 +212,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 022889061CA939DE00D7E11A /* Products */;
-					ProjectRef = 022889051CA939DE00D7E11A /* LocationPickerExample.xcodeproj */;
+					ProductGroup = 020C1FA61CAD8B6E007B243F /* Products */;
+					ProjectRef = 020C1FA51CAD8B6E007B243F /* Demo.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -225,25 +225,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0228890C1CA939DF00D7E11A /* LocationPickerExample.app */ = {
+		020C1FAC1CAD8B6F007B243F /* Demo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = LocationPickerExample.app;
-			remoteRef = 0228890B1CA939DF00D7E11A /* PBXContainerItemProxy */;
+			path = Demo.app;
+			remoteRef = 020C1FAB1CAD8B6F007B243F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0228890E1CA939DF00D7E11A /* LocationPickerExampleTests.xctest */ = {
+		020C1FAE1CAD8B6F007B243F /* DemoTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = LocationPickerExampleTests.xctest;
-			remoteRef = 0228890D1CA939DF00D7E11A /* PBXContainerItemProxy */;
+			path = DemoTests.xctest;
+			remoteRef = 020C1FAD1CAD8B6F007B243F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		022889101CA939DF00D7E11A /* LocationPickerExampleUITests.xctest */ = {
+		020C1FB01CAD8B6F007B243F /* DemoUITests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = LocationPickerExampleUITests.xctest;
-			remoteRef = 0228890F1CA939DF00D7E11A /* PBXContainerItemProxy */;
+			path = DemoUITests.xctest;
+			remoteRef = 020C1FAF1CAD8B6F007B243F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

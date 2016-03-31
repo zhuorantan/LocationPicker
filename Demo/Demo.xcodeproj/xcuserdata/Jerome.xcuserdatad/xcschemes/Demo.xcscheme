@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "022888D31CA939DE00D7E11A"
-               BuildableName = "LocationPickerExample.app"
-               BlueprintName = "LocationPickerExample"
-               ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+               BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
+               BuildableName = "Demo.app"
+               BlueprintName = "Demo"
+               ReferencedContainer = "container:Demo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "022888E71CA939DE00D7E11A"
-               BuildableName = "LocationPickerExampleTests.xctest"
-               BlueprintName = "LocationPickerExampleTests"
-               ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+               BlueprintIdentifier = "020C1F871CAD8B6E007B243F"
+               BuildableName = "DemoTests.xctest"
+               BlueprintName = "DemoTests"
+               ReferencedContainer = "container:Demo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "022888F21CA939DE00D7E11A"
-               BuildableName = "LocationPickerExampleUITests.xctest"
-               BlueprintName = "LocationPickerExampleUITests"
-               ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+               BlueprintIdentifier = "020C1F921CAD8B6E007B243F"
+               BuildableName = "DemoUITests.xctest"
+               BlueprintName = "DemoUITests"
+               ReferencedContainer = "container:Demo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "022888D31CA939DE00D7E11A"
-            BuildableName = "LocationPickerExample.app"
-            BlueprintName = "LocationPickerExample"
-            ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
+            BuildableName = "Demo.app"
+            BlueprintName = "Demo"
+            ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "022888D31CA939DE00D7E11A"
-            BuildableName = "LocationPickerExample.app"
-            BlueprintName = "LocationPickerExample"
-            ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
+            BuildableName = "Demo.app"
+            BlueprintName = "Demo"
+            ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "022888D31CA939DE00D7E11A"
-            BuildableName = "LocationPickerExample.app"
-            BlueprintName = "LocationPickerExample"
-            ReferencedContainer = "container:LocationPickerExample.xcodeproj">
+            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
+            BuildableName = "Demo.app"
+            BlueprintName = "Demo"
+            ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
