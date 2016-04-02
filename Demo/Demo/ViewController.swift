@@ -19,6 +19,12 @@ class ViewController: UIViewController, LocationPickerDelegate {
         
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        locationNameTextField.text = nil
+        locationAddressTextField.text = nil
+    }
+    
     // MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

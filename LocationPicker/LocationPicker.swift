@@ -31,7 +31,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: UI Customs
     
     public var currentLocationText = "Current Location"
-    public var searchBarPlaceholder = "Search for convenient location"
+    public var searchBarPlaceholder = "Search for location"
     
     public var defaultMapViewDistance: Double = 1000
     public var searchRegionDistance: Double = 10000
