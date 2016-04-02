@@ -40,14 +40,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var historyLocationEditable = true
     public var divideSection = false
     
-    public var currentLocationColor = UIColor.blackColor()
-    public var searchResultLocationColor = UIColor.blackColor()
-    public var historyLocationColor = UIColor.blackColor()
+    public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    public var searchResultLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    public var historyLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var pinColor = UIColor.blackColor()
     
-    public var currentLocationImage = UIImage()
-    public var searchResultLocationImage = UIImage()
-    public var historyLocationImage = UIImage()
+    public var currentLocationImage: UIImage? = nil
+    public var searchResultLocationImage: UIImage? = nil
+    public var historyLocationImage: UIImage? = nil
     
     
     
@@ -231,11 +231,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         var cell: LocationCell!
         
         if indexPath.row == 0 {
-            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText)
+            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationColor, iconImage: currentLocationImage)
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
             
-            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index])
+            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationColor, iconImage: searchResultLocationImage)
         }
         
         return cell
@@ -248,7 +248,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 reverseGeocodeLocation(currentLocation)
             }
         } else {
-            let locationItem = searchResultList[indexPath.row - 1]
+            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: 0)) as! LocationCell
+            let locationItem = cell.locationItem!
             selectLocationItem(locationItem)
         }
     }

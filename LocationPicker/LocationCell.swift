@@ -22,10 +22,14 @@ class LocationCell: UITableViewCell {
     private let iconView = UIImageView()
     private let locationNameLabel = UILabel()
     
-    convenience init(locationType: LocationType, locationItem: LocationItem? = nil, title: String? = nil) {
+    private var iconColor: UIColor!
+    
+    convenience init(locationType: LocationType, locationItem: LocationItem? = nil, title: String? = nil, iconColor: UIColor, iconImage: UIImage?) {
         self.init()
         self.locationType = locationType
         self.locationItem = locationItem
+        self.iconColor = iconColor
+        iconView.image = iconImage
         
         if let title = title {
             locationNameLabel.text = title
@@ -41,13 +45,15 @@ class LocationCell: UITableViewCell {
         separatorInset.left = length
         
         iconView.frame = CGRect(x: 0, y: 0, width: length, height: length)
-        switch locationType! {
-        case .CurrentLocation:
-            iconView.image = StyleKit.imageOfMapPointerIcon(size: CGSize(width: length, height: length))
-        case .SearchLocation:
-            iconView.image = StyleKit.imageOfSearchIcon(size: CGSize(width: length, height: length))
-        case .HistoryLocation:
-            iconView.image = StyleKit.imageOfPinIcon(size: CGSize(width: length, height: length))
+        if iconView.image == nil {
+            switch locationType! {
+            case .CurrentLocation:
+                iconView.image = StyleKit.imageOfMapPointerIcon(size: CGSize(width: length, height: length), color: iconColor)
+            case .SearchLocation:
+                iconView.image = StyleKit.imageOfSearchIcon(size: CGSize(width: length, height: length), color: iconColor)
+            case .HistoryLocation:
+                iconView.image = StyleKit.imageOfPinIcon(size: CGSize(width: length, height: length), color: iconColor)
+            }
         }
         
         if let locationItem = locationItem {
