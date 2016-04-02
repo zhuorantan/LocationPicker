@@ -186,6 +186,68 @@ class StyleKit: NSObject {
         CGContextRestoreGState(context)
     }
     
+    class func drawPinIconFilled(frame frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 32), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
+        /// General Declarations
+        let context = UIGraphicsGetCurrentContext()!
+        
+        /// Resize To Frame
+        CGContextSaveGState(context)
+        let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 20, height: 32), target: frame)
+        CGContextTranslateCTM(context, resizedFrame.minX, resizedFrame.minY)
+        let resizedScale = CGSize(width: resizedFrame.width / 20, height: resizedFrame.height / 32)
+        CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
+        
+        /// v_u_icon_pin
+        do {
+            CGContextSaveGState(context)
+            
+            /// Layer_1
+            do {
+                CGContextSaveGState(context)
+                CGContextTranslateCTM(context, 1, 0)
+                
+                // Empty.
+                
+                CGContextRestoreGState(context)
+            }
+            
+            /// map_x5F_pin_x5F_fill
+            do {
+                CGContextSaveGState(context)
+                
+                /// Shape
+                let shape = UIBezierPath()
+                shape.moveToPoint(CGPoint(x: 17.07, y: 2.93))
+                shape.addCurveToPoint(CGPoint(x: 2.93, y: 2.93), controlPoint1: CGPoint(x: 13.16, y: -0.98), controlPoint2: CGPoint(x: 6.84, y: -0.98))
+                shape.addCurveToPoint(CGPoint(x: 2.93, y: 17.07), controlPoint1: CGPoint(x: -0.98, y: 6.83), controlPoint2: CGPoint(x: -0.98, y: 13.17))
+                shape.addCurveToPoint(CGPoint(x: 10, y: 32), controlPoint1: CGPoint(x: 2.93, y: 17.07), controlPoint2: CGPoint(x: 10, y: 24))
+                shape.addCurveToPoint(CGPoint(x: 17.07, y: 17.07), controlPoint1: CGPoint(x: 10, y: 24), controlPoint2: CGPoint(x: 17.07, y: 17.07))
+                shape.addCurveToPoint(CGPoint(x: 17.07, y: 2.93), controlPoint1: CGPoint(x: 20.98, y: 13.17), controlPoint2: CGPoint(x: 20.98, y: 6.83))
+                shape.addLineToPoint(CGPoint(x: 17.07, y: 2.93))
+                shape.closePath()
+                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
+                shape.addCurveToPoint(CGPoint(x: 6, y: 10.01), controlPoint1: CGPoint(x: 7.79, y: 14.01), controlPoint2: CGPoint(x: 6, y: 12.22))
+                shape.addCurveToPoint(CGPoint(x: 10, y: 6.01), controlPoint1: CGPoint(x: 6, y: 7.79), controlPoint2: CGPoint(x: 7.79, y: 6.01))
+                shape.addCurveToPoint(CGPoint(x: 14, y: 10.01), controlPoint1: CGPoint(x: 12.21, y: 6.01), controlPoint2: CGPoint(x: 14, y: 7.79))
+                shape.addCurveToPoint(CGPoint(x: 10, y: 14.01), controlPoint1: CGPoint(x: 14, y: 12.22), controlPoint2: CGPoint(x: 12.21, y: 14.01))
+                shape.addLineToPoint(CGPoint(x: 10, y: 14.01))
+                shape.closePath()
+                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
+                CGContextSaveGState(context)
+                shape.usesEvenOddFillRule = true
+                color.setFill()
+                shape.fill()
+                CGContextRestoreGState(context)
+                
+                CGContextRestoreGState(context)
+            }
+            
+            CGContextRestoreGState(context)
+        }
+        
+        CGContextRestoreGState(context)
+    }
+    
     
     //MARK: - Canvas Images
     
@@ -218,6 +280,17 @@ class StyleKit: NSObject {
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         StyleKit.drawPinIcon(frame: CGRect(origin: CGPoint.zero, size: size), resizing: resizing, color: color)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    class func imageOfPinIconFilled(size size: CGSize = CGSize(width: 20, height: 32), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+        var image: UIImage
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        StyleKit.drawPinIconFilled(frame: CGRect(origin: CGPoint.zero, size: size), resizing: resizing, color: color)
         image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

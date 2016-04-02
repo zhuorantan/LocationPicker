@@ -14,14 +14,22 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     @IBOutlet weak var locationNameTextField: UITextField!
     @IBOutlet weak var locationAddressTextField: UITextField!
     
-    var historyLocationList = [LocationItem]()
+    var historyLocationList: [LocationItem] {
+        get {
+            if let locationDataList = NSUserDefaults.standardUserDefaults().arrayForKey("HistoryLocationList") as? [NSData] {
+                return locationDataList.map({ NSKeyedUnarchiver.unarchiveObjectWithData($0) as! LocationItem })
+            } else {
+                return []
+            }
+        }
+        set {
+            let locationDataList = newValue.map({ NSKeyedArchiver.archivedDataWithRootObject($0) })
+            NSUserDefaults.standardUserDefaults().setObject(locationDataList, forKey: "HistoryLocationList")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let locationDataList = NSUserDefaults.standardUserDefaults().arrayForKey("HistoryLocationList") as? [NSData] {
-            self.historyLocationList = locationDataList.map({ NSKeyedUnarchiver.unarchiveObjectWithData($0) as! LocationItem })
-        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -63,7 +71,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             self.storeLocation(pickedLocationItem)
         }
         locationPicker.deleteCompletion = { locationItem in
-            self.deleteLocation(locationItem)
+            self.historyLocationList.removeAtIndex(self.historyLocationList.indexOf(locationItem)!)
         }
         navigationController!.pushViewController(locationPicker, animated: true)
     }
@@ -73,6 +81,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     // Location Picker Delegate
     
     func locationDidSelect(locationItem: LocationItem) {
+        
     }
     
     func locationDidPick(locationItem: LocationItem) {
@@ -93,7 +102,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     }
     
     func commitHistoryLocationDeletion(locationItem: LocationItem) {
-        deleteLocation(locationItem)
+        historyLocationList.removeAtIndex(historyLocationList.indexOf(locationItem)!)
     }
     
     
@@ -108,14 +117,6 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             historyLocationList.removeAtIndex(index)
         }
         historyLocationList.append(locationItem)
-        let locationDataList = historyLocationList.map({ NSKeyedArchiver.archivedDataWithRootObject($0) })
-        NSUserDefaults.standardUserDefaults().setObject(locationDataList, forKey: "HistoryLocationList")
-    }
-    
-    func deleteLocation(locationItem: LocationItem) {
-        historyLocationList.removeAtIndex(historyLocationList.indexOf(locationItem)!)
-        let locationDataList = historyLocationList.map({ NSKeyedArchiver.archivedDataWithRootObject($0) })
-        NSUserDefaults.standardUserDefaults().setObject(locationDataList, forKey: "HistoryLocationList")
     }
 
 }

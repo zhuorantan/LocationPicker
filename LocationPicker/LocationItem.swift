@@ -59,6 +59,10 @@ public class LocationItem: NSObject, NSCoding {
         self.mapItem = MKMapItem(placemark: placeMark)
     }
     
+    public override func isEqual(object: AnyObject?) -> Bool {
+        return object?.hashValue == hashValue
+    }
+    
     
     
     public required convenience init(coder decoder: NSCoder) {

@@ -15,8 +15,8 @@
 		020C1F8D1CAD8B6E007B243F /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020C1F8C1CAD8B6E007B243F /* DemoTests.swift */; };
 		020C1F981CAD8B6E007B243F /* DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020C1F971CAD8B6E007B243F /* DemoUITests.swift */; };
 		020C1FB51CAD8BB8007B243F /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020C1FB41CAD8BB8007B243F /* CustomLocationPicker.swift */; };
-		020C1FBA1CAD8C5B007B243F /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020C1FB91CAD8C5B007B243F /* LocationPicker.framework */; };
-		020C1FBB1CAD8C5B007B243F /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 020C1FB91CAD8C5B007B243F /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0225367E1CAFE72B00B949F9 /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0225367D1CAFE72B00B949F9 /* LocationPicker.framework */; };
+		0225367F1CAFE72B00B949F9 /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0225367D1CAFE72B00B949F9 /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		020C1FBC1CAD8C5B007B243F /* Embed Frameworks */ = {
+		022536801CAFE72B00B949F9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				020C1FBB1CAD8C5B007B243F /* LocationPicker.framework in Embed Frameworks */,
+				0225367F1CAFE72B00B949F9 /* LocationPicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +65,7 @@
 		020C1F971CAD8B6E007B243F /* DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoUITests.swift; sourceTree = "<group>"; };
 		020C1F991CAD8B6E007B243F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		020C1FB41CAD8BB8007B243F /* CustomLocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
-		020C1FB91CAD8C5B007B243F /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LocationPicker.framework; path = "/Users/Jerome/Library/Developer/Xcode/DerivedData/LocationPicker-chpqhihsisflzudurzcjvdngjitt/Build/Products/Debug-iphonesimulator/LocationPicker.framework"; sourceTree = "<absolute>"; };
+		0225367D1CAFE72B00B949F9 /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LocationPicker.framework; path = "/Users/Jerome/Library/Developer/Xcode/DerivedData/LocationPicker-chpqhihsisflzudurzcjvdngjitt/Build/Products/Debug-iphoneos/LocationPicker.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				020C1FBA1CAD8C5B007B243F /* LocationPicker.framework in Frameworks */,
+				0225367E1CAFE72B00B949F9 /* LocationPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,7 @@
 		020C1F6B1CAD8B6E007B243F = {
 			isa = PBXGroup;
 			children = (
-				020C1FB91CAD8C5B007B243F /* LocationPicker.framework */,
+				0225367D1CAFE72B00B949F9 /* LocationPicker.framework */,
 				020C1F761CAD8B6E007B243F /* Demo */,
 				020C1F8B1CAD8B6E007B243F /* DemoTests */,
 				020C1F961CAD8B6E007B243F /* DemoUITests */,
@@ -157,7 +157,7 @@
 				020C1F701CAD8B6E007B243F /* Sources */,
 				020C1F711CAD8B6E007B243F /* Frameworks */,
 				020C1F721CAD8B6E007B243F /* Resources */,
-				020C1FBC1CAD8C5B007B243F /* Embed Frameworks */,
+				022536801CAFE72B00B949F9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -506,6 +506,7 @@
 				020C1F9E1CAD8B6E007B243F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		020C1F9F1CAD8B6E007B243F /* Build configuration list for PBXNativeTarget "DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +515,7 @@
 				020C1FA11CAD8B6E007B243F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		020C1FA21CAD8B6E007B243F /* Build configuration list for PBXNativeTarget "DemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +524,7 @@
 				020C1FA41CAD8B6E007B243F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

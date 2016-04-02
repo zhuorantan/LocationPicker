@@ -44,11 +44,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var searchResultLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var historyLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
-    public var pinColor = UIColor.blackColor()
+    public var pinColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     
     public var currentLocationImage: UIImage? = nil
     public var searchResultLocationImage: UIImage? = nil
     public var historyLocationImage: UIImage? = nil
+    public var pinImage: UIImage? = nil
     
     
     
@@ -57,6 +58,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let mapView = MKMapView()
+    private let pinView = UIImageView()
     
     // MARK: Attributes
     
@@ -133,15 +135,19 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         mapView.rotateEnabled = false
         mapView.pitchEnabled = false
         
+        pinView.image = pinImage ?? StyleKit.imageOfPinIconFilled(color: pinColor)
+        
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(mapView)
+        mapView.addSubview(pinView)
     }
     
     private func layoutViews() {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        pinView.translatesAutoresizingMaskIntoConstraints = false
         
         let margins = view.layoutMarginsGuide
         
@@ -160,6 +166,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         mapViewHeightConstraint = mapView.heightAnchor.constraintEqualToConstant(0)
         mapViewHeightConstraint.active = true
+
+        pinView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
+        pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinView.image!.size.height / 2).active = true
     }
     
     
