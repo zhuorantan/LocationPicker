@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
     // MARK: - Completion handlers
     
@@ -137,6 +137,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         pinView.image = pinImage ?? StyleKit.imageOfPinIconFilled(color: pinColor)
         
+        if mapViewDraggable {
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureInMapViewDidRecognize(_:)))
+            panGestureRecognizer.delegate = self
+            mapView.addGestureRecognizer(panGestureRecognizer)
+        }
+        
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(mapView)
@@ -198,7 +204,32 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
-    // MARK: - Search Bar Delegate
+    // MARK: - Gesture Recognizer
+    
+    func panGestureInMapViewDidRecognize(sender: UIPanGestureRecognizer) {
+        let location = sender.locationInView(sender.view)
+        
+        switch(sender.state) {
+        case .Began:
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+            }
+        case .Ended:
+            let revisedCoordinate = gcj2wgs(mapView.centerCoordinate)
+            reverseGeocodeLocation(CLLocation(latitude: revisedCoordinate.latitude, longitude: revisedCoordinate.longitude))
+            
+        default:
+            break
+        }
+    }
+    
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    
+    
+    // MARK: Search Bar Delegate
     
     public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count > 0 {
@@ -342,9 +373,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         let coordinate = coordinateObjectFromTuple(locationItem.coordinate)
         showMapViewWithCenterCoordinate(coordinate, WithDistance: self.defaultMapViewDistance)
         
-        if let doneButtonItem = doneButtonItem {
-            doneButtonItem.enabled = true
-        }
+        doneButtonItem?.enabled = true
         locationDidSelect(locationItem)
         NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: locationItem)
     }
