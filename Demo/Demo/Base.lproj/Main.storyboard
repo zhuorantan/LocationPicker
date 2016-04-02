@@ -3,12 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LocationPickerExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -38,29 +39,31 @@
                                     <segue destination="KBY-6g-MsR" kind="show" identifier="LocationPicker" id="9Jv-IY-vZM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBU-oa-4H0">
-                                <rect key="frame" x="242.5" y="227" width="115" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HJg-Ui-iH7">
-                                <rect key="frame" x="235" y="256" width="131" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location Address" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="MUL-27-w1D">
+                                <rect key="frame" x="20" y="247" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYU-2y-4mL">
+                                <rect key="frame" x="20" y="209" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ghW-a7-332" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1Ed-YG-lJh"/>
-                            <constraint firstItem="HJg-Ui-iH7" firstAttribute="top" secondItem="yBU-oa-4H0" secondAttribute="bottom" constant="8" symbolic="YES" id="FV1-Dn-x3t"/>
-                            <constraint firstItem="HJg-Ui-iH7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Gki-F4-kTd"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="MUL-27-w1D" secondAttribute="leading" id="3T4-Tv-cVj"/>
+                            <constraint firstItem="MUL-27-w1D" firstAttribute="top" secondItem="uYU-2y-4mL" secondAttribute="bottom" constant="8" symbolic="YES" id="5ab-Bz-yp8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uYU-2y-4mL" secondAttribute="trailing" id="6GG-wJ-ryt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MUL-27-w1D" secondAttribute="trailing" id="7er-uf-MPw"/>
+                            <constraint firstItem="MUL-27-w1D" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AB3-4e-MN3"/>
+                            <constraint firstItem="ghW-a7-332" firstAttribute="top" secondItem="MUL-27-w1D" secondAttribute="bottom" constant="8" symbolic="YES" id="FCj-Fi-eHc"/>
+                            <constraint firstItem="uYU-2y-4mL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GtS-pP-g6k"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerX" secondItem="ghW-a7-332" secondAttribute="centerX" id="SX1-z9-4hh"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="top" secondItem="ghW-a7-332" secondAttribute="bottom" constant="8" symbolic="YES" id="WcN-da-Kau"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="centerX" secondItem="DfY-5R-8rm" secondAttribute="centerX" id="cUP-5h-73n"/>
-                            <constraint firstItem="ghW-a7-332" firstAttribute="top" secondItem="HJg-Ui-iH7" secondAttribute="bottom" constant="8" symbolic="YES" id="eVN-PJ-g0Q"/>
-                            <constraint firstItem="yBU-oa-4H0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hM4-Wn-mHZ"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="uYU-2y-4mL" secondAttribute="leading" id="g5S-aC-hsM"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerY" secondItem="ghW-a7-332" secondAttribute="centerY" id="iDH-Nx-bZS"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="top" secondItem="DfY-5R-8rm" secondAttribute="bottom" constant="8" symbolic="YES" id="khc-Iy-ruU"/>
                             <constraint firstItem="ghW-a7-332" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yi0-sM-je5"/>
@@ -73,8 +76,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="8p0-gq-VJw"/>
                     <connections>
-                        <outlet property="locationAddressLabel" destination="HJg-Ui-iH7" id="6uB-xC-h3R"/>
-                        <outlet property="locationNameLabel" destination="yBU-oa-4H0" id="yau-sb-AaO"/>
+                        <outlet property="locationAddressTextField" destination="MUL-27-w1D" id="fZA-UV-3PF"/>
+                        <outlet property="locationNameTextField" destination="uYU-2y-4mL" id="Mxi-WN-fLe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

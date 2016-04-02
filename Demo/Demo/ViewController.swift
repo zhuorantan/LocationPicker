@@ -11,8 +11,8 @@ import LocationPicker
 
 class ViewController: UIViewController, LocationPickerDelegate {
     
-    @IBOutlet weak var locationNameLabel: UILabel!
-    @IBOutlet weak var locationAddressLabel: UILabel!
+    @IBOutlet weak var locationNameTextField: UITextField!
+    @IBOutlet weak var locationAddressTextField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +52,8 @@ class ViewController: UIViewController, LocationPickerDelegate {
     
     
     func showLocation(locationItem: LocationItem) {
-        locationNameLabel.text = locationItem.name
-        locationAddressLabel.text = locationItem.formattedAddressString
+        locationNameTextField.text = locationItem.name
+        locationAddressTextField.text = locationItem.formattedAddressString
     }
     
     

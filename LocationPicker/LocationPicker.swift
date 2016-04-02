@@ -21,7 +21,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var delegate: LocationPickerDelegate?
     public var dataSource: LocationPickerDataSource?
     public var historyLocationList: [LocationItem]?
-    public var doneButtonItem: UIBarButtonItem?
+    public var doneButtonItem: UIBarButtonItem? {
+        didSet {
+            doneButtonItem?.target = self
+            doneButtonItem?.action = #selector(doneButtonDidTap(_:))
+        }
+    }
     
     // MARK: UI Customs
     
@@ -94,6 +99,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        guard doneButtonItem == nil else { return }
         if let locationItem = selectedLocationItem {
             locationDidPick(locationItem)
             NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
@@ -246,6 +252,18 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         } else {
             let locationItem = searchResultList[indexPath.row - 1]
             selectLocationItem(locationItem)
+        }
+    }
+    
+    
+    
+    // MARK: Buttons
+    
+    @objc private func doneButtonDidTap(sender: UIBarButtonItem) {
+        if let locationItem = selectedLocationItem {
+            dismissViewControllerAnimated(true, completion: nil)
+            locationDidPick(locationItem)
+            NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
         }
     }
     

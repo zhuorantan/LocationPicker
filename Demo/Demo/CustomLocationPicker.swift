@@ -14,14 +14,13 @@ class CustomLocationPicker: LocationPicker {
     var viewController: ViewController!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(dismissLocationPicker(_:)))
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(dismissLocationPicker(_:)))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil)
         doneButton.enabled = false
         navigationItem.rightBarButtonItem = doneButton
         doneButtonItem = doneButton
+        super.viewDidLoad()
     }
     
     func dismissLocationPicker(sender: UIBarButtonItem) {
