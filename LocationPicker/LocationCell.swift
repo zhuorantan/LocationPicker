@@ -16,11 +16,13 @@ enum LocationType {
 
 class LocationCell: UITableViewCell {
     
-    public var locationItem: LocationItem?
-    public var locationType: LocationType!
+    var locationItem: LocationItem?
+    var locationType: LocationType!
     
     private let iconView = UIImageView()
     private let locationNameLabel = UILabel()
+    private let locationAddressLabel = UILabel()
+    private let containerView = UIView()
     
     private var iconColor: UIColor!
     
@@ -57,20 +59,45 @@ class LocationCell: UITableViewCell {
         }
         
         if let locationItem = locationItem {
+            locationNameLabel.font = UIFont.systemFontOfSize(16)
             locationNameLabel.text = locationItem.name
+            
+            locationAddressLabel.font = UIFont.systemFontOfSize(11)
+            locationAddressLabel.text = locationItem.formattedAddressString
         }
         
         contentView.addSubview(iconView)
-        contentView.addSubview(locationNameLabel)
+        containerView.addSubview(locationNameLabel)
+        if locationType! != .CurrentLocation {
+            containerView.addSubview(locationAddressLabel)
+        }
+        contentView.addSubview(containerView)
     }
     
     private func layoutViews() {
         locationNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationAddressLabel.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         
         let margins = contentView.layoutMarginsGuide
         
-        locationNameLabel.centerYAnchor.constraintEqualToAnchor(margins.centerYAnchor).active = true
-        locationNameLabel.leadingAnchor.constraintEqualToAnchor(iconView.trailingAnchor).active = true
+        containerView.centerYAnchor.constraintEqualToAnchor(margins.centerYAnchor).active = true
+        containerView.leadingAnchor.constraintEqualToAnchor(iconView.trailingAnchor).active = true
+        containerView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
+        
+        locationNameLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
+        locationNameLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
+        if locationType! == .CurrentLocation {
+            locationNameLabel.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor).active = true
+            
+        } else {
+            locationNameLabel.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+            
+            locationAddressLabel.topAnchor.constraintEqualToAnchor(locationNameLabel.bottomAnchor).active = true
+            locationAddressLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
+            locationAddressLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
+            locationAddressLabel.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor).active = true
+        }
     }
 
 }
