@@ -119,10 +119,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     private func setupViews() {
-        view.addSubview(searchBar)
-        view.addSubview(tableView)
-        view.addSubview(mapView)
-        
         view.backgroundColor = UIColor.whiteColor()
         
         searchBar.delegate = self
@@ -135,6 +131,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         mapView.zoomEnabled = false
         mapView.rotateEnabled = false
         mapView.pitchEnabled = false
+        
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        view.addSubview(mapView)
     }
     
     private func layoutViews() {
@@ -228,16 +228,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell!
+        var cell: LocationCell!
         
         if indexPath.row == 0 {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-            cell.textLabel?.text = currentLocationText
+            cell = LocationCell(locationType: .CurrentLocation, locationItem: nil)
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
             
-            cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-            cell.textLabel?.text = searchResultList[index].name
+            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index])
         }
         
         return cell

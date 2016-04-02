@@ -14,6 +14,8 @@
 		022889281CABDAF500D7E11A /* LocationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889271CABDAF500D7E11A /* LocationItem.swift */; };
 		0228892A1CAC297E00D7E11A /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022889291CAC297E00D7E11A /* Protocol.swift */; };
 		0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0228892B1CACE58A00D7E11A /* Helpers.swift */; };
+		0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268267C1CAF94A900B18185 /* LocationCell.swift */; };
+		026826821CAF9FC600B18185 /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026826811CAF9FC600B18185 /* StyleKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		022889271CABDAF500D7E11A /* LocationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
 		022889291CAC297E00D7E11A /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		0228892B1CACE58A00D7E11A /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0268267C1CAF94A900B18185 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		026826811CAF9FC600B18185 /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +118,11 @@
 			children = (
 				0228887A1CA9398D00D7E11A /* LocationPicker.h */,
 				022889111CA939FB00D7E11A /* LocationPicker.swift */,
+				0268267C1CAF94A900B18185 /* LocationCell.swift */,
 				022889271CABDAF500D7E11A /* LocationItem.swift */,
 				022889291CAC297E00D7E11A /* Protocol.swift */,
 				0228892B1CACE58A00D7E11A /* Helpers.swift */,
+				026826811CAF9FC600B18185 /* StyleKit.swift */,
 				0228887C1CA9398D00D7E11A /* Info.plist */,
 			);
 			path = LocationPicker;
@@ -270,7 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				026826821CAF9FC600B18185 /* StyleKit.swift in Sources */,
 				0228892A1CAC297E00D7E11A /* Protocol.swift in Sources */,
+				0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */,
 				022889121CA939FB00D7E11A /* LocationPicker.swift in Sources */,
 				022889281CABDAF500D7E11A /* LocationItem.swift in Sources */,
 				0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */,
