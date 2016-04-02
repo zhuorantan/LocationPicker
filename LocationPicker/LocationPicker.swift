@@ -272,7 +272,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             historyLocationList?.removeAtIndex(index)
             
             deleteCompletion?(locationItem)
-            dataSource?.commitHistoryLocationDeletion?(locationItem, AtIndex: index)
+            dataSource?.commitHistoryLocationDeletion?(locationItem)
             NSNotificationCenter.defaultCenter().postNotificationName("LocationDelete", object: locationItem)
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

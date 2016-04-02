@@ -8,7 +8,7 @@
 
 import MapKit
 
-public class LocationItem: NSObject {
+public class LocationItem: NSObject, NSCoding {
     
     public let mapItem: MKMapItem
     
@@ -41,6 +41,14 @@ public class LocationItem: NSObject {
     
     
     
+    public override var hashValue: Int {
+        get {
+            return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
+        }
+    }
+    
+    
+    
     public init(mapItem: MKMapItem) {
         self.mapItem = mapItem
     }
@@ -49,6 +57,21 @@ public class LocationItem: NSObject {
         let coordinateObject = coordinateObjectFromTuple(coordinate)
         let placeMark = MKPlacemark(coordinate: coordinateObject, addressDictionary: addressDictionary)
         self.mapItem = MKMapItem(placemark: placeMark)
+    }
+    
+    
+    
+    public required convenience init(coder decoder: NSCoder) {
+        let latitude = decoder.decodeObjectForKey("latitude") as! Double
+        let longitude = decoder.decodeObjectForKey("longitude") as! Double
+        let addressDictionary = decoder.decodeObjectForKey("addressDictionary") as! [String: AnyObject]
+        self.init(coordinate: (latitude, longitude), addressDictionary: addressDictionary)
+    }
+    
+    public func encodeWithCoder(coder: NSCoder) {
+        coder.encodeObject(coordinate.latitude, forKey: "latitude")
+        coder.encodeObject(coordinate.longitude, forKey: "longitude")
+        coder.encodeObject(addressDictionary, forKey: "addressDictionary")
     }
     
 }

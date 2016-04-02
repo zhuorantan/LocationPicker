@@ -19,6 +19,6 @@ import Foundation
     
     func numberOfHistoryLocations() -> Int
     func historyLocationAtIndex(index: Int) -> LocationItem
-    optional func commitHistoryLocationDeletion(locationItem: LocationItem, AtIndex index: Int)
+    optional func commitHistoryLocationDeletion(locationItem: LocationItem)
     
 }
