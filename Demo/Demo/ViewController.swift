@@ -13,7 +13,9 @@ class ViewController: UIViewController, LocationPickerDelegate {
     
     @IBOutlet weak var locationNameTextField: UITextField!
     @IBOutlet weak var locationAddressTextField: UITextField!
-
+    
+    var locationList = [LocationItem]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +33,8 @@ class ViewController: UIViewController, LocationPickerDelegate {
         if segue.identifier == "LocationPicker" {
             let customLocationPicker = segue.destinationViewController as! LocationPicker
             customLocationPicker.delegate = self
+            customLocationPicker.historyLocationEditable = true
+            customLocationPicker.historyLocationList = locationList
         }
     }
     
@@ -63,6 +67,11 @@ class ViewController: UIViewController, LocationPickerDelegate {
     }
     
     
+    
+    func locationDidSelect(locationItem: LocationItem) {
+        locationList.append(locationItem)
+        print(locationItem)
+    }
     
     func locationDidPick(locationItem: LocationItem) {
         showLocation(locationItem)

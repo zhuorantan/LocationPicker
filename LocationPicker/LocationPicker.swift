@@ -15,6 +15,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     public var selectCompletion: ((LocationItem) -> Void)?
     public var pickCompletion: ((LocationItem) -> Void)?
+    public var deleteCompletion: ((LocationItem) -> Void)?
     
     // MARK: Optional varaiables
     
@@ -37,7 +38,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var searchRegionDistance: Double = 10000
     
     public var mapViewDraggable = true
-    public var historyLocationEditable = true
+    public var historyLocationEditable = false
     public var divideSection = false
     
     public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
@@ -234,8 +235,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationColor, iconImage: currentLocationImage)
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
-            
             cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationColor, iconImage: searchResultLocationImage)
+        } else if indexPath.row > searchResultList.count && indexPath.row <= historyLocationCount + searchResultList.count {
+            let index = indexPath.row - 1 - searchResultList.count
+            let locationItem = (historyLocationList?[index] ?? dataSource?.historyLocationAtIndex(index))!
+            cell = LocationCell(locationType: .HistoryLocation, locationItem: locationItem, iconColor: historyLocationColor, iconImage: historyLocationImage)
         }
         
         return cell
@@ -243,14 +247,35 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         searchBar.endEditing(true)
+        
         if indexPath.row == 0 {
             if let currentLocation = locationManager.location {
                 reverseGeocodeLocation(currentLocation)
             }
         } else {
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: 0)) as! LocationCell
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
             let locationItem = cell.locationItem!
             selectLocationItem(locationItem)
+        }
+        
+    }
+    
+    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return historyLocationEditable && indexPath.row > searchResultList.count && indexPath.row <= historyLocationCount + searchResultList.count
+    }
+    
+    public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
+            let locationItem = cell.locationItem!
+            let index = indexPath.row - 1 - searchResultList.count
+            historyLocationList?.removeAtIndex(index)
+            
+            deleteCompletion?(locationItem)
+            dataSource?.commitHistoryLocationDeletion?(locationItem, AtIndex: index)
+            NSNotificationCenter.defaultCenter().postNotificationName("LocationDelete", object: locationItem)
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
     
