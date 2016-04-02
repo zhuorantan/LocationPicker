@@ -88,3 +88,11 @@ func gcj2wgs(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
     let revisedCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude - deltaLatitude, longitude: coordinate.longitude - deltaLongitude)
     return revisedCoordinate
 }
+
+
+
+func longitudinalDistanceFromMapRect(mapRect: MKMapRect) -> Double {
+    let westMapPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect))
+    let eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect))
+    return MKMetersBetweenMapPoints(westMapPoint, eastMapPoint)
+}
