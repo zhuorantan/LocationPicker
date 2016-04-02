@@ -19,13 +19,17 @@ class LocationCell: UITableViewCell {
     public var locationItem: LocationItem?
     public var locationType: LocationType!
     
-    private var iconView: IconView!
+    private let iconView = UIImageView()
     private let locationNameLabel = UILabel()
     
-    convenience init(locationType: LocationType, locationItem: LocationItem?) {
+    convenience init(locationType: LocationType, locationItem: LocationItem? = nil, title: String? = nil) {
         self.init()
         self.locationType = locationType
         self.locationItem = locationItem
+        
+        if let title = title {
+            locationNameLabel.text = title
+        }
         
         setupViews()
         layoutViews()
@@ -33,10 +37,22 @@ class LocationCell: UITableViewCell {
     
     private func setupViews() {
         let length = contentView.bounds.height
-        iconView = IconView(frame: CGRect(x: 0, y: 0, width: length, height: length), locationType: locationType)
-        iconView.backgroundColor = UIColor.clearColor()
         
-        locationNameLabel.text = locationItem?.name
+        separatorInset.left = length
+        
+        iconView.frame = CGRect(x: 0, y: 0, width: length, height: length)
+        switch locationType! {
+        case .CurrentLocation:
+            iconView.image = StyleKit.imageOfMapPointerIcon(size: CGSize(width: length, height: length))
+        case .SearchLocation:
+            iconView.image = StyleKit.imageOfSearchIcon(size: CGSize(width: length, height: length))
+        case .HistoryLocation:
+            iconView.image = StyleKit.imageOfPinIcon(size: CGSize(width: length, height: length))
+        }
+        
+        if let locationItem = locationItem {
+            locationNameLabel.text = locationItem.name
+        }
         
         contentView.addSubview(iconView)
         contentView.addSubview(locationNameLabel)
@@ -51,26 +67,4 @@ class LocationCell: UITableViewCell {
         locationNameLabel.leadingAnchor.constraintEqualToAnchor(iconView.trailingAnchor).active = true
     }
 
-}
-
-class IconView: UIView {
-    
-    private var locationType: LocationType!
-    
-    convenience init(frame: CGRect, locationType: LocationType) {
-        self.init(frame: frame)
-        self.locationType = locationType
-    }
-    
-    override func drawRect(rect: CGRect) {
-        switch locationType! {
-        case .CurrentLocation:
-            StyleKit.drawMapPointerIcon()
-        case .SearchLocation:
-            StyleKit.drawSearchIcon()
-        case .HistoryLocation:
-            StyleKit.drawPinIcon()
-        }
-        
-    }
 }

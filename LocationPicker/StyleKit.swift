@@ -9,12 +9,16 @@
 
 import UIKit
 
+
+
 class StyleKit: NSObject {
     
     
     //MARK: - Canvas Drawings
     
-    class func drawMapPointerIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit) {
+    /// Page 1
+    
+    class func drawMapPointerIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
@@ -25,6 +29,7 @@ class StyleKit: NSObject {
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
         CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
         
+        /// v_u_map_pointer
         do {
             CGContextSaveGState(context)
             CGContextTranslateCTM(context, 12, 12)
@@ -52,7 +57,7 @@ class StyleKit: NSObject {
                 CGContextSaveGState(context)
                 CGContextTranslateCTM(context, 0, 0.04)
                 shape.lineWidth = 2
-                UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1).setStroke()
+                color.setStroke()
                 shape.stroke()
                 CGContextRestoreGState(context)
                 
@@ -65,7 +70,7 @@ class StyleKit: NSObject {
         CGContextRestoreGState(context)
     }
     
-    class func drawSearchIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit) {
+    class func drawSearchIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
@@ -87,10 +92,8 @@ class StyleKit: NSObject {
             let oval167 = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: 8, height: 8))
             CGContextSaveGState(context)
             CGContextTranslateCTM(context, 6, 6)
-            UIColor.whiteColor().setFill()
-            oval167.fill()
             oval167.lineWidth = 2
-            UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1).setStroke()
+            color.setStroke()
             oval167.stroke()
             CGContextRestoreGState(context)
             
@@ -111,7 +114,7 @@ class StyleKit: NSObject {
             oval166.moveToPoint(CGPoint(x: 6.03, y: 19.18))
             CGContextSaveGState(context)
             oval166.lineWidth = 2
-            UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1).setStroke()
+            color.setStroke()
             oval166.stroke()
             CGContextRestoreGState(context)
             
@@ -121,7 +124,7 @@ class StyleKit: NSObject {
         CGContextRestoreGState(context)
     }
     
-    class func drawPinIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit) {
+    class func drawPinIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
@@ -132,6 +135,7 @@ class StyleKit: NSObject {
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
         CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
         
+        /// v_u_icon_pin
         do {
             CGContextSaveGState(context)
             CGContextTranslateCTM(context, 12, 6)
@@ -169,7 +173,7 @@ class StyleKit: NSObject {
                 shape.moveToPoint(CGPoint(x: 10, y: 14.01))
                 CGContextSaveGState(context)
                 shape.lineWidth = 2
-                UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1).setStroke()
+                color.setStroke()
                 shape.stroke()
                 CGContextRestoreGState(context)
                 
@@ -180,6 +184,44 @@ class StyleKit: NSObject {
         }
         
         CGContextRestoreGState(context)
+    }
+    
+    
+    //MARK: - Canvas Images
+    
+    /// Page 1
+    
+    class func imageOfMapPointerIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+        var image: UIImage
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        StyleKit.drawMapPointerIcon(frame: CGRect(origin: CGPoint.zero, size: size), resizing: resizing, color: color)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    class func imageOfSearchIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+        var image: UIImage
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        StyleKit.drawSearchIcon(frame: CGRect(origin: CGPoint.zero, size: size), resizing: resizing, color: color)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    class func imageOfPinIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+        var image: UIImage
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        StyleKit.drawPinIcon(frame: CGRect(origin: CGPoint.zero, size: size), resizing: resizing, color: color)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
     }
     
     

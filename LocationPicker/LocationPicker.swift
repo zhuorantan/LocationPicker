@@ -231,7 +231,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         var cell: LocationCell!
         
         if indexPath.row == 0 {
-            cell = LocationCell(locationType: .CurrentLocation, locationItem: nil)
+            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText)
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
             
