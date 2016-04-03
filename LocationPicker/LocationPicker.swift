@@ -11,11 +11,53 @@ import MapKit
 
 public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
-    // MARK: - Completion handlers
+    // MARK: - Completion closures
     
+        /**
+         Completion closure executed after everytime user select a location.
+         - Note:
+             This closure would be executed multiple times, because user may change selection before final decision.
+             To get user's final decition, use `pickCompletion` instead.
+             Alternatively, you can do the same by:
+             * conform to `protocol LocationPickerDelegate`, set the `delegate`, and implement `func locationDidSelect(locationItem: LocationItem)`
+             * create a subclass of `LocationPicker` and override `func locationDidSelect(locationItem: LocationItem)`
+         - SeeAlso:
+             * `pickCompletion: ((LocationItem) -> Void)?`
+             * `func locationDidSelect(locationItem: LocationItem)`
+             * `protocol LocationPickerDelegate`
+        */
     public var selectCompletion: ((LocationItem) -> Void)?
+    
+        /**
+        Completion closure executed after user finally pick a location.
+        - Note:
+            This closure would be executed once in `viewWillDisappear(animated: Bool)` before `LocationPicker` dismissed.
+            To get user's every selection, use `selectCompletion` instead.
+            Alternatively, you can do the same by:
+            * conform to `protocol LocationPickerDelegate`, set the `delegate`, and implement `func locationDidPick(locationItem: LocationItem)`
+            * create a subclass of `LocationPicker` and override `func locationDidPick(locationItem: LocationItem)`
+        - SeeAlso:
+            * `selectCompletion: ((LocationItem) -> Void)?`
+            * `func locationDidPick(locationItem: LocationItem)`
+            * `protocol LocationPickerDelegate`
+        */
     public var pickCompletion: ((LocationItem) -> Void)?
+    
+        /**
+        Completion closure executed after user delete a history location.
+        - Note:
+            This closure would be executed when user delete a location cell from `tableView`.
+            User can only delete the location provided in `historyLocationList` or `dataSource` method `historyLocationAtIndex(index: Int) -> LocationItem`
+            Alternatively, you can do the same by 3 steps:
+            1. conform to `protocol LocationPickerDataSource`
+            2. set the `dataSource`
+            3. implement `func numberOfHistoryLocations() -> Int` and `func historyLocationAtIndex(index: Int) -> LocationItem`
+     
+        - SeeAlso: `selectCompletion: ((LocationItem) -> Void)?`
+        */
     public var deleteCompletion: ((LocationItem) -> Void)?
+    
+    
     
     // MARK: Optional varaiables
     
@@ -30,6 +72,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public var notificationCenter = NSNotificationCenter.defaultCenter()
+    
+    
     
     // MARK: UI Customs
     
@@ -60,10 +104,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: - UI Elements
     
-    private let searchBar = UISearchBar()
-    private let tableView = UITableView()
-    private let mapView = MKMapView()
-    private let pinView = UIImageView()
+    public let searchBar = UISearchBar()
+    public let tableView = UITableView()
+    public let mapView = MKMapView()
+    public let pinView = UIImageView()
+    
+    
     
     // MARK: Attributes
     
@@ -99,7 +145,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     // MARK: - View Controller
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -47,6 +47,12 @@ public class LocationItem: NSObject, NSCoding {
         }
     }
     
+    public override var description: String {
+        get {
+            return "Location item with map item: " + mapItem.description
+        }
+    }
+    
     
     
     public init(mapItem: MKMapItem) {
