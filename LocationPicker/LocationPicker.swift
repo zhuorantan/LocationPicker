@@ -45,6 +45,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var historyLocationEditable = false
     public var divideSection = false
     
+    public var tableViewBackgroundColor = UIColor.whiteColor()
     public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var searchResultLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var historyLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
@@ -81,9 +82,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             return view.frame.width / 3 * 2
         }
     }
-    private var isMapViewOpen: Bool {
+    
+    private var pinViewCenterYConstraint: NSLayoutConstraint!
+    private var pinViewImageHeight: CGFloat {
         get {
-            return mapViewHeightConstraint.constant != 0
+            return pinView.image!.size.height
         }
     }
     
@@ -139,6 +142,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         tableView.keyboardDismissMode = .OnDrag
+        tableView.backgroundColor = tableViewBackgroundColor
         
         mapView.zoomEnabled = mapViewZoomEnabled
         mapView.rotateEnabled = false
@@ -186,7 +190,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         mapViewHeightConstraint.active = true
 
         pinView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
-        pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinView.image!.size.height / 2).active = true
+        pinViewCenterYConstraint = pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinViewImageHeight / 2)
+        pinViewCenterYConstraint.active = true
     }
     
     
@@ -350,7 +355,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: Map View Delegate
     
     public func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        
+        if !animated {
+            UIView.animateWithDuration(0.35, delay: 0, options: .CurveEaseOut, animations: {
+                self.pinView.frame.origin.y -= self.pinViewImageHeight / 2
+                }, completion: nil)
+        }
     }
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -359,6 +368,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             mapViewCenterChanged = false
             let revisedCoordinate = gcj2wgs(mapView.centerCoordinate)
             reverseGeocodeLocation(CLLocation(latitude: revisedCoordinate.latitude, longitude: revisedCoordinate.longitude))
+        }
+        
+        if !animated {
+            UIView.animateWithDuration(0.35, delay: 0, options: .CurveEaseOut, animations: {
+                self.pinView.frame.origin.y += self.pinViewImageHeight / 2
+                }, completion: nil)
         }
     }
     
