@@ -29,6 +29,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         }
     }
     
+    public var notificationCenter = NSNotificationCenter.defaultCenter()
+    
     // MARK: UI Customs
     
     public var currentLocationText = "Current Location"
@@ -112,7 +114,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         guard doneButtonItem == nil else { return }
         if let locationItem = selectedLocationItem {
             locationDidPick(locationItem)
-            NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
+            notificationCenter.postNotificationName("LocationPick", object: locationItem)
         }
     }
     
@@ -210,6 +212,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public func locationDidPick(locationItem: LocationItem) {
         pickCompletion?(locationItem)
         delegate?.locationDidPick?(locationItem)
+    }
+    
+    public func historyLocationDidDelete(locationItem: LocationItem) {
+        deleteCompletion?(locationItem)
+        dataSource?.commitHistoryLocationDeletion?(locationItem)
     }
     
     
@@ -331,9 +338,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             let index = indexPath.row - 1 - searchResultList.count
             historyLocationList?.removeAtIndex(index)
             
-            deleteCompletion?(locationItem)
-            dataSource?.commitHistoryLocationDeletion?(locationItem)
-            NSNotificationCenter.defaultCenter().postNotificationName("LocationDelete", object: locationItem)
+            historyLocationDidDelete(locationItem)
+            notificationCenter.postNotificationName("LocationDelete", object: locationItem)
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
@@ -364,7 +370,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         if let locationItem = selectedLocationItem {
             dismissViewControllerAnimated(true, completion: nil)
             locationDidPick(locationItem)
-            NSNotificationCenter.defaultCenter().postNotificationName("LocationPick", object: locationItem)
+            notificationCenter.postNotificationName("LocationPick", object: locationItem)
         }
     }
     
@@ -412,7 +418,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         doneButtonItem?.enabled = true
         locationDidSelect(locationItem)
-        NSNotificationCenter.defaultCenter().postNotificationName("LocationSelect", object: locationItem)
+        notificationCenter.postNotificationName("LocationSelect", object: locationItem)
     }
     
     private func reverseGeocodeLocation(location: CLLocation) {
