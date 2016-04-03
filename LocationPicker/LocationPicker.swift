@@ -15,6 +15,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /**
          Completion closure executed after everytime user select a location.
+     
          - important:
              If you override `func locationDidSelect(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
@@ -43,6 +44,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /**
          Completion closure executed after user finally pick a location.
+     
          - important:
              If you override `func locationDidPick(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
@@ -71,6 +73,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /**
          Completion closure executed after user delete an alternative location.
+     
          - important:
              If you override `func alternativeLocationDidDelete(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
@@ -108,18 +111,30 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /**
          Locations you want to show in the location list.
+     
          - Note:
              Alternatively, `LocationPicker` can obtain locations by DataSource:
              1. conform to `protocol LocationPickerDataSource`
              2. set the `var dataSource`
              3. implement `func numberOfAlternativeLocations() -> Int` to tell the `tableView` how many rows to display
              4. implement `func alternativeLocationAtIndex(index: Int) -> LocationItem`
+     
          - SeeAlso:
              * `func numberOfAlternativeLocations() -> Int`
              * `func alternativeLocationAtIndex(index: Int) -> LocationItem`
              * `protocol LocationPickerDataSource`
         */
     public var alternativeLocations: [LocationItem]?
+    
+        /**
+         Button that confirms user's location pick.
+     
+         - important:
+             If you specify this property, only user tap this button can the pick closure, method and delegate method be called.
+     
+         - Note:
+             You don't need to seet the `target` and `action` of this `UIBarButtonItem` object, just customize the button as you like, and `LocationPicker` will do the rest, inculuding dismissing the view controller.
+        */
     public var doneButtonItem: UIBarButtonItem? {
         didSet {
             doneButtonItem?.target = self
@@ -127,23 +142,44 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         }
     }
     
+        /// Notification center to send notifications. __Default__ is __`NSNotificationCenter.defaultCenter()`__.
     public var notificationCenter = NSNotificationCenter.defaultCenter()
     
     
     
-    // MARK: UI Customs
+    // MARK: UI Customizations
     
+        /// Text that indicates user's current location. __Default__ is __`"Current Location"`__.
     public var currentLocationText = "Current Location"
+    
+        /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
     public var searchBarPlaceholder = "Search for location"
     
-    public var defaultLongitudinalDistance: Double = 1000
-    public var searchLongitudinalDistance: Double = 10000
     
+    
+        /// Longitudinal distance in meters that the map view shows when user select a location and before zoom in or zoom out. __Default__ is __`1000`__.
+    public var defaultLongitudinalDistance: Double = 1000
+    
+        /// Distance in meters that is used to search locations. __Default__ is __`10000`__
+    public var searchDistance: Double = 10000
+    
+    
+    
+        /// In `func viewDidLoad()`, `mapView.zoomEnabled` is set to this property's value. __Default__ is __`true`__
     public var mapViewZoomEnabled = true
+    
+        /// In `func viewDidLoad()`, `mapView.showsUserLocation` is set to this property's value. __Default__ is __`true`__
     public var mapViewShowsUserLocation = true
+    
+        /// In `func viewDidLoad()`, `mapView.scrollEnabled` is set to this property's value. __Default__ is __`true`__
     public var mapViewScrollEnabled = true
+    
+        /**
+         Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
+         - important:
+             If you set this property to `true`, remember to update your models by closure, delegate, override, or notification center.
+        */
     public var alternativeLocationEditable = false
-    public var divideSection = false
     
     public var tableViewBackgroundColor = UIColor.whiteColor()
     public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
@@ -363,7 +399,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             localSearchRequest.naturalLanguageQuery = searchText
             
             if let currentCoordinate = locationManager.location?.coordinate {
-                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchLongitudinalDistance, searchLongitudinalDistance)
+                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
                 guard error == nil else { return }
