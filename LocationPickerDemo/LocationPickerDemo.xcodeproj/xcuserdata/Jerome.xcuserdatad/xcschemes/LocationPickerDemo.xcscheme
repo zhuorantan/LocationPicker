@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
-               BuildableName = "Demo.app"
-               BlueprintName = "Demo"
-               ReferencedContainer = "container:Demo.xcodeproj">
+               BlueprintIdentifier = "022E3F691CB11C87006BF665"
+               BuildableName = "LocationPickerDemo.app"
+               BlueprintName = "LocationPickerDemo"
+               ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,30 +32,30 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "020C1F871CAD8B6E007B243F"
-               BuildableName = "DemoTests.xctest"
-               BlueprintName = "DemoTests"
-               ReferencedContainer = "container:Demo.xcodeproj">
+               BlueprintIdentifier = "022E3F7D1CB11C88006BF665"
+               BuildableName = "LocationPickerDemoTests.xctest"
+               BlueprintName = "LocationPickerDemoTests"
+               ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "020C1F921CAD8B6E007B243F"
-               BuildableName = "DemoUITests.xctest"
-               BlueprintName = "DemoUITests"
-               ReferencedContainer = "container:Demo.xcodeproj">
+               BlueprintIdentifier = "022E3F881CB11C88006BF665"
+               BuildableName = "LocationPickerDemoUITests.xctest"
+               BlueprintName = "LocationPickerDemoUITests"
+               ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
-            BuildableName = "Demo.app"
-            BlueprintName = "Demo"
-            ReferencedContainer = "container:Demo.xcodeproj">
+            BlueprintIdentifier = "022E3F691CB11C87006BF665"
+            BuildableName = "LocationPickerDemo.app"
+            BlueprintName = "LocationPickerDemo"
+            ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
-            BuildableName = "Demo.app"
-            BlueprintName = "Demo"
-            ReferencedContainer = "container:Demo.xcodeproj">
+            BlueprintIdentifier = "022E3F691CB11C87006BF665"
+            BuildableName = "LocationPickerDemo.app"
+            BlueprintName = "LocationPickerDemo"
+            ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,10 +94,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "020C1F731CAD8B6E007B243F"
-            BuildableName = "Demo.app"
-            BlueprintName = "Demo"
-            ReferencedContainer = "container:Demo.xcodeproj">
+            BlueprintIdentifier = "022E3F691CB11C87006BF665"
+            BuildableName = "LocationPickerDemo.app"
+            BlueprintName = "LocationPickerDemo"
+            ReferencedContainer = "container:LocationPickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

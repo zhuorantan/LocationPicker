@@ -1,14 +1,14 @@
 //
-//  DemoUITests.swift
-//  DemoUITests
+//  LocationPickerDemoUITests.swift
+//  LocationPickerDemoUITests
 //
-//  Created by Jerome Tan on 4/1/16.
+//  Created by Jerome Tan on 4/3/16.
 //  Copyright © 2016 Jerome Tan. All rights reserved.
 //
 
 import XCTest
 
-class DemoUITests: XCTestCase {
+class LocationPickerDemoUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Demo.xcscheme</key>
+		<key>LocationPickerDemo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
@@ -12,17 +12,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>020C1F731CAD8B6E007B243F</key>
+		<key>022E3F691CB11C87006BF665</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>020C1F871CAD8B6E007B243F</key>
+		<key>022E3F7D1CB11C88006BF665</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>020C1F921CAD8B6E007B243F</key>
+		<key>022E3F881CB11C88006BF665</key>
 		<dict>
 			<key>primary</key>
 			<true/>

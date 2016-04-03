@@ -17,12 +17,17 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
          Completion closure executed after everytime user select a location.
          - Note:
              This closure would be executed multiple times, because user may change selection before final decision.
-             To get user's final decition, use `pickCompletion` instead.
+             To get user's final decition, use `var pickCompletion` instead.
              Alternatively, you can do the same by:
-             * conform to `protocol LocationPickerDelegate`, set the `delegate`, and implement `func locationDidSelect(locationItem: LocationItem)`
-             * create a subclass of `LocationPicker` and override `func locationDidSelect(locationItem: LocationItem)`
+             * Delegate
+             1. conform to `protocol LocationPickerDelegate`
+             2. set the `var delegate`
+             3. implement `func locationDidSelect(locationItem: LocationItem)`
+             * Overrride
+             1. create a subclass of `class LocationPicker`
+             2. override `func locationDidSelect(locationItem: LocationItem)`
          - SeeAlso:
-             * `pickCompletion: ((LocationItem) -> Void)?`
+             * `var pickCompletion: ((LocationItem) -> Void)?`
              * `func locationDidSelect(locationItem: LocationItem)`
              * `protocol LocationPickerDelegate`
         */
@@ -31,13 +36,18 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /**
         Completion closure executed after user finally pick a location.
         - Note:
-            This closure would be executed once in `viewWillDisappear(animated: Bool)` before `LocationPicker` dismissed.
-            To get user's every selection, use `selectCompletion` instead.
+            This closure would be executed once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
+            To get user's every selection, use `var selectCompletion` instead.
             Alternatively, you can do the same by:
-            * conform to `protocol LocationPickerDelegate`, set the `delegate`, and implement `func locationDidPick(locationItem: LocationItem)`
-            * create a subclass of `LocationPicker` and override `func locationDidPick(locationItem: LocationItem)`
+            * Delegate
+            1. conform to `protocol LocationPickerDelegate`
+            2. set the `var delegate`
+            3. implement `func locationDidPick(locationItem: LocationItem)`
+            * Override
+            1. create a subclass of `class LocationPicker`
+            2. override `func locationDidPick(locationItem: LocationItem)`
         - SeeAlso:
-            * `selectCompletion: ((LocationItem) -> Void)?`
+            * `var selectCompletion: ((LocationItem) -> Void)?`
             * `func locationDidPick(locationItem: LocationItem)`
             * `protocol LocationPickerDelegate`
         */
@@ -47,13 +57,17 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         Completion closure executed after user delete a history location.
         - Note:
             This closure would be executed when user delete a location cell from `tableView`.
-            User can only delete the location provided in `historyLocationList` or `dataSource` method `historyLocationAtIndex(index: Int) -> LocationItem`
-            Alternatively, you can do the same by 3 steps:
+            User can only delete the location provided in `var historyLocationList` or `dataSource` method `historyLocationAtIndex(index: Int) -> LocationItem`
+            Alternatively, you can do the same by 4 steps:
             1. conform to `protocol LocationPickerDataSource`
-            2. set the `dataSource`
-            3. implement `func numberOfHistoryLocations() -> Int` and `func historyLocationAtIndex(index: Int) -> LocationItem`
+            2. set the `var dataSource`
+            3. implement `func numberOfHistoryLocations() -> Int` to tell the `tableView` how many rows to display
+            4. implement `func historyLocationAtIndex(index: Int) -> LocationItem`
      
-        - SeeAlso: `selectCompletion: ((LocationItem) -> Void)?`
+        - SeeAlso:
+            * `func numberOfHistoryLocations() -> Int`
+            * `func historyLocationAtIndex(index: Int) -> LocationItem`
+            * `protocol LocationPickerDataSource`
         */
     public var deleteCompletion: ((LocationItem) -> Void)?
     
