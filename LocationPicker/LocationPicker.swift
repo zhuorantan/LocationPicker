@@ -181,15 +181,35 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         */
     public var alternativeLocationEditable = false
     
+    
+    
+        /// In `func viewDidLoad()`, `tableView.backgroundColor` is set to this property's value. __Default__ is __`UIColor.whiteColor()`__
     public var tableViewBackgroundColor = UIColor.whiteColor()
-    public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
-    public var searchResultLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
-    public var alternativeLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    
+        /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    public var currentLocationIconColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    
+        /// The color of the icon showed in search result location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    public var searchResultLocationIconColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    
+        /// The color of the icon showed in alternative location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    public var alternativeLocationIconColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    
+        /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var pinColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     
-    public var currentLocationImage: UIImage? = nil
-    public var searchResultLocationImage: UIImage? = nil
-    public var alternativeLocationImage: UIImage? = nil
+    
+    
+        /// The image of the icon showed in current location cell. If this property is set, the `var currentLocationIconColor` won't be adopted.
+    public var currentLocationIconImage: UIImage? = nil
+    
+        /// The image of the icon showed in search result location cells. If this property is set, the `var searchResultLocationIconColor` won't be adopted.
+    public var searchResultLocationIconImage: UIImage? = nil
+    
+        /// The image of the icon showed in alternative location cells. If this property is set, the `var alternativeLocationIconColor` won't be adopted.
+    public var alternativeLocationIconImage: UIImage? = nil
+    
+        /// The image of the pin showed in the center of map view. If this property is set, the `var pinColor` won't be adopted.
     public var pinImage: UIImage? = nil
     
     
@@ -337,9 +357,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: - Customs
     
     public func setThemeColor(color: UIColor) {
-        currentLocationColor = color
-        searchResultLocationColor = color
-        alternativeLocationColor = color
+        currentLocationIconColor = color
+        searchResultLocationIconColor = color
+        alternativeLocationIconColor = color
         pinColor = color
     }
     
@@ -441,14 +461,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         var cell: LocationCell!
         
         if indexPath.row == 0 {
-            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationColor, iconImage: currentLocationImage)
+            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationIconColor, iconImage: currentLocationIconImage)
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
-            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationColor, iconImage: searchResultLocationImage)
+            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationIconColor, iconImage: searchResultLocationIconImage)
         } else if indexPath.row > searchResultList.count && indexPath.row <= alternativeLocationCount + searchResultList.count {
             let index = indexPath.row - 1 - searchResultList.count
             let locationItem = (alternativeLocations?[index] ?? dataSource?.alternativeLocationAtIndex(index))!
-            cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem, iconColor: alternativeLocationColor, iconImage: alternativeLocationImage)
+            cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem, iconColor: alternativeLocationIconColor, iconImage: alternativeLocationIconImage)
         }
         
         return cell
