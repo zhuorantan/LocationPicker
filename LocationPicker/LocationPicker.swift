@@ -24,7 +24,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      
              To get user's final decition, use `var pickCompletion` instead.
      
-             Alternatively, you can do the same by:
+             Alternatively, the same result can be achieved by:
              * Delegate
              1. conform to `protocol LocationPickerDelegate`
              2. set the `var delegate`
@@ -32,8 +32,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
              * Overrride
              1. create a subclass of `class LocationPicker`
              2. override `func locationDidSelect(locationItem: LocationItem)`
-             * Notification
-             1. add a notification observer to observe notification with name _LocationSelect_
      
          - SeeAlso:
              * `var pickCompletion: ((LocationItem) -> Void)?`
@@ -49,11 +47,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
              If you override `func locationDidPick(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
          - Note:
-             This closure would be executed once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
+             This closure would be executed only once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
      
              To get user's every selection, use `var selectCompletion` instead.
      
-             Alternatively, you can do the same by:
+             Alternatively, the same result can be achieved by:
              * Delegate
              1. conform to `protocol LocationPickerDelegate`
              2. set the `var delegate`
@@ -61,8 +59,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
              * Override
              1. create a subclass of `class LocationPicker`
              2. override `func locationDidPick(locationItem: LocationItem)`
-             * Notification
-             1. add a notification observer to observe notification with name _LocationPick_
      
          - SeeAlso:
              * `var selectCompletion: ((LocationItem) -> Void)?`
@@ -82,7 +78,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      
              User can only delete the location provided in `var alternativeLocations` or `dataSource` method `alternativeLocationAtIndex(index: Int) -> LocationItem`.
      
-             Alternatively, you can do the same by:
+             Alternatively, the same result can be achieved by:
              * Delegate
              1. conform to `protocol LocationPickerDataSource`
              2. set the `var dataSource`
@@ -90,8 +86,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
              * Override
              1. create a subclass of `class LocationPicker`
              2. override `func alternativeLocationDidDelete(locationItem: LocationItem)`
-             * Notification
-             1. add a notification observer to observe notification with name _LocationDelete_
      
          - SeeAlso:
              * `func alternativeLocationDidDelete(locationItem: LocationItem)`
@@ -110,7 +104,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var dataSource: LocationPickerDataSource?
     
         /**
-         Locations you want to show in the location list.
+         Locations that show in the location list.
      
          - Note:
              Alternatively, `LocationPicker` can obtain locations by DataSource:
@@ -130,10 +124,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
          Button that confirms user's location pick.
      
          - important:
-             If you specify this property, only user tap this button can the pick closure, method and delegate method be called.
+             If this property is specified, only when user tap this button can the pick closure, method and delegate method be called.
      
          - Note:
-             You don't need to seet the `target` and `action` of this `UIBarButtonItem` object, just customize the button as you like, and `LocationPicker` will do the rest, inculuding dismissing the view controller.
+             You don't need to set the `target` and `action` of this `UIBarButtonItem` object, just customize the button as you like, and `LocationPicker` will do the rest, inculuding dismissing the view controller.
         */
     public var doneButtonItem: UIBarButtonItem? {
         didSet {
@@ -141,9 +135,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             doneButtonItem?.action = #selector(doneButtonDidTap(_:))
         }
     }
-    
-        /// Notification center to send notifications. __Default__ is __`NSNotificationCenter.defaultCenter()`__.
-    public var notificationCenter = NSNotificationCenter.defaultCenter()
     
     
     
@@ -177,7 +168,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /**
          Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
          - important:
-             If you set this property to `true`, remember to update your models by closure, delegate, override, or notification center.
+             If this property is set to `true`, remember to update your models by closure, delegate, or override.
         */
     public var alternativeLocationEditable = false
     
@@ -275,7 +266,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         guard doneButtonItem == nil else { return }
         if let locationItem = selectedLocationItem {
             locationDidPick(locationItem)
-            notificationCenter.postNotificationName("LocationPick", object: locationItem)
         }
     }
     
@@ -502,7 +492,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             alternativeLocations?.removeAtIndex(index)
             
             alternativeLocationDidDelete(locationItem)
-            notificationCenter.postNotificationName("LocationDelete", object: locationItem)
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
@@ -543,7 +532,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         if let locationItem = selectedLocationItem {
             dismissViewControllerAnimated(true, completion: nil)
             locationDidPick(locationItem)
-            notificationCenter.postNotificationName("LocationPick", object: locationItem)
         }
     }
     
@@ -591,7 +579,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         doneButtonItem?.enabled = true
         locationDidSelect(locationItem)
-        notificationCenter.postNotificationName("LocationSelect", object: locationItem)
     }
     
     private func reverseGeocodeLocation(location: CLLocation) {
