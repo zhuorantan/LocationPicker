@@ -45,7 +45,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             let customLocationPicker = segue.destinationViewController as! LocationPicker
             customLocationPicker.delegate = self
             customLocationPicker.dataSource = self
-            customLocationPicker.historyLocationEditable = true
+            customLocationPicker.alternativeLocationEditable = true
         }
     }
     
@@ -60,8 +60,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
         let locationPicker = LocationPicker()
-        locationPicker.historyLocationList = historyLocationList.reverse()
-        locationPicker.historyLocationEditable = true
+        locationPicker.alternativeLocations = historyLocationList.reverse()
+        locationPicker.alternativeLocationEditable = true
         
         locationPicker.selectCompletion = { selectedLocationItem in
             
@@ -93,11 +93,11 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     // Location Picker Data Source
     
-    func numberOfHistoryLocations() -> Int {
+    func numberOfAlternativeLocations() -> Int {
         return historyLocationList.count
     }
     
-    func historyLocationAtIndex(index: Int) -> LocationItem {
+    func alternativeLocationAtIndex(index: Int) -> LocationItem {
         return historyLocationList.reverse()[index]
     }
     

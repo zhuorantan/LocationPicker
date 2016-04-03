@@ -15,9 +15,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /**
          Completion closure executed after everytime user select a location.
+         - important:
+             If you override `func locationDidSelect(locationItem: LocationItem)` without calling `super`, this closure would not be called.
+     
          - Note:
              This closure would be executed multiple times, because user may change selection before final decision.
+     
              To get user's final decition, use `var pickCompletion` instead.
+     
              Alternatively, you can do the same by:
              * Delegate
              1. conform to `protocol LocationPickerDelegate`
@@ -26,6 +31,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
              * Overrride
              1. create a subclass of `class LocationPicker`
              2. override `func locationDidSelect(locationItem: LocationItem)`
+             * Notification
+             1. add a notification observer to observe notification with name _LocationSelect_
+     
          - SeeAlso:
              * `var pickCompletion: ((LocationItem) -> Void)?`
              * `func locationDidSelect(locationItem: LocationItem)`
@@ -34,40 +42,57 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var selectCompletion: ((LocationItem) -> Void)?
     
         /**
-        Completion closure executed after user finally pick a location.
-        - Note:
-            This closure would be executed once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
-            To get user's every selection, use `var selectCompletion` instead.
-            Alternatively, you can do the same by:
-            * Delegate
-            1. conform to `protocol LocationPickerDelegate`
-            2. set the `var delegate`
-            3. implement `func locationDidPick(locationItem: LocationItem)`
-            * Override
-            1. create a subclass of `class LocationPicker`
-            2. override `func locationDidPick(locationItem: LocationItem)`
-        - SeeAlso:
-            * `var selectCompletion: ((LocationItem) -> Void)?`
-            * `func locationDidPick(locationItem: LocationItem)`
-            * `protocol LocationPickerDelegate`
+         Completion closure executed after user finally pick a location.
+         - important:
+             If you override `func locationDidPick(locationItem: LocationItem)` without calling `super`, this closure would not be called.
+     
+         - Note:
+             This closure would be executed once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
+     
+             To get user's every selection, use `var selectCompletion` instead.
+     
+             Alternatively, you can do the same by:
+             * Delegate
+             1. conform to `protocol LocationPickerDelegate`
+             2. set the `var delegate`
+             3. implement `func locationDidPick(locationItem: LocationItem)`
+             * Override
+             1. create a subclass of `class LocationPicker`
+             2. override `func locationDidPick(locationItem: LocationItem)`
+             * Notification
+             1. add a notification observer to observe notification with name _LocationPick_
+     
+         - SeeAlso:
+             * `var selectCompletion: ((LocationItem) -> Void)?`
+             * `func locationDidPick(locationItem: LocationItem)`
+             * `protocol LocationPickerDelegate`
         */
     public var pickCompletion: ((LocationItem) -> Void)?
     
         /**
-        Completion closure executed after user delete a history location.
-        - Note:
-            This closure would be executed when user delete a location cell from `tableView`.
-            User can only delete the location provided in `var historyLocationList` or `dataSource` method `historyLocationAtIndex(index: Int) -> LocationItem`
-            Alternatively, you can do the same by 4 steps:
-            1. conform to `protocol LocationPickerDataSource`
-            2. set the `var dataSource`
-            3. implement `func numberOfHistoryLocations() -> Int` to tell the `tableView` how many rows to display
-            4. implement `func historyLocationAtIndex(index: Int) -> LocationItem`
+         Completion closure executed after user delete an alternative location.
+         - important:
+             If you override `func alternativeLocationDidDelete(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
-        - SeeAlso:
-            * `func numberOfHistoryLocations() -> Int`
-            * `func historyLocationAtIndex(index: Int) -> LocationItem`
-            * `protocol LocationPickerDataSource`
+         - Note:
+             This closure would be executed when user delete a location cell from `tableView`.
+     
+             User can only delete the location provided in `var alternativeLocations` or `dataSource` method `alternativeLocationAtIndex(index: Int) -> LocationItem`.
+     
+             Alternatively, you can do the same by:
+             * Delegate
+             1. conform to `protocol LocationPickerDataSource`
+             2. set the `var dataSource`
+             3. implement `func commitAlternativeLocationDeletion(locationItem: LocationItem)`
+             * Override
+             1. create a subclass of `class LocationPicker`
+             2. override `func alternativeLocationDidDelete(locationItem: LocationItem)`
+             * Notification
+             1. add a notification observer to observe notification with name _LocationDelete_
+     
+         - SeeAlso:
+             * `func alternativeLocationDidDelete(locationItem: LocationItem)`
+             * `protocol LocationPickerDataSource`
         */
     public var deleteCompletion: ((LocationItem) -> Void)?
     
@@ -75,9 +100,26 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Optional varaiables
     
+        /// Delegate of `protocol LocationPickerDelegate`
     public var delegate: LocationPickerDelegate?
+    
+        /// DataSource of `protocol LocationPickerDataSource`
     public var dataSource: LocationPickerDataSource?
-    public var historyLocationList: [LocationItem]?
+    
+        /**
+         Locations you want to show in the location list.
+         - Note:
+             Alternatively, `LocationPicker` can obtain locations by DataSource:
+             1. conform to `protocol LocationPickerDataSource`
+             2. set the `var dataSource`
+             3. implement `func numberOfAlternativeLocations() -> Int` to tell the `tableView` how many rows to display
+             4. implement `func alternativeLocationAtIndex(index: Int) -> LocationItem`
+         - SeeAlso:
+             * `func numberOfAlternativeLocations() -> Int`
+             * `func alternativeLocationAtIndex(index: Int) -> LocationItem`
+             * `protocol LocationPickerDataSource`
+        */
+    public var alternativeLocations: [LocationItem]?
     public var doneButtonItem: UIBarButtonItem? {
         didSet {
             doneButtonItem?.target = self
@@ -100,18 +142,18 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var mapViewZoomEnabled = true
     public var mapViewShowsUserLocation = true
     public var mapViewScrollEnabled = true
-    public var historyLocationEditable = false
+    public var alternativeLocationEditable = false
     public var divideSection = false
     
     public var tableViewBackgroundColor = UIColor.whiteColor()
     public var currentLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var searchResultLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
-    public var historyLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    public var alternativeLocationColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var pinColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     
     public var currentLocationImage: UIImage? = nil
     public var searchResultLocationImage: UIImage? = nil
-    public var historyLocationImage: UIImage? = nil
+    public var alternativeLocationImage: UIImage? = nil
     public var pinImage: UIImage? = nil
     
     
@@ -150,15 +192,16 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         }
     }
     
-    private var historyLocationCount: Int {
+    private var alternativeLocationCount: Int {
         get {
-            return historyLocationList?.count ?? dataSource?.numberOfHistoryLocations() ?? 0
+            return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
         }
     }
 
     
     
     // MARK: - View Controller
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -260,7 +303,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public func setThemeColor(color: UIColor) {
         currentLocationColor = color
         searchResultLocationColor = color
-        historyLocationColor = color
+        alternativeLocationColor = color
         pinColor = color
     }
     
@@ -278,9 +321,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         delegate?.locationDidPick?(locationItem)
     }
     
-    public func historyLocationDidDelete(locationItem: LocationItem) {
+    public func alternativeLocationDidDelete(locationItem: LocationItem) {
         deleteCompletion?(locationItem)
-        dataSource?.commitHistoryLocationDeletion?(locationItem)
+        dataSource?.commitAlternativeLocationDeletion?(locationItem)
     }
     
     
@@ -355,7 +398,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + searchResultList.count + historyLocationCount
+        return 1 + searchResultList.count + alternativeLocationCount
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -366,10 +409,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
             let index = indexPath.row - 1
             cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationColor, iconImage: searchResultLocationImage)
-        } else if indexPath.row > searchResultList.count && indexPath.row <= historyLocationCount + searchResultList.count {
+        } else if indexPath.row > searchResultList.count && indexPath.row <= alternativeLocationCount + searchResultList.count {
             let index = indexPath.row - 1 - searchResultList.count
-            let locationItem = (historyLocationList?[index] ?? dataSource?.historyLocationAtIndex(index))!
-            cell = LocationCell(locationType: .HistoryLocation, locationItem: locationItem, iconColor: historyLocationColor, iconImage: historyLocationImage)
+            let locationItem = (alternativeLocations?[index] ?? dataSource?.alternativeLocationAtIndex(index))!
+            cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem, iconColor: alternativeLocationColor, iconImage: alternativeLocationImage)
         }
         
         return cell
@@ -392,7 +435,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return historyLocationEditable && indexPath.row > searchResultList.count && indexPath.row <= historyLocationCount + searchResultList.count
+        return alternativeLocationEditable && indexPath.row > searchResultList.count && indexPath.row <= alternativeLocationCount + searchResultList.count
     }
     
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -400,9 +443,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
             let locationItem = cell.locationItem!
             let index = indexPath.row - 1 - searchResultList.count
-            historyLocationList?.removeAtIndex(index)
+            alternativeLocations?.removeAtIndex(index)
             
-            historyLocationDidDelete(locationItem)
+            alternativeLocationDidDelete(locationItem)
             notificationCenter.postNotificationName("LocationDelete", object: locationItem)
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

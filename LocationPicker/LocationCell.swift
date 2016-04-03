@@ -11,7 +11,7 @@ import UIKit
 enum LocationType {
     case CurrentLocation
     case SearchLocation
-    case HistoryLocation
+    case AlternativeLocation
 }
 
 class LocationCell: UITableViewCell {
@@ -54,7 +54,7 @@ class LocationCell: UITableViewCell {
                 iconView.image = StyleKit.imageOfMapPointerIcon(size: CGSize(width: length, height: length), color: iconColor)
             case .SearchLocation:
                 iconView.image = StyleKit.imageOfSearchIcon(size: CGSize(width: length, height: length), color: iconColor)
-            case .HistoryLocation:
+            case .AlternativeLocation:
                 iconView.image = StyleKit.imageOfPinIcon(size: CGSize(width: length, height: length), color: iconColor)
             }
         }
