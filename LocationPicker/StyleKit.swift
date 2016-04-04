@@ -9,8 +9,6 @@
 
 import UIKit
 
-
-
 class StyleKit: NSObject {
     
     

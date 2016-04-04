@@ -216,15 +216,21 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Attributes
     
-    private var selectedLocationItem: LocationItem?
-    private var searchResultList = [LocationItem]()
-    
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
-    private var longitudinalDistance: Double!
+    private var selectedLocationItem: LocationItem?
+    private var searchResultLocations = [LocationItem]()
     
-    private var mapViewCenterChanged = false
+    private var alternativeLocationCount: Int {
+        get {
+            return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
+        }
+    }
+    
+    private var longitudinalDistance: Double!   // This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
+    private var mapViewCenterChanged = false    // This property is used to record whether the map view center changes. This is neccessary because reverseGeocodeLocation(location: CLLocation) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation) back, this would become a endless loop.
+    
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
         get {
@@ -236,12 +242,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     private var pinViewImageHeight: CGFloat {
         get {
             return pinView.image!.size.height
-        }
-    }
-    
-    private var alternativeLocationCount: Int {
-        get {
-            return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
         }
     }
 
@@ -416,12 +416,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 guard let localSearchResponse = localSearchResponse else { return }
                 guard localSearchResponse.mapItems.count > 0 else { return }
                 
-                self.searchResultList = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
                 self.tableView.reloadData()
             })
         } else {
             selectedLocationItem = nil
-            searchResultList.removeAll()
+            searchResultLocations.removeAll()
             tableView.reloadData()
             closeMapView()
             
@@ -444,7 +444,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + searchResultList.count + alternativeLocationCount
+        return 1 + searchResultLocations.count + alternativeLocationCount
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -452,11 +452,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         if indexPath.row == 0 {
             cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationIconColor, iconImage: currentLocationIconImage)
-        } else if indexPath.row > 0 && indexPath.row <= searchResultList.count {
+        } else if indexPath.row > 0 && indexPath.row <= searchResultLocations.count {
             let index = indexPath.row - 1
-            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultList[index], iconColor: searchResultLocationIconColor, iconImage: searchResultLocationIconImage)
-        } else if indexPath.row > searchResultList.count && indexPath.row <= alternativeLocationCount + searchResultList.count {
-            let index = indexPath.row - 1 - searchResultList.count
+            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultLocations[index], iconColor: searchResultLocationIconColor, iconImage: searchResultLocationIconImage)
+        } else if indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count {
+            let index = indexPath.row - 1 - searchResultLocations.count
             let locationItem = (alternativeLocations?[index] ?? dataSource?.alternativeLocationAtIndex(index))!
             cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem, iconColor: alternativeLocationIconColor, iconImage: alternativeLocationIconImage)
         }
@@ -481,14 +481,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return alternativeLocationEditable && indexPath.row > searchResultList.count && indexPath.row <= alternativeLocationCount + searchResultList.count
+        return alternativeLocationEditable && indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count
     }
     
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
             let locationItem = cell.locationItem!
-            let index = indexPath.row - 1 - searchResultList.count
+            let index = indexPath.row - 1 - searchResultLocations.count
             alternativeLocations?.removeAtIndex(index)
             
             alternativeLocationDidDelete(locationItem)
