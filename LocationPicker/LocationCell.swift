@@ -8,34 +8,26 @@
 
 import UIKit
 
-enum LocationType {
+public enum LocationType {
     case CurrentLocation
     case SearchLocation
     case AlternativeLocation
 }
 
-class LocationCell: UITableViewCell {
+public class LocationCell: UITableViewCell {
     
-    var locationItem: LocationItem?
-    var locationType: LocationType!
+    public var locationItem: LocationItem?
+    public var locationType: LocationType!
     
-    private let iconView = UIImageView()
-    private let locationNameLabel = UILabel()
-    private let locationAddressLabel = UILabel()
-    private let containerView = UIView()
+    public let iconView = UIImageView()
+    public let locationNameLabel = UILabel()
+    public let locationAddressLabel = UILabel()
+    public let containerView = UIView()
     
-    private var iconColor: UIColor!
-    
-    convenience init(locationType: LocationType, locationItem: LocationItem? = nil, title: String? = nil, iconColor: UIColor, iconImage: UIImage?) {
+    public convenience init(locationType: LocationType, locationItem: LocationItem?) {
         self.init()
         self.locationType = locationType
         self.locationItem = locationItem
-        self.iconColor = iconColor
-        iconView.image = iconImage
-        
-        if let title = title {
-            locationNameLabel.text = title
-        }
         
         setupViews()
         layoutViews()
@@ -48,16 +40,6 @@ class LocationCell: UITableViewCell {
         separatorInset.left = length
         
         iconView.frame = CGRect(x: 0, y: 0, width: length, height: length)
-        if iconView.image == nil {
-            switch locationType! {
-            case .CurrentLocation:
-                iconView.image = StyleKit.imageOfMapPointerIcon(size: CGSize(width: length, height: length), color: iconColor)
-            case .SearchLocation:
-                iconView.image = StyleKit.imageOfSearchIcon(size: CGSize(width: length, height: length), color: iconColor)
-            case .AlternativeLocation:
-                iconView.image = StyleKit.imageOfPinIcon(size: CGSize(width: length, height: length), color: iconColor)
-            }
-        }
         
         if let locationItem = locationItem {
             locationNameLabel.font = UIFont.systemFontOfSize(16)

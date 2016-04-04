@@ -13,111 +13,111 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: - Completion closures
     
-        /**
-         Completion closure executed after everytime user select a location.
+    /**
+     Completion closure executed after everytime user select a location.
      
-         - important:
-             If you override `func locationDidSelect(locationItem: LocationItem)` without calling `super`, this closure would not be called.
+     - important:
+     If you override `func locationDidSelect(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
-         - Note:
-             This closure would be executed multiple times, because user may change selection before final decision.
+     - Note:
+     This closure would be executed multiple times, because user may change selection before final decision.
      
-             To get user's final decition, use `var pickCompletion` instead.
+     To get user's final decition, use `var pickCompletion` instead.
      
-             Alternatively, the same result can be achieved by:
-             * Delegate
-             1. conform to `protocol LocationPickerDelegate`
-             2. set the `var delegate`
-             3. implement `func locationDidSelect(locationItem: LocationItem)`
-             * Overrride
-             1. create a subclass of `class LocationPicker`
-             2. override `func locationDidSelect(locationItem: LocationItem)`
+     Alternatively, the same result can be achieved by:
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidSelect(locationItem: LocationItem)`
+     * Overrride
+     1. create a subclass of `class LocationPicker`
+     2. override `func locationDidSelect(locationItem: LocationItem)`
      
-         - SeeAlso:
-             * `var pickCompletion: ((LocationItem) -> Void)?`
-             * `func locationDidSelect(locationItem: LocationItem)`
-             * `protocol LocationPickerDelegate`
-        */
+     - SeeAlso:
+     * `var pickCompletion: ((LocationItem) -> Void)?`
+     * `func locationDidSelect(locationItem: LocationItem)`
+     * `protocol LocationPickerDelegate`
+     */
     public var selectCompletion: ((LocationItem) -> Void)?
     
-        /**
-         Completion closure executed after user finally pick a location.
+    /**
+     Completion closure executed after user finally pick a location.
      
-         - important:
-             If you override `func locationDidPick(locationItem: LocationItem)` without calling `super`, this closure would not be called.
+     - important:
+     If you override `func locationDidPick(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
-         - Note:
-             This closure would be executed only once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
+     - Note:
+     This closure would be executed only once in `func viewWillDisappear(animated: Bool)` before the instance of `LocationPicker` dismissed.
      
-             To get user's every selection, use `var selectCompletion` instead.
+     To get user's every selection, use `var selectCompletion` instead.
      
-             Alternatively, the same result can be achieved by:
-             * Delegate
-             1. conform to `protocol LocationPickerDelegate`
-             2. set the `var delegate`
-             3. implement `func locationDidPick(locationItem: LocationItem)`
-             * Override
-             1. create a subclass of `class LocationPicker`
-             2. override `func locationDidPick(locationItem: LocationItem)`
+     Alternatively, the same result can be achieved by:
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidPick(locationItem: LocationItem)`
+     * Override
+     1. create a subclass of `class LocationPicker`
+     2. override `func locationDidPick(locationItem: LocationItem)`
      
-         - SeeAlso:
-             * `var selectCompletion: ((LocationItem) -> Void)?`
-             * `func locationDidPick(locationItem: LocationItem)`
-             * `protocol LocationPickerDelegate`
-        */
+     - SeeAlso:
+     * `var selectCompletion: ((LocationItem) -> Void)?`
+     * `func locationDidPick(locationItem: LocationItem)`
+     * `protocol LocationPickerDelegate`
+     */
     public var pickCompletion: ((LocationItem) -> Void)?
     
-        /**
-         Completion closure executed after user delete an alternative location.
+    /**
+     Completion closure executed after user delete an alternative location.
      
-         - important:
-             If you override `func alternativeLocationDidDelete(locationItem: LocationItem)` without calling `super`, this closure would not be called.
+     - important:
+     If you override `func alternativeLocationDidDelete(locationItem: LocationItem)` without calling `super`, this closure would not be called.
      
-         - Note:
-             This closure would be executed when user delete a location cell from `tableView`.
+     - Note:
+     This closure would be executed when user delete a location cell from `tableView`.
      
-             User can only delete the location provided in `var alternativeLocations` or `dataSource` method `alternativeLocationAtIndex(index: Int) -> LocationItem`.
+     User can only delete the location provided in `var alternativeLocations` or `dataSource` method `alternativeLocationAtIndex(index: Int) -> LocationItem`.
      
-             Alternatively, the same result can be achieved by:
-             * Delegate
-             1. conform to `protocol LocationPickerDataSource`
-             2. set the `var dataSource`
-             3. implement `func commitAlternativeLocationDeletion(locationItem: LocationItem)`
-             * Override
-             1. create a subclass of `class LocationPicker`
-             2. override `func alternativeLocationDidDelete(locationItem: LocationItem)`
+     Alternatively, the same result can be achieved by:
+     * Delegate
+     1. conform to `protocol LocationPickerDataSource`
+     2. set the `var dataSource`
+     3. implement `func commitAlternativeLocationDeletion(locationItem: LocationItem)`
+     * Override
+     1. create a subclass of `class LocationPicker`
+     2. override `func alternativeLocationDidDelete(locationItem: LocationItem)`
      
-         - SeeAlso:
-             * `func alternativeLocationDidDelete(locationItem: LocationItem)`
-             * `protocol LocationPickerDataSource`
-        */
+     - SeeAlso:
+     * `func alternativeLocationDidDelete(locationItem: LocationItem)`
+     * `protocol LocationPickerDataSource`
+     */
     public var deleteCompletion: ((LocationItem) -> Void)?
     
-        /**
-         Handler closure executed when user try to fetch current location without location permission.
-         
-         - important:
-             If you override `func locationDidDeny(locationPicker: LocationPicker)` without calling `super`, this closure would not be called.
+    /**
+     Handler closure executed when user try to fetch current location without location permission.
      
-         - Note:
-             If this closure is not set, an alert view controller will be presented, you can configure it using `func customizeLocationDeniedAlertController` or provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`
+     - important:
+     If you override `func locationDidDeny(locationPicker: LocationPicker)` without calling `super`, this closure would not be called.
      
-             Alternatively, the same result can be achieved by:
-             * Delegate
-             1. conform to `protocol LocationPickerDelegate`
-             2. set the `var delegate`
-             3. implement `func locationDidDeny(locationPicker: LocationPicker)`
-             * Override
-             1. create a subclass of `class LocationPicker`
-             2. override `func locationDidDeny(locationPicker: LocationPicker)`
-             
-         - SeeAlso:
-             * `func locationDidDeny(locationPicker: LocationPicker)`
-             * `protocol LocationPickerDelegate`
-             * `var locationDeniedAlertController`
-             * `func customizeLocationDeniedAlertController`
+     - Note:
+     If this closure is not set, an alert view controller will be presented, you can configure it using `func customizeLocationDeniedAlertController` or provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`
      
-        */
+     Alternatively, the same result can be achieved by:
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidDeny(locationPicker: LocationPicker)`
+     * Override
+     1. create a subclass of `class LocationPicker`
+     2. override `func locationDidDeny(locationPicker: LocationPicker)`
+     
+     - SeeAlso:
+     * `func locationDidDeny(locationPicker: LocationPicker)`
+     * `protocol LocationPickerDelegate`
+     * `var locationDeniedAlertController`
+     * `func customizeLocationDeniedAlertController`
+     
+     */
     public var locationDeniedHandler: ((LocationPicker) -> Void)?
     
     
@@ -130,53 +130,53 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /// DataSource of `protocol LocationPickerDataSource`
     public var dataSource: LocationPickerDataSource?
     
-        /**
-         Locations that show in the location list.
+    /**
+     Locations that show in the location list.
      
-         - Note:
-             Alternatively, `LocationPicker` can obtain locations by DataSource:
-             1. conform to `protocol LocationPickerDataSource`
-             2. set the `var dataSource`
-             3. implement `func numberOfAlternativeLocations() -> Int` to tell the `tableView` how many rows to display
-             4. implement `func alternativeLocationAtIndex(index: Int) -> LocationItem`
+     - Note:
+     Alternatively, `LocationPicker` can obtain locations by DataSource:
+     1. conform to `protocol LocationPickerDataSource`
+     2. set the `var dataSource`
+     3. implement `func numberOfAlternativeLocations() -> Int` to tell the `tableView` how many rows to display
+     4. implement `func alternativeLocationAtIndex(index: Int) -> LocationItem`
      
-         - SeeAlso:
-             * `func numberOfAlternativeLocations() -> Int`
-             * `func alternativeLocationAtIndex(index: Int) -> LocationItem`
-             * `protocol LocationPickerDataSource`
-        */
+     - SeeAlso:
+     * `func numberOfAlternativeLocations() -> Int`
+     * `func alternativeLocationAtIndex(index: Int) -> LocationItem`
+     * `protocol LocationPickerDataSource`
+     */
     public var alternativeLocations: [LocationItem]?
     
-        /**
-         Alert Controller shows when user try to fetch current location without location permission.
+    /**
+     Alert Controller shows when user try to fetch current location without location permission.
      
-         - Note: 
-             If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func customizeLocationDeniedAlertController` or change the following text directly.
+     - Note:
+     If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func customizeLocationDeniedAlertController` or change the following text directly.
      
-               var locationDeniedAlertTitle
-               var locationDeniedAlertMessage
-               var locationDeniedGrantText
-               var locationDeniedCancelText
+     var locationDeniedAlertTitle
+     var locationDeniedAlertMessage
+     var locationDeniedGrantText
+     var locationDeniedCancelText
      
-         - SeeAlso:
-             * `func customizeLocationDeniedAlertController`
-             * `var locationDeniedHandler: ((LocationPicker) -> Void)?`
-             * `func locationDidDeny(locationPicker: LocationPicker)`
-             * `protocol LocationPickerDelegate`
-        */
+     - SeeAlso:
+     * `func customizeLocationDeniedAlertController`
+     * `var locationDeniedHandler: ((LocationPicker) -> Void)?`
+     * `func locationDidDeny(locationPicker: LocationPicker)`
+     * `protocol LocationPickerDelegate`
+     */
     public var locationDeniedAlertController: UIAlertController?
     
-        /**
-         Bar button that confirms user's location pick.
+    /**
+     Bar button that confirms user's location pick.
      
-         - important:
-             If this property is specified, only when user tap this button can the pick closure, method and delegate method be called.
-             
-             Don't change the `target` and `action` property, `target` will be set to this `LocationPicker` instance in after view is loaded.
+     - important:
+     If this property is specified, only when user tap this button can the pick closure, method and delegate method be called.
      
-         - Note:
-             You just need to provide a customized `UIBarButtonItem` object, `LocationPicker` will handle the dismission of this view controller itself.
-        */
+     Don't change the `target` and `action` property, `target` will be set to this `LocationPicker` instance in after view is loaded.
+     
+     - Note:
+     You just need to provide a customized `UIBarButtonItem` object, `LocationPicker` will handle the dismission of this view controller itself.
+     */
     public var doneButtonItem: UIBarButtonItem? {
         didSet {
             doneButtonItem?.target = self
@@ -225,11 +225,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
     public var mapViewScrollEnabled = true
     
-        /**
-         Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
-         - important:
-             If this property is set to `true`, remember to update your models by closure, delegate, or override.
-        */
+    /**
+     Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
+     - important:
+     If this property is set to `true`, remember to update your models by closure, delegate, or override.
+     */
     public var alternativeLocationEditable = false
     
     
@@ -248,6 +248,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
         /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var pinColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
+    
+        /// The color of primary text color. __Default__ is __`UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)`__
+    public var primaryTextColor = UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)
+    
+        /// The color of secondary text color. __Default__ is __`UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)`__
+    public var secondaryTextColor = UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)
     
     
     
@@ -345,6 +351,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         searchBar.delegate = self
         searchBar.placeholder = searchBarPlaceholder
+        let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as! UITextField
+        textFieldInsideSearchBar.textColor = primaryTextColor
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -405,18 +413,57 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: - Customs
     
-    public func setThemeColor(color: UIColor) {
-        currentLocationIconColor = color
-        searchResultLocationIconColor = color
-        alternativeLocationIconColor = color
-        pinColor = color
+    /**
+     If you are content with the icons provided in `LocaitonPicker` but not with the colors, you can change them by calling this method.
+     
+     This mehod can also change the color of text color all over the UI.
+     
+     - Note:
+     * You can set the color of three icons and the pin in map view by setting the attributes listed below, but to keep the UI consistent, this is not recommanded.
+     
+            var currentLocationIconColor
+            var searchResultLocationIconColor
+            var alternativeLocationIconColor
+            var pinColor
+     
+     * If you are not satisified with the shape of icons and pin image, you can change them by setting the attributes below.
+     
+            var currentLocationIconImage
+            var searchResultLocationIconImage
+            var alternativeLocationIconImage
+            var pinImage
+     
+     - parameter themeColor:         The color of all icons.
+     - parameter primaryTextColor:   The color of primary text.
+     - parameter secondaryTextColor: The color of secondary text.
+     */
+    public func setColors(themeColor: UIColor? = nil, primaryTextColor: UIColor? = nil, secondaryTextColor: UIColor? = nil) {
+        self.currentLocationIconColor = themeColor ?? self.currentLocationIconColor
+        self.searchResultLocationIconColor = themeColor ?? self.searchResultLocationIconColor
+        self.alternativeLocationIconColor = themeColor ?? self.alternativeLocationIconColor
+        self.pinColor = themeColor ?? self.pinColor
+        self.primaryTextColor = primaryTextColor ?? self.primaryTextColor
+        self.secondaryTextColor = secondaryTextColor ?? self.secondaryTextColor
     }
     
-    public func customizeLocationDeniedAlertController(_ title: String = locationDeniedAlertTitle, message: String = locationDeniedAlertMessage, grantText: String = locationDeniedGrantText, cancelText: String = locationDeniedCancelText) {
-        locationDeniedAlertTitle = title
-        locationDeniedAlertMessage = message
-        locationDeniedGrantText = grantText
-        locationDeniedCancelText = cancelText
+    /**
+     Set texts of alert controller presented when user try to get current location but denied app's authorization.
+     
+     If you are content with the default alert controller provided by `LocationPicker`, just call this method to change the alert texts to your any language you like.
+     
+     - Note: 
+     If you are not satisfied with the default alert controller, just set `var locationDeniedAlertController` to your fully customized alert controller. If you don't want to present an alert controller at all in such situation, you can customize the behavior of `LocationPicker` by setting closure, using delegate or overriding.
+     
+     - parameter title:      Text of location denied alert title.
+     - parameter message:    Text of location denied alert message.
+     - parameter grantText:  Text of location denied alert _Grant_ button text.
+     - parameter cancelText: Text of location denied alert _Cancel_ button text.
+     */
+    public func customizeLocationDeniedAlertController(title: String? = nil, message: String? = nil, grantText: String? = nil, cancelText: String? = nil) {
+        self.locationDeniedAlertTitle = title ?? self.locationDeniedAlertTitle
+        self.locationDeniedAlertMessage = message ?? self.locationDeniedAlertMessage
+        self.locationDeniedGrantText = grantText ?? self.locationDeniedGrantText
+        self.locationDeniedCancelText = cancelText ?? self.locationDeniedCancelText
     }
     
     
@@ -537,15 +584,21 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         var cell: LocationCell!
         
         if indexPath.row == 0 {
-            cell = LocationCell(locationType: .CurrentLocation, title: currentLocationText, iconColor: currentLocationIconColor, iconImage: currentLocationIconImage)
+            cell = LocationCell(locationType: .CurrentLocation, locationItem: nil)
+            cell.locationNameLabel.text = currentLocationText
+            cell.iconView.image = currentLocationIconImage ?? StyleKit.imageOfMapPointerIcon(color: currentLocationIconColor)
         } else if indexPath.row > 0 && indexPath.row <= searchResultLocations.count {
             let index = indexPath.row - 1
-            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultLocations[index], iconColor: searchResultLocationIconColor, iconImage: searchResultLocationIconImage)
+            cell = LocationCell(locationType: .SearchLocation, locationItem: searchResultLocations[index])
+            cell.iconView.image = searchResultLocationIconImage ?? StyleKit.imageOfSearchIcon(color: searchResultLocationIconColor)
         } else if indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count {
             let index = indexPath.row - 1 - searchResultLocations.count
             let locationItem = (alternativeLocations?[index] ?? dataSource?.alternativeLocationAtIndex(index))!
-            cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem, iconColor: alternativeLocationIconColor, iconImage: alternativeLocationIconImage)
+            cell = LocationCell(locationType: .AlternativeLocation, locationItem: locationItem)
+            cell.iconView.image = alternativeLocationIconImage ?? StyleKit.imageOfPinIcon(color: alternativeLocationIconColor)
         }
+        cell.locationNameLabel.textColor = primaryTextColor
+        cell.locationAddressLabel.textColor = secondaryTextColor
         
         return cell
     }
