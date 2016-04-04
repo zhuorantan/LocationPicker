@@ -93,6 +93,33 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         */
     public var deleteCompletion: ((LocationItem) -> Void)?
     
+        /**
+         Handler closure executed when user try to fetch current location without location permission.
+         
+         - important:
+             If you override `func locationDidDeny(locationPicker: LocationPicker)` without calling `super`, this closure would not be called.
+     
+         - Note:
+             If this closure is not set, an alert view controller will be presented, you can configure it using `func customizeLocationDeniedAlertController` or provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`
+     
+             Alternatively, the same result can be achieved by:
+             * Delegate
+             1. conform to `protocol LocationPickerDelegate`
+             2. set the `var delegate`
+             3. implement `func locationDidDeny(locationPicker: LocationPicker)`
+             * Override
+             1. create a subclass of `class LocationPicker`
+             2. override `func locationDidDeny(locationPicker: LocationPicker)`
+             
+         - SeeAlso:
+             * `func locationDidDeny(locationPicker: LocationPicker)`
+             * `protocol LocationPickerDelegate`
+             * `var locationDeniedAlertController`
+             * `func customizeLocationDeniedAlertController`
+     
+        */
+    public var locationDeniedHandler: ((LocationPicker) -> Void)?
+    
     
     
     // MARK: Optional varaiables
@@ -121,13 +148,34 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var alternativeLocations: [LocationItem]?
     
         /**
-         Button that confirms user's location pick.
+         Alert Controller shows when user try to fetch current location without location permission.
+     
+         - Note: 
+             If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func customizeLocationDeniedAlertController` or change the following text directly.
+     
+               var locationDeniedAlertTitle
+               var locationDeniedAlertMessage
+               var locationDeniedGrantText
+               var locationDeniedCancelText
+     
+         - SeeAlso:
+             * `func customizeLocationDeniedAlertController`
+             * `var locationDeniedHandler: ((LocationPicker) -> Void)?`
+             * `func locationDidDeny(locationPicker: LocationPicker)`
+             * `protocol LocationPickerDelegate`
+        */
+    public var locationDeniedAlertController: UIAlertController?
+    
+        /**
+         Bar button that confirms user's location pick.
      
          - important:
              If this property is specified, only when user tap this button can the pick closure, method and delegate method be called.
+             
+             Don't change the `target` and `action` property, `target` will be set to this `LocationPicker` instance in after view is loaded.
      
          - Note:
-             You don't need to set the `target` and `action` of this `UIBarButtonItem` object, just customize the button as you like, and `LocationPicker` will do the rest, inculuding dismissing the view controller.
+             You just need to provide a customized `UIBarButtonItem` object, `LocationPicker` will handle the dismission of this view controller itself.
         */
     public var doneButtonItem: UIBarButtonItem? {
         didSet {
@@ -146,6 +194,18 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
     public var searchBarPlaceholder = "Search for location"
     
+        /// Text of location denied alert title. __Default__ is __`"No location access"`__
+    public var locationDeniedAlertTitle = "No location access"
+    
+        /// Text of location denied alert message. __Default__ is __`"Grant location access to use current location"`__
+    public var locationDeniedAlertMessage = "Grant location access to use current location"
+    
+        /// Text of location denied alert _Grant_ button. __Default__ is __`"Grant"`__
+    public var locationDeniedGrantText = "Grant"
+    
+        /// Text of location denied alert _Cancel_ button. __Default__ is __`"Cancel"`__
+    public var locationDeniedCancelText = "Cancel"
+    
     
     
         /// Longitudinal distance in meters that the map view shows when user select a location and before zoom in or zoom out. __Default__ is __`1000`__.
@@ -156,13 +216,13 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
-        /// In `func viewDidLoad()`, `mapView.zoomEnabled` is set to this property's value. __Default__ is __`true`__
+        /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
     public var mapViewZoomEnabled = true
     
-        /// In `func viewDidLoad()`, `mapView.showsUserLocation` is set to this property's value. __Default__ is __`true`__
+        /// `mapView.showsUserLocation` is set to this property's value after view is loaded. __Default__ is __`true`__
     public var mapViewShowsUserLocation = true
     
-        /// In `func viewDidLoad()`, `mapView.scrollEnabled` is set to this property's value. __Default__ is __`true`__
+        /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
     public var mapViewScrollEnabled = true
     
         /**
@@ -174,7 +234,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
-        /// In `func viewDidLoad()`, `tableView.backgroundColor` is set to this property's value. __Default__ is __`UIColor.whiteColor()`__
+        /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
     public var tableViewBackgroundColor = UIColor.whiteColor()
     
         /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
@@ -229,7 +289,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     private var longitudinalDistance: Double!   // This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
-    private var mapViewCenterChanged = false    // This property is used to record whether the map view center changes. This is neccessary because reverseGeocodeLocation(location: CLLocation) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation) back, this would become a endless loop.
+    private var mapViewCenterChanged = false    // This property is used to record whether the map view center changes. This is neccessary because private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation), and this method calls private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) back, this would lead to an infinite loop.
     
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
@@ -275,14 +335,13 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     private func setupLocationManager() {
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
         locationManager.requestLocation()
     }
     
     private func setupViews() {
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.whiteColor()     // the background color of view needs to be set because this color would affect the color of navigation bar if it is translucent.
         
         searchBar.delegate = self
         searchBar.placeholder = searchBarPlaceholder
@@ -353,6 +412,13 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         pinColor = color
     }
     
+    public func customizeLocationDeniedAlertController(_ title: String = locationDeniedAlertTitle, message: String = locationDeniedAlertMessage, grantText: String = locationDeniedGrantText, cancelText: String = locationDeniedCancelText) {
+        locationDeniedAlertTitle = title
+        locationDeniedAlertMessage = message
+        locationDeniedGrantText = grantText
+        locationDeniedCancelText = cancelText
+    }
+    
     
     
     // MARK: - Callbacks
@@ -370,6 +436,26 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public func alternativeLocationDidDelete(locationItem: LocationItem) {
         deleteCompletion?(locationItem)
         dataSource?.commitAlternativeLocationDeletion?(locationItem)
+    }
+    
+    public func locationDidDeny(locationPicker: LocationPicker) {
+        locationDeniedHandler?(self)
+        delegate?.locationDidDeny?(self)
+        
+        if locationDeniedHandler == nil && delegate?.locationDidDeny == nil {
+            if let alertController = locationDeniedAlertController {
+                presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                let alertController = UIAlertController(title: locationDeniedAlertTitle, message: locationDeniedAlertMessage, preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Grant", style: .Default, handler: { (alertAction) in
+                    if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                }))
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
     }
     
     
@@ -469,6 +555,16 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         longitudinalDistance = defaultLongitudinalDistance
         
         if indexPath.row == 0 {
+            switch CLLocationManager.authorizationStatus() {
+            case .NotDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .Denied:
+                locationDidDeny(self)
+                
+            default:
+                break
+            }
+            
             if let currentLocation = locationManager.location {
                 reverseGeocodeLocation(currentLocation)
             }

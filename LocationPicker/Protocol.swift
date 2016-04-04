@@ -12,6 +12,7 @@ import Foundation
     
     optional func locationDidSelect(locationItem: LocationItem)
     optional func locationDidPick(locationItem: LocationItem)
+    optional func locationDidDeny(locationPicker: LocationPicker)
     
 }
 
