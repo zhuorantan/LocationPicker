@@ -162,7 +162,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Locations that show in the location list.
      
      - Note:
-     Alternatively, `LocationPicker` can obtain locations by DataSource:
+     Alternatively, `LocationPicker` can obtain locations via DataSource:
      1. conform to `protocol LocationPickerDataSource`
      2. set the `var dataSource`
      3. implement `func numberOfAlternativeLocations() -> Int` to tell the `tableView` how many rows to display
@@ -452,14 +452,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      This mehod can also change the color of text color all over the UI.
      
      - Note:
-     * You can set the color of three icons and the pin in map view by setting the attributes listed below, but to keep the UI consistent, this is not recommanded.
+     You can set the color of three icons and the pin in map view by setting the attributes listed below, but to keep the UI consistent, this is not recommanded.
      
             var currentLocationIconColor
             var searchResultLocationIconColor
             var alternativeLocationIconColor
             var pinColor
      
-     * If you are not satisified with the shape of icons and pin image, you can change them by setting the attributes below.
+     If you are not satisified with the shape of icons and pin image, you can change them by setting the attributes below.
      
             var currentLocationIconImage
             var searchResultLocationIconImage
@@ -772,6 +772,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 locationManager.requestWhenInUseAuthorization()
             case .Denied:
                 locationDidDeny(self)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 
             default:
                 break
@@ -848,7 +849,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: - UI Mainipulations
     
     private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
-        print("map center changed.")
         mapViewHeightConstraint.constant = mapViewHeight
         
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
@@ -868,7 +868,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("current location updated.")
         if tableView.indexPathForSelectedRow?.row == 0 {
             let currentLocation = locations[0]
             reverseGeocodeLocation(currentLocation)

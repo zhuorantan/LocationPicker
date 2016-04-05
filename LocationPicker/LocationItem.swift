@@ -28,6 +28,26 @@
 
 import MapKit
 
+/**
+ A `MKMapItem` encapsulation class to save you from import `MapKit` and provide some convenience.
+ 
+ - important:
+ This class is a encapsulation of `MKMapItem`, you can access the `MKMapItem` object via `mapItem` property.
+ 
+ - Note:
+ `LocationItem` provides some get-only computed property to access properties of `MKMapItem` object more easily.
+ 
+        var name: String
+        var coordinate: (latitude: Double, longitude: Double)
+        var addressDictionary: [NSObject: AnyObject]?
+        var formattedAddressString: String?
+ 
+ This class provides two initialization methods, you can either provide a `MKMapItem` object or provide a coordinate and an address dictionary to initialize.
+ 
+ This class is hashable, the hash value of this class is the hash value of the combined string of latitude and longitude.
+ 
+ This class is equalable, objects have the same latitude and longitude are equal.
+ */
 public class LocationItem: NSObject, NSCoding {
     
     public let mapItem: MKMapItem
