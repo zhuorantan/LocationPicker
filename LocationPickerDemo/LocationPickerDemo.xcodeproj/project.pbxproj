@@ -15,8 +15,8 @@
 		022E3F831CB11C88006BF665 /* LocationPickerDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F821CB11C88006BF665 /* LocationPickerDemoTests.swift */; };
 		022E3F8E1CB11C88006BF665 /* LocationPickerDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F8D1CB11C88006BF665 /* LocationPickerDemoUITests.swift */; };
 		022E3FAF1CB11D21006BF665 /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */; };
-		02844A071CB25C4E00401066 /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02844A061CB25C4E00401066 /* LocationPicker.framework */; };
-		02844A081CB25C4E00401066 /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02844A061CB25C4E00401066 /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		028C30391CB683B40060CF51 /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028C30381CB683B40060CF51 /* LocationPicker.framework */; };
+		028C303A1CB683B40060CF51 /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 028C30381CB683B40060CF51 /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		022E3FAD1CB11D0C006BF665 /* Embed Frameworks */ = {
+		028C30341CB6807B0060CF51 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				02844A081CB25C4E00401066 /* LocationPicker.framework in Embed Frameworks */,
+				028C303A1CB683B40060CF51 /* LocationPicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +65,7 @@
 		022E3F8D1CB11C88006BF665 /* LocationPickerDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerDemoUITests.swift; sourceTree = "<group>"; };
 		022E3F8F1CB11C88006BF665 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
-		02844A061CB25C4E00401066 /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LocationPicker.framework; path = "/Users/Jerome/Library/Developer/Xcode/DerivedData/LocationPicker-chpqhihsisflzudurzcjvdngjitt/Build/Products/Debug-iphoneos/LocationPicker.framework"; sourceTree = "<absolute>"; };
+		028C30381CB683B40060CF51 /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = LocationPicker.framework; path = "/Users/Jerome/Library/Developer/Xcode/DerivedData/LocationPicker-chpqhihsisflzudurzcjvdngjitt/Build/Products/Debug-iphoneos/LocationPicker.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02844A071CB25C4E00401066 /* LocationPicker.framework in Frameworks */,
+				028C30391CB683B40060CF51 /* LocationPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,7 @@
 		022E3F611CB11C87006BF665 = {
 			isa = PBXGroup;
 			children = (
-				02844A061CB25C4E00401066 /* LocationPicker.framework */,
+				028C30381CB683B40060CF51 /* LocationPicker.framework */,
 				022E3F6C1CB11C87006BF665 /* LocationPickerDemo */,
 				022E3F811CB11C88006BF665 /* LocationPickerDemoTests */,
 				022E3F8C1CB11C88006BF665 /* LocationPickerDemoUITests */,
@@ -157,7 +157,7 @@
 				022E3F661CB11C87006BF665 /* Sources */,
 				022E3F671CB11C87006BF665 /* Frameworks */,
 				022E3F681CB11C87006BF665 /* Resources */,
-				022E3FAD1CB11D0C006BF665 /* Embed Frameworks */,
+				028C30341CB6807B0060CF51 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

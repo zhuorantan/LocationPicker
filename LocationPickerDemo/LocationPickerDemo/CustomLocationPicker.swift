@@ -19,7 +19,7 @@ class CustomLocationPicker: LocationPicker {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil)
         doneButton.enabled = false
         navigationItem.rightBarButtonItem = doneButton
-        doneButtonItem = doneButton
+        doneButtonItem = doneButton // Handle over the button to LocationPicker and let it do the rest.
         super.viewDidLoad()
     }
     
@@ -28,11 +28,12 @@ class CustomLocationPicker: LocationPicker {
     }
     
     override func locationDidSelect(locationItem: LocationItem) {
-        
+        print("Select overrided method: " + locationItem.name)
     }
     
     override func locationDidPick(locationItem: LocationItem) {
         viewController.showLocation(locationItem)
+        viewController.storeLocation(locationItem)
     }
 
 }

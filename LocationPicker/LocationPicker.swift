@@ -522,9 +522,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alternatively, the same result can be achieved by:
      * Closure
      1. set `var selectCompletion`
-     * Overrride
-     1. create a subclass of `class LocationPicker`
-     2. override `func locationDidSelect(locationItem: LocationItem)`
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidPick(locationItem: LocationItem)`
      
      - SeeAlso:
      `var selectCompletion: ((LocationItem) -> Void)?`
@@ -559,9 +560,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alternatively, the same result can be achieved by:
      * Closure
      1. set `var pickCompletion`
-     * Override
-     1. create a subclass of `class LocationPicker`
-     2. override `func locationDidPick(locationItem: LocationItem)`
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidPick(locationItem: LocationItem)`
      
      - SeeAlso:
      `var pickCompletion: ((LocationItem) -> Void)?`
@@ -596,9 +598,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alternatively, the same result can be achieved by:
      * Closure
      1. set `var deleteCompletion`
-     * Override
-     1. create a subclass of `class LocationPicker`
-     2. override `func alternativeLocationDidDelete(locationItem: LocationItem)`
+     * Delegate
+     1. conform to `protocol LocationPickerDataSource`
+     2. set the `var dataSource`
+     3. implement `func commitAlternativeLocationDeletion(locationItem: LocationItem)`
      
      - SeeAlso:
      `var deleteCompletion: ((LocationItem) -> Void)?`
@@ -629,9 +632,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alternatively, the same result can be achieved by:
      * Closure
      1. set `var locationDeniedHandler`
-     * Override
-     1. create a subclass of `class LocationPicker`
-     2. override `func locationDidDeny(locationPicker: LocationPicker)`
+     * Delegate
+     1. conform to `protocol LocationPickerDelegate`
+     2. set the `var delegate`
+     3. implement `func locationDidDeny(locationPicker: LocationPicker)`
      
      - SeeAlso:
      `var locationDeniedHandler: ((LocationPicker) -> Void)?`

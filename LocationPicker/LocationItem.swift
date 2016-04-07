@@ -47,6 +47,11 @@ import MapKit
  This class is hashable, the hash value of this class is the hash value of the combined string of latitude and longitude.
  
  This class is equalable, objects have the same latitude and longitude are equal.
+ 
+ Objects of this class can be encoded and decoded.
+ 
+        let locationData = NSKeyedArchiver.archivedDataWithRootObject(locationItem)
+        let locationItem = NSKeyedUnarchiver.unarchiveObjectWithData(locationData) as! LocationItem
  */
 public class LocationItem: NSObject, NSCoding {
     
@@ -54,25 +59,31 @@ public class LocationItem: NSObject, NSCoding {
     
     
     
+        /// The name of the location. A reference to `MKMapItem` object's property `name`.
     public var name: String {
         get {
             return mapItem.name ?? ""
         }
     }
     
+        /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple.
     public var coordinate: (latitude: Double, longitude: Double) {
         get {
             let coordinate = mapItem.placemark.coordinate
-            return (coordinate.latitude, coordinate.longitude)
+            return coordinateTupleFromObject(coordinate)
         }
     }
     
+        /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
+        /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
     public var addressDictionary: [NSObject: AnyObject]? {
         get {
             return mapItem.placemark.addressDictionary
         }
     }
     
+        /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
+        /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
     public var formattedAddressString: String? {
         get {
             return (addressDictionary?["FormattedAddressLines"] as? [String])?[0]

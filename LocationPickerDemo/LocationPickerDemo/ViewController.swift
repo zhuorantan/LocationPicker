@@ -13,16 +13,18 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     @IBOutlet weak var locationNameTextField: UITextField!
     @IBOutlet weak var locationAddressTextField: UITextField!
-    
+
     var historyLocationList: [LocationItem] {
         get {
             if let locationDataList = NSUserDefaults.standardUserDefaults().arrayForKey("HistoryLocationList") as? [NSData] {
+                // Decode NSData into LocationItem object.
                 return locationDataList.map({ NSKeyedUnarchiver.unarchiveObjectWithData($0) as! LocationItem })
             } else {
                 return []
             }
         }
         set {
+            // Encode LocationItem object.
             let locationDataList = newValue.map({ NSKeyedArchiver.archivedDataWithRootObject($0) })
             NSUserDefaults.standardUserDefaults().setObject(locationDataList, forKey: "HistoryLocationList")
         }
@@ -42,29 +44,31 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "LocationPicker" {
-            let customLocationPicker = segue.destinationViewController as! LocationPicker
-            customLocationPicker.delegate = self
-            customLocationPicker.dataSource = self
-            customLocationPicker.alternativeLocationEditable = true
+            let locationPicker = segue.destinationViewController as! LocationPicker
+            locationPicker.delegate = self
+            locationPicker.dataSource = self
+            locationPicker.alternativeLocationEditable = true
         }
     }
     
     
     
     @IBAction func presentLocationPickerButtonDidTap(sender: UIButton) {
-        let locationPicker = CustomLocationPicker()
-        locationPicker.viewController = self
-        let navigationController = UINavigationController(rootViewController: locationPicker)
+        let customLocationPicker = CustomLocationPicker()
+        customLocationPicker.viewController = self
+        let navigationController = UINavigationController(rootViewController: customLocationPicker)
         presentViewController(navigationController, animated: true, completion: nil)
     }
     
+    // Push LocationPicker to navigation controller.
     @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
         let locationPicker = LocationPicker()
         locationPicker.alternativeLocations = historyLocationList.reverse()
         locationPicker.alternativeLocationEditable = true
         
+        // Closures
         locationPicker.selectCompletion = { selectedLocationItem in
-            
+            print("Select completion closure: " + selectedLocationItem.name)
         }
         locationPicker.pickCompletion = { pickedLocationItem in
             self.showLocation(pickedLocationItem)
@@ -81,7 +85,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     // Location Picker Delegate
     
     func locationDidSelect(locationItem: LocationItem) {
-        
+        print("Select delegate method: " + locationItem.name)
     }
     
     func locationDidPick(locationItem: LocationItem) {

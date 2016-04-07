@@ -29,12 +29,6 @@
 import Foundation
 import MapKit
 
-func distanceFromCoordinate(coordinateA: CLLocationCoordinate2D, to coordinateB: CLLocationCoordinate2D) -> CLLocationDistance {
-    let locationA = CLLocation(latitude: coordinateA.latitude, longitude: coordinateA.longitude)
-    let locationB = CLLocation(latitude: coordinateB.latitude, longitude: coordinateB.longitude)
-    return locationA.distanceFromLocation(locationB)
-}
-
 
 
 func coordinateObjectFromTuple(coordinateTuple: (latitude: Double, longitude: Double)) -> CLLocationCoordinate2D {
