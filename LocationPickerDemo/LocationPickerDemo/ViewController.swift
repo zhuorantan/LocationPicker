@@ -43,8 +43,11 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     // MARK: Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Show Location Picker via push segue.
+        // LocationPicker in Storyboard.
         if segue.identifier == "LocationPicker" {
             let locationPicker = segue.destinationViewController as! LocationPicker
+            // User delegate and dataSource.
             locationPicker.delegate = self
             locationPicker.dataSource = self
             locationPicker.alternativeLocationEditable = true
@@ -54,6 +57,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     
     @IBAction func presentLocationPickerButtonDidTap(sender: UIButton) {
+        // Present Location Picker subclass via codes.
+        // Create LocationPicker subclass.
         let customLocationPicker = CustomLocationPicker()
         customLocationPicker.viewController = self
         let navigationController = UINavigationController(rootViewController: customLocationPicker)
@@ -62,11 +67,12 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     // Push LocationPicker to navigation controller.
     @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
+        // Push Location Picker via codes.
         let locationPicker = LocationPicker()
         locationPicker.alternativeLocations = historyLocationList.reverse()
         locationPicker.alternativeLocationEditable = true
         
-        // Closures
+        // Completion closures
         locationPicker.selectCompletion = { selectedLocationItem in
             print("Select completion closure: " + selectedLocationItem.name)
         }

@@ -19,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfY-5R-8rm">
-                                <rect key="frame" x="185" y="323" width="231" height="30"/>
-                                <state key="normal" title="Present Location Picker via codes"/>
+                                <rect key="frame" x="153" y="323" width="295" height="30"/>
+                                <state key="normal" title="Present Location Picker subclass via codes"/>
                                 <connections>
                                     <action selector="presentLocationPickerButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dPH-W1-oMW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30v-yE-BNj">
-                                <rect key="frame" x="162" y="361" width="277" height="30"/>
-                                <state key="normal" title="Push Location Picker subclass via codes"/>
+                                <rect key="frame" x="194" y="361" width="213" height="30"/>
+                                <state key="normal" title="Push Location Picker via codes"/>
                                 <connections>
                                     <action selector="pushLocationPickerButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1A9-B0-fZ9"/>
                                 </connections>
