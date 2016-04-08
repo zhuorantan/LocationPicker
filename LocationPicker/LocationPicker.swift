@@ -199,24 +199,6 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      */
     public var locationDeniedAlertController: UIAlertController?
     
-    /**
-     Bar button that confirms user's location pick.
-     
-     - important:
-     If this property is specified, only when user tap this button can the pick closure, method and delegate method be called.
-     
-     Don't change the `target` and `action` property, `target` will be set to this `LocationPicker` instance in after view is loaded.
-     
-     - Note:
-     You just need to provide a customized `UIBarButtonItem` object, `LocationPicker` will handle the dismission of this view controller itself.
-     */
-    public var doneButtonItem: UIBarButtonItem? {
-        didSet {
-            doneButtonItem?.target = self
-            doneButtonItem?.action = #selector(doneButtonDidTap(_:))
-        }
-    }
-    
     
     
     // MARK: UI Customizations
@@ -310,6 +292,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public let tableView = UITableView()
     public let mapView = MKMapView()
     public let pinView = UIImageView()
+    
+    public private(set) var doneButtonItem: UIBarButtonItem?
     
     
     
@@ -445,6 +429,40 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     // MARK: - Customs
+    
+    /**
+     Add two bar buttons that confirm and cancel user's location pick.
+     
+     - important:
+     If this method is called, only when user tap this button can the pick closure, method and delegate method be called.
+     If you don't provide `UIBarButtonItem` object, default system style bar button will be used.
+     
+     - Note:
+     You don't need to set the `target` and `action` property of the buttons, `LocationPicker` will handle the dismission of this view controller.
+     
+     - parameter doneButtonItem:      An `UIBarButtonItem` tapped to confirm selection, default is a _Done_ `barButtonSystemItem`
+     - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
+     - parameter doneButtonDirection: The direction of the done button, default is `.Right`
+     */
+    public func addButtons(doneButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: #selector(doneButtonDidTap(_:))),
+                           cancelButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: #selector(cancelButtonDidTap(_:))),
+                           doneButtonDirection: NavigationItemDirection = .Right) {
+        doneButtonItem.enabled = false
+        doneButtonItem.target = self
+        self.doneButtonItem = doneButtonItem
+        
+        cancelButtonItem.target = self
+        
+        switch doneButtonDirection {
+        case .Right:
+            navigationItem.leftBarButtonItem = cancelButtonItem
+            navigationItem.rightBarButtonItem = doneButtonItem
+        case .Left:
+            navigationItem.leftBarButtonItem = doneButtonItem
+            navigationItem.rightBarButtonItem = cancelButtonItem
+        }
+        
+    }
     
     /**
      If you are content with the icons provided in `LocaitonPicker` but not with the colors, you can change them by calling this method.
@@ -841,11 +859,15 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Buttons
     
-    @objc private func doneButtonDidTap(sender: UIBarButtonItem) {
+    func doneButtonDidTap(sender: UIBarButtonItem) {
         if let locationItem = selectedLocationItem {
             dismissViewControllerAnimated(true, completion: nil)
             locationDidPick(locationItem)
         }
+    }
+    
+    func cancelButtonDidTap(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     

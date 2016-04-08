@@ -28,12 +28,6 @@
 
 import UIKit
 
-public enum LocationType {
-    case CurrentLocation
-    case SearchLocation
-    case AlternativeLocation
-}
-
 public class LocationCell: UITableViewCell {
     
     public var locationItem: LocationItem?
