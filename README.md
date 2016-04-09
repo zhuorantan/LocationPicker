@@ -116,7 +116,7 @@ presentViewController(navigationController, animated: true, completion: nil)
 ### Storyboard
 
 1. Drag a __View Controller__ to your Storyboard.
-2. In the __Identity inspector__, Entry `LocationPicker` both in __Class__ and __Module__ field.
+2. In the __Identity inspector__, Entry `LocationPicker` both in __Class__ and __Module__ field(__Note__: If you are using Cocopods, the __Module__ field should be `LocationPickerViewController`).
 ![](/Screenshots/storyboard.png)
 3. Create a __segue__ and add a __Identifier__ to it.
 4. Add the following codes in the source view controller.
