@@ -442,18 +442,20 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      
      - parameter doneButtonItem:      An `UIBarButtonItem` tapped to confirm selection, default is a _Done_ `barButtonSystemItem`
      - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
-     - parameter doneButtonDirection: The direction of the done button, default is `.Right`
+     - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
      */
-    public func addButtons(doneButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: #selector(doneButtonDidTap(_:))),
-                           cancelButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: #selector(cancelButtonDidTap(_:))),
-                           doneButtonDirection: NavigationItemDirection = .Right) {
+    public func addButtons(doneButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil),
+                           cancelButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil),
+                           doneButtonOrientation: NavigationItemOrientation = .Right) {
         doneButtonItem.enabled = false
         doneButtonItem.target = self
+        doneButtonItem.action = #selector(doneButtonDidTap(_:))
         self.doneButtonItem = doneButtonItem
         
         cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancelButtonDidTap(_:))
         
-        switch doneButtonDirection {
+        switch doneButtonOrientation {
         case .Right:
             navigationItem.leftBarButtonItem = cancelButtonItem
             navigationItem.rightBarButtonItem = doneButtonItem
@@ -675,12 +677,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 presentViewController(alertController, animated: true, completion: nil)
             } else {
                 let alertController = UIAlertController(title: locationDeniedAlertTitle, message: locationDeniedAlertMessage, preferredStyle: .Alert)
-                alertController.addAction(UIAlertAction(title: "Grant", style: .Default, handler: { (alertAction) in
+                alertController.addAction(UIAlertAction(title: locationDeniedGrantText, style: .Default, handler: { (alertAction) in
                     if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
                         UIApplication.sharedApplication().openURL(url)
                     }
                 }))
-                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                alertController.addAction(UIAlertAction(title: locationDeniedCancelText, style: .Cancel, handler: nil))
                 presentViewController(alertController, animated: true, completion: nil)
             }
         }

@@ -2,12 +2,12 @@
 
 A ready for use and fully customizable location picker for your app.
 
-<!-- ![](/Screenshots/locationpicker.gif) -->
-<!--
+![](/Screenshots/locationpicker.gif)
+
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
 [![CocoaPods](https://img.shields.io/cocoapods/v/JTLocationPicker.svg?style=flat)](http://cocoadocs.org/docsets/JTLocationPicker/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-![License](https://img.shields.io/github/license/JeromeTan1997/LocationPicker.svg?style=flat) -->
+![License](https://img.shields.io/github/license/JeromeTan1997/LocationPicker.svg?style=flat)
 
 * [Features](#features)
 * [Installation](#installation)
@@ -17,6 +17,8 @@ A ready for use and fully customizable location picker for your app.
     - [Programmatically](#programmatically)
     - [Storyboard](#storyboard)
 * [Customization](#customization)
+    - [Methods](#methods)
+    - [Boolean](#boolean)
     - [Text](#text)
     - [Color](#color)
     - [Image](#image)
@@ -119,36 +121,74 @@ That's __all__ you need to have a fully functional location picker in your app. 
 
 ## Customization
 
+### Methods
+
+##### `func addButtons`
+
+This method provides 3 optional parameter. `doneButtonItem` and `cancelButtonItem` can be set as the customized `UIBarButtonItem` object. `doneButtonOrientation` is used to determine how to align these two buttons. If none of the parameters is provided, two system style buttons would be used, and the done button would be put on the right side.
+
+##### `func setColors`
+
+This method aims to set colors more conveniently. `themColor` will be set to `currentLocationIconColor`, `searchResultLocationIconColor`, `alternativeLocationIconColor`, `pinColor`. `primaryTextColor` and `secondaryTextColor` can also be set by this method.
+
+##### `func customizeLocationDeniedAlertController`
+
+This method provides the texts of `locationDeniedAlertController` simultaneously.
+
+### Boolean
+
+| Property name | Default | Target | Remark |
+| ------------- |:-------:| ------ | ------ |
+| mapViewZoomEnabled | true | mapView.zoomEnabled | Whether the map view can zoom in and out |
+| mapViewShowsUserLocation | true | mapView.showsUserLocation | Whether the map view shows user's location |
+| mapViewScrollEnabled | true | mapView.scrollEnabled | Whether user can scroll the map view |
+| alternativeLocationEditable | false | tableViewDataSource.tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) | Whether user can delete the provided locations in table view |
+
+__Note__: If `alternativeLocationEditable` is set to true, please adopt __Location Deletion__ callback to delete the location from database or memory.
+
 ### Text
 
 | Property name | Default | Target | Remark |
-| ------------- |:-------:|:------:| ------ |
-| currentLocationText | "Current Location" | UITableViewCell | The text that indicates the user's current location |
-| searchBarPlaceholder | "Search for location" | UISearchBar | The text that ask user to search for locations |
-| locationDeniedAlertTitle | "No location access" | UIAlertController | The text of the alert controller's title |
-| locationDeniedAlertMessage | "Grant location access to use current location" | UIAlertController | The text of the alert controller's message |
-| locationDeniedGrantText | "Grant" | UIAlertController | The text of the alert controller's _Grant_ button |
-| locationDeniedCancelText | "Cancel" | UIAlertController | The text of the alert controller's _Cancel_ button |
+| ------------- |:-------:| ------ | ------ |
+| currentLocationText | "Current Location" | currentLocationCell.locationNameLabel.text | The text that indicates the user's current location |
+| searchBarPlaceholder | "Search for location" | searchBar.placeholder | The text that ask user to search for locations |
+| locationDeniedAlertTitle | "No location access" | alertController.title | The text of the alert controller's title |
+| locationDeniedAlertMessage | "Grant location access to use current location" | alertController.message | The text of the alert controller's message |
+| locationDeniedGrantText | "Grant" | alertAction.title | The text of the alert controller's _Grant_ button |
+| locationDeniedCancelText | "Cancel" | alertAction.title | The text of the alert controller's _Cancel_ button |
 
 ### Color
 
 | Property name | Default | Target | Remark |
-| ------------- |:-------:|:------:| ------ |
-| tableViewBackgroundColor | UIColor.whiteColor() | UITableView | The background color of the table view |
-| currentLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage | The color of the icon showed in current location cell, the icon image can be changed via property `currentLocationIconImage` |
-| searchResultLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage | The color of the icon showed in search result location cells, the icon image can be changed via property `searchResultLocationIconImage` |
-| alternativeLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage | The color of the icon showed in alternative location cells, the icon image can be changed via property 'alternativeLocationIconImage' |
-| pinColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage | The color of the pin showed in the center of map view, the pin image can be changed via property `pinImage` |
+| ------------- |:-------:| ------ | ------ |
+| tableViewBackgroundColor | UIColor.whiteColor() | tableView.backgroundColor | The background color of the table view |
+| currentLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in current location cell, the icon image can be changed via property `currentLocationIconImage` |
+| searchResultLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in search result location cells, the icon image can be changed via property `searchResultLocationIconImage` |
+| alternativeLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in alternative location cells, the icon image can be changed via property 'alternativeLocationIconImage' |
+| pinColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the pin showed in the center of map view, the pin image can be changed via property `pinImage` |
 | primaryTextColor | UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1) | Multiple | The text color of search bar and location name label in location cells |
 | secondaryTextColor | UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1) | Multiple | The text color of location address label in location cells |
 
 ### Image
 
 | Property name | Target | Remark |
-| ------------- |:------:| ------ |
-| currentLocationIconImage | UIImageView | The image of the icon showed in current location cell, this image's color won't be affected by property `currentLocationIconColor` |
-| searchResultLocationIconImage | UIImageView | The image of the icon showed in search result location cells, this image's color won't be affected by property `searchResultLocationIconColor` |
-| alternativeLocationIconImage | UIImageView | The image of the icon showed in alternative location cells, this image's color won't be affected by property `alternativeLocationIconColor` |
+| ------------- | ------ | ------ |
+| currentLocationIconImage | currentLocationCell.iconView.image | The image of the icon showed in current location cell, this image's color won't be affected by property `currentLocationIconColor` |
+| searchResultLocationIconImage | searchResultLocationCell.iconView.image | The image of the icon showed in search result location cells, this image's color won't be affected by property `searchResultLocationIconColor` |
+| alternativeLocationIconImage | alternativeLocationCell.iconView.image | The image of the icon showed in alternative location cells, this image's color won't be affected by property `alternativeLocationIconColor` |
+
+### Other
+
+| Property name | Type | Default | Remark |
+| ------------- |:----:|:-------:| ------ |
+| alternativeLocations | [LocationItem]? | nil | Locations that show under current location and search result locations |
+| locationDeniedAlertController | UIAlertController? | nil | Alert controller that appear when user request current location but denied the app's location permission |
+| defaultLongitudinalDistance | Double | 1000 | Longitudinal distance of the map view shows when user select a location and before zoom in or zoom out |
+| searchDistance | Double | 10000 | Distance in meters that is used to search locations |
+
+__Note__:
+* Alternative locations can also be provided via [Data Source](#alternative-location-data-source).
+* You don't need to set the `locationDeniedAlertController` if you are satisfied with the alert controller included in `LocationPicker`. You can change the texts of the default alert controller via `func customizeLocationDeniedAlertController`. If you want to do something other than presenting an alert controller, you can adopt __Permission Denied Handler__ callback.
 
 ## Callbacks
 
@@ -156,7 +196,7 @@ That's __all__ you need to have a fully functional location picker in your app. 
 
 ### Closure
 
-###### Location Pick
+##### Location Pick
 
 This completion closure is used to get user's final decision. It would be executed only once for every `LocationPicker` object when it is about to be dismissed.
 
@@ -166,7 +206,7 @@ locationPicker.pickCompletion = { (pickedLocationItem) in
 }
 ```
 
-###### Location Selection
+##### Location Selection
 
 This completion closure is used to get user's every location selection. It would be executed every time user chooses a location in the list or drag the map view.
 
@@ -176,7 +216,7 @@ locationPicker.selectCompletion = { (selectedLocationItem) in
 }
 ```
 
-###### Location Deletion
+##### Location Deletion
 
 If `alternativeLocations` is not empty and `alternativeLocationEditable` is set to `true`, this closure will be executed when user delete a location item in the table view.
 
@@ -186,9 +226,9 @@ locationPicker.deleteCompletion = { (deletedLocationItem) in
 }
 ```
 
-###### Permission Denied Handler
+##### Permission Denied Handler
 
-In default, when user request current location without but denied the app's location, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this closure.
+In default, when user request current location but denied the app's location permission, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this closure.
 
 ```swift
 locationPicker.locationDeniedHandler = { (locationPicker) in

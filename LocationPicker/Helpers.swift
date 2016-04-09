@@ -35,7 +35,7 @@ public enum LocationType {
     case AlternativeLocation
 }
 
-public enum NavigationItemDirection {
+public enum NavigationItemOrientation {
     case Left
     case Right
 }
