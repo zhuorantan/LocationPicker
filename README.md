@@ -5,7 +5,7 @@ A ready for use and fully customizable location picker for your app.
 ![](/Screenshots/locationpicker.gif)
 
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
-[![CocoaPods](https://img.shields.io/cocoapods/v/JTLocationPicker.svg?style=flat)](http://cocoadocs.org/docsets/JTLocationPicker/)
+[![CocoaPods](https://img.shields.io/cocoapods/v/LocationPickerViewController.svg?style=flat)](http://cocoadocs.org/docsets/LocationPickerViewController/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![License](https://img.shields.io/github/license/JeromeTan1997/LocationPicker.svg?style=flat)
 
@@ -13,6 +13,7 @@ A ready for use and fully customizable location picker for your app.
 * [Installation](#installation)
     - [Cocoapods](#cocoapods)
     - [Carthage](#carthage)
+    - [Manually](#manually)
 * [Quick Start](#quick-start)
     - [Programmatically](#programmatically)
     - [Storyboard](#storyboard)
@@ -55,11 +56,11 @@ $ gem install cocoapods
 To integrate `LocationPicker` into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 target 'YourApp' do
-    pod 'JTLocationPicker'
+    pod 'LocationPickerViewController'
 end
 ```
 
@@ -79,6 +80,12 @@ To integrate Permission into your Xcode project using Carthage, specify it in yo
 ```ogdl
 github "JeromeTan1997/LocationPicker"
 ```
+
+### Manually
+
+Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.0/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
+
+![](/Screenshots/framework.png)
 
 ## Quick Start
 
@@ -125,6 +132,8 @@ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 ```
 
 That's __all__ you need to have a fully functional location picker in your app. How easy!
+
+__Note__: To use current location, don't forget to add `NSLocationWhenInUseUsageDescription` to your `info.plist`
 
 ## Customization
 
