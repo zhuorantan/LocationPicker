@@ -27,6 +27,13 @@ A ready for use and fully customizable location picker for your app.
     - [Closure](#closure)
     - [Delegate and Data Source](#delegate-and-data-source)
     - [Override](#override)
+* [Location Item](#location-item)
+    - [Storage](#storage)
+    - [Equatable](#equatable)
+    - [Properties](#properties)
+    - [Initialization](#initialization)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## Features
 * Easy to use - A fully functional location picker can be integrated to your app within __5 lines__ of codes. `LocationPicker` can be subclassed both in storyboard and programmatically.
@@ -187,7 +194,7 @@ __Note__: If `alternativeLocationEditable` is set to true, please adopt __Locati
 | searchDistance | Double | 10000 | Distance in meters that is used to search locations |
 
 __Note__:
-* Alternative locations can also be provided via [Data Source](#alternative-location-data-source).
+* Alternative locations can also be provided via __Data Source__.
 * You don't need to set the `locationDeniedAlertController` if you are satisfied with the alert controller included in `LocationPicker`. You can change the texts of the default alert controller via `func customizeLocationDeniedAlertController`. If you want to do something other than presenting an alert controller, you can adopt __Permission Denied Handler__ callback.
 
 ## Callbacks
@@ -228,7 +235,7 @@ locationPicker.deleteCompletion = { (deletedLocationItem) in
 
 ##### Permission Denied Handler
 
-In default, when user request current location but denied the app's location permission, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this closure.
+By default, when user request current location but denied the app's location permission, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this closure.
 
 ```swift
 locationPicker.locationDeniedHandler = { (locationPicker) in
@@ -236,21 +243,189 @@ locationPicker.locationDeniedHandler = { (locationPicker) in
 }
 ```
 
-<!-- ### Delegate and Data Source
+### Delegate and Data Source
 
-1. Conform to `LocationPickerDelegate`
+To use a delegate or data source, the following steps need to be taken:
+
+1. Conform to `LocationPickerDelegate` or `LocationPickerDataSource`
 ```swift
-class YourViewController: LocationPickerDelegate
+class YourViewController: LocationPickerDelegate, LocationPickerDataSource
 ```
-2. Set `delegate` to this class
+2. Set `delegate` or `dataSource` to this class
 ```swift
 locationPicker.delegate = self
+locationPicker.dataSource = self
 ```
-3. Implement `func locationDidPick(locationItem: LocationItem)`
+3. Implement methods in `delegate` or `dataSource`
+
+##### Location Pick
+
+This delegate method is used to get user's final decision. It would be called only once for every `LocationPicker` object when it is about to be dismissed.
+
 ```swift
 func locationDidPick(locationItem: LocationItem) {
     // Do something with the location the user picked.
 }
 ```
 
-### Override -->
+##### Location Selection
+
+This delegate method is used to get user's every location selection. It would be called every time user chooses a location in the list or drag the map view.
+
+```swift
+func locationDidSelect(locationItem: LocationItem) {
+    // Do something with user's every selection.
+}
+```
+
+##### Alternative Locations
+
+This data source method is used to provide locations that show under current location and search result locations. Instead of using delegate, you can also just set the `alternativeLocations` property.
+
+```swift
+func numberOfAlternativeLocations() -> Int {
+    // Get the number of locations you need to add to the location list.
+    return count
+}
+func alternativeLocationAtIndex(index: Int) -> LocationItem {
+    // Get the location item for the specific index.
+    return locationItem
+}
+```
+
+##### Location Deletion
+
+If `alternativeLocations` is not empty and `alternativeLocationEditable` is set to `true`, this data source method will be called when user delete a location item in the table view.
+
+```swift
+func commitAlternativeLocationDeletion(locationItem: LocationItem) {
+    // Delete the location.
+}
+```
+
+##### Permission Denied Handler
+
+By default, when user request current location but denied the app's location permission, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this delegate method.
+
+```swift
+func locationDidDeny(locationPicker: LocationPicker) {
+    // Ask user to grant location permission of this app.
+}
+```
+
+### Override
+
+If you prefer to subclass `LocationPicker`, these methods can be overridden to achieve the same result as closure and delegate.
+
+##### Location Pick
+
+This method is used to get user's final decision. It would be called only once for every `LocationPicker` object when it is about to be dismissed.
+
+```swift
+override func locationDidPick(locationItem: LocationItem) {
+    // Do something with the location the user picked.
+}
+```
+
+##### Location Selection
+
+This method is used to get user's every location selection. It would be called every time user chooses a location in the list or drag the map view.
+
+__Note__: If you override these methods, the corresponding closure and delegate method won't be executed.
+
+```swift
+override func locationDidSelect(locationItem: LocationItem) {
+    // Do something with user's every selection.
+}
+```
+
+##### Location Deletion
+
+If `alternativeLocations` is not empty and `alternativeLocationEditable` is set to `true`, this method will be called when user delete a location item in the table view.
+
+```swift
+override func alternativeLocationDidDelete(locationItem: LocationItem) {
+    // Delete the location.
+}
+```
+
+##### Permission Denied Handler
+
+By default, when user request current location but denied the app's location permission, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func customizeLocationDeniedAlertController`. If you need to do something other than presenting an alert controller, you can set this method.
+
+```swift
+override func locationDidDeny(locationPicker: LocationPicker) {
+    // Ask user to grant location permission of this app.
+}
+```
+
+## Location Item
+
+`LocationItem` is a encapsulation class of `MKMapItem` to save you from importing `MapKit` everywhere in your project. To make it more convenient to use, it equips with several computing properties to access the `MKMapItem`.
+
+### Storage
+
+`LocationItem` is conformed to `NSCoding`, which means `LocationItem` object can be encoded to `NSData` object and decoded back.
+
+```swift
+let locationData = NSKeyedArchiver.archivedDataWithRootObject(locationItem)
+let locationItem = NSKeyedUnarchiver.unarchiveObjectWithData(locationData) as! LocationItem
+```
+
+### Equatable
+
+The hash value of `LocationItem` is `"\(coordinate.latitude), \(coordinate.longitude)".hashValue`, so objects that have the same latitude and longitude are equal.
+
+### Properties
+
+| Property name | Type | Target | Remark |
+| ------------- |:----:| ------ | ------ |
+| name | String | mapItem.name | The name of the location |
+| coordinate | (latitude: Double, longitude: Double) | mapItem.placemark.coordinate | The coordinate of the location and converted to tuple |
+| addressDictionary | [NSObject: AnyObject]? | mapItem.placemark.addressDictionary | The address dictionary of the location |
+| formattedAddressString | String? | addressDictionary?["FormattedAddressLines"] | The address text formatted according to user's region |
+
+If you want to access other properties of `MKMapItem` object, just call `locationItem.mapItem`.
+
+### Initialization
+
+##### `init(mapItem: MKMapItem)`
+
+Since `LocationItem` is just the encapsulation of `MKMapItem`, of course you can create a `LocationItem` with a `MKMapItem` object.
+
+##### `init(coordinate: (latitude: Double, longitude: Double), addressDictionary: [String: AnyObject])`
+
+You can also initialize with the coordinate and address dictionary.
+
+If you don't want to store `LocationItem` objects as `NSData`, you can just store the coordinate and address dictionary, and use this method to initialize.
+
+## Contribute
+
+* If you encounter any bugs or other problems, please create issues or pull requests.
+* If you want to add more features to `LocationPicker`, you are more than welcome to create pull requests.
+* If you are good at English, please correct my English.
+* If you like the project, please star it and share with others.
+
+## License
+
+The MIT License (MIT)
+
+Copyright (c) 2016 Jerome Tan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

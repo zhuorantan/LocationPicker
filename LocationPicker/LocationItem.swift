@@ -29,7 +29,7 @@
 import MapKit
 
 /**
- A `MKMapItem` encapsulation class to save you from import `MapKit` and provide some convenience.
+ A `MKMapItem` encapsulation class to save you from importing `MapKit` everywhere in you project and provide some convenience.
  
  - important:
  This class is a encapsulation of `MKMapItem`, you can access the `MKMapItem` object via `mapItem` property.
