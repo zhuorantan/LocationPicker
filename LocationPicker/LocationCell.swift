@@ -76,25 +76,45 @@ public class LocationCell: UITableViewCell {
         locationAddressLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let margins = contentView.layoutMarginsGuide
-        
-        containerView.centerYAnchor.constraintEqualToAnchor(margins.centerYAnchor).active = true
-        containerView.leadingAnchor.constraintEqualToAnchor(iconView.trailingAnchor).active = true
-        containerView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
-        
-        locationNameLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
-        locationNameLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
-        if locationType! == .CurrentLocation {
-            locationNameLabel.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor).active = true
+        if #available(iOS 9.0, *) {
+            let margins = contentView.layoutMarginsGuide
             
+            containerView.centerYAnchor.constraintEqualToAnchor(margins.centerYAnchor).active = true
+            containerView.leadingAnchor.constraintEqualToAnchor(iconView.trailingAnchor).active = true
+            containerView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
+            
+            locationNameLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
+            locationNameLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
+            if locationType! == .CurrentLocation {
+                locationNameLabel.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor).active = true
+            } else {
+                locationNameLabel.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+                
+                locationAddressLabel.topAnchor.constraintEqualToAnchor(locationNameLabel.bottomAnchor).active = true
+                locationAddressLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
+                locationAddressLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
+                locationAddressLabel.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor).active = true
+            }
         } else {
-            locationNameLabel.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+            NSLayoutConstraint(item: containerView, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: containerView, attribute: .Leading, relatedBy: .Equal, toItem: iconView, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: containerView, attribute: .Trailing, relatedBy: .Equal, toItem: contentView, attribute: .Trailing, multiplier: 1, constant: 0).active = true
             
-            locationAddressLabel.topAnchor.constraintEqualToAnchor(locationNameLabel.bottomAnchor).active = true
-            locationAddressLabel.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
-            locationAddressLabel.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
-            locationAddressLabel.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor).active = true
+            NSLayoutConstraint(item: locationNameLabel, attribute: .Leading, relatedBy: .Equal, toItem: containerView, attribute: .Leading, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: locationNameLabel, attribute: .Trailing, relatedBy: .Equal, toItem: containerView, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+            
+            if locationType! == .CurrentLocation {
+                NSLayoutConstraint(item: locationNameLabel, attribute: .CenterY, relatedBy: .Equal, toItem: containerView, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            } else {
+                NSLayoutConstraint(item: locationNameLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1, constant: 0).active = true
+                
+                NSLayoutConstraint(item: locationAddressLabel, attribute: .Top, relatedBy: .Equal, toItem: locationNameLabel, attribute: .Bottom, multiplier: 1, constant: 0).active = true
+                NSLayoutConstraint(item: locationAddressLabel, attribute: .Leading, relatedBy: .Equal, toItem: containerView, attribute: .Leading, multiplier: 1, constant: 0).active = true
+                NSLayoutConstraint(item: locationAddressLabel, attribute: .Trailing, relatedBy: .Equal, toItem: containerView, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+                NSLayoutConstraint(item: locationAddressLabel, attribute: .Bottom, relatedBy: .Equal, toItem: containerView, attribute: .Bottom, multiplier: 1, constant: 0).active = true
+            }
         }
+        
     }
 
 }

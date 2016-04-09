@@ -360,7 +360,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
-        locationManager.requestLocation()
+        if #available(iOS 9.0, *) {
+            locationManager.requestLocation()
+        } else {
+            locationManager.startUpdatingLocation()
+        }
     }
     
     private func setupViews() {
@@ -403,27 +407,49 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         mapView.translatesAutoresizingMaskIntoConstraints = false
         pinView.translatesAutoresizingMaskIntoConstraints = false
         
-        let margins = view.layoutMarginsGuide
-        
-        searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
-        searchBar.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: -view.layoutMargins.left * 2).active = true
-        searchBar.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: view.layoutMargins.right * 2).active = true
-        
-        tableView.topAnchor.constraintEqualToAnchor(searchBar.bottomAnchor).active = true
-        tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
-        tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
-        
-        mapView.topAnchor.constraintEqualToAnchor(tableView.bottomAnchor).active = true
-        mapView.leadingAnchor.constraintEqualToAnchor(tableView.leadingAnchor).active = true
-        mapView.trailingAnchor.constraintEqualToAnchor(tableView.trailingAnchor).active = true
-        mapView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
-        
-        mapViewHeightConstraint = mapView.heightAnchor.constraintEqualToConstant(0)
-        mapViewHeightConstraint.active = true
-
-        pinView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
-        pinViewCenterYConstraint = pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinViewImageHeight / 2)
-        pinViewCenterYConstraint.active = true
+        if #available(iOS 9.0, *) {
+            let margins = view.layoutMarginsGuide
+            
+            searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
+            searchBar.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: -view.layoutMargins.left * 2).active = true
+            searchBar.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: view.layoutMargins.right * 2).active = true
+            
+            tableView.topAnchor.constraintEqualToAnchor(searchBar.bottomAnchor).active = true
+            tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
+            tableView.trailingAnchor.constraintEqualToAnchor(searchBar.trailingAnchor).active = true
+            
+            mapView.topAnchor.constraintEqualToAnchor(tableView.bottomAnchor).active = true
+            mapView.leadingAnchor.constraintEqualToAnchor(tableView.leadingAnchor).active = true
+            mapView.trailingAnchor.constraintEqualToAnchor(tableView.trailingAnchor).active = true
+            mapView.bottomAnchor.constraintEqualToAnchor(bottomLayoutGuide.topAnchor).active = true
+            
+            mapViewHeightConstraint = mapView.heightAnchor.constraintEqualToConstant(0)
+            mapViewHeightConstraint.active = true
+            
+            pinView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
+            pinViewCenterYConstraint = pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinViewImageHeight / 2)
+            pinViewCenterYConstraint.active = true
+        } else {
+            NSLayoutConstraint(item: searchBar, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: searchBar, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: searchBar, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+            
+            NSLayoutConstraint(item: tableView, attribute: .Top, relatedBy: .Equal, toItem: searchBar, attribute: .Bottom, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: tableView, attribute: .Leading, relatedBy: .Equal, toItem: searchBar, attribute: .Leading, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: tableView, attribute: .Trailing, relatedBy: .Equal, toItem: searchBar, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+            
+            NSLayoutConstraint(item: mapView, attribute: .Top, relatedBy: .Equal, toItem: tableView, attribute: .Bottom, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: mapView, attribute: .Leading, relatedBy: .Equal, toItem: tableView, attribute: .Leading, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: mapView, attribute: .Trailing, relatedBy: .Equal, toItem: tableView, attribute: .Trailing, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: mapView, attribute: .Bottom, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1, constant: 0).active = true
+            
+            mapViewHeightConstraint = NSLayoutConstraint(item: mapView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: 0)
+            mapViewHeightConstraint.active = true
+            
+            NSLayoutConstraint(item: pinView, attribute: .CenterX, relatedBy: .Equal, toItem: mapView, attribute: .CenterX, multiplier: 1, constant: 0).active = true
+            pinViewCenterYConstraint = NSLayoutConstraint(item: pinView, attribute: .CenterY, relatedBy: .Equal, toItem: mapView, attribute: .CenterY, multiplier: 1, constant: -pinViewImageHeight / 2)
+            pinViewCenterYConstraint.active = true
+        }
     }
     
     
@@ -899,6 +925,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         if tableView.indexPathForSelectedRow?.row == 0 {
             let currentLocation = locations[0]
             reverseGeocodeLocation(currentLocation)
+            if #available(iOS 9.0, *) {
+            } else {
+                locationManager.stopUpdatingLocation()
+            }
         }
     }
     

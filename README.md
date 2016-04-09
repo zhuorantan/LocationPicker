@@ -2,7 +2,7 @@
 
 A ready for use and fully customizable location picker for your app.
 
-![](/Screenshots/locationpicker.gif)
+![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/locationpicker.gif)
 
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
 [![CocoaPods](https://img.shields.io/cocoapods/v/LocationPickerViewController.svg?style=flat)](http://cocoadocs.org/docsets/LocationPickerViewController/)
@@ -33,6 +33,7 @@ A ready for use and fully customizable location picker for your app.
     - [Equatable](#equatable)
     - [Properties](#properties)
     - [Initialization](#initialization)
+* [Change Log](#change-log)
 * [Contribute](#contribute)
 * [License](#license)
 
@@ -56,7 +57,7 @@ $ gem install cocoapods
 To integrate `LocationPicker` into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-platform :ios, '9.0'
+platform :ios, '8.0'
 use_frameworks!
 
 target 'YourApp' do
@@ -83,9 +84,9 @@ github "JeromeTan1997/LocationPicker"
 
 ### Manually
 
-Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.0/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
+Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.1/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
 
-![](/Screenshots/framework.png)
+![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/framework.png)
 
 ## Quick Start
 
@@ -117,7 +118,7 @@ presentViewController(navigationController, animated: true, completion: nil)
 
 1. Drag a __View Controller__ to your Storyboard.
 2. In the __Identity inspector__, Entry `LocationPicker` both in __Class__ and __Module__ field(__Note__: If you are using Cocopods, the __Module__ field should be `LocationPickerViewController`).
-![](/Screenshots/storyboard.png)
+![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/storyboard.png)
 3. Create a __segue__ and add a __Identifier__ to it.
 4. Add the following codes in the source view controller.
 ```swift
@@ -407,6 +408,10 @@ Since `LocationItem` is just the encapsulation of `MKMapItem`, of course you can
 You can also initialize with the coordinate and address dictionary.
 
 If you don't want to store `LocationItem` objects as `NSData`, you can just store the coordinate and address dictionary, and use this method to initialize.
+
+## Change Log
+
+[CHANGELOG.md](https://github.com/JeromeTan1997/LocationPicker/blob/master/CHANGELOG.md)
 
 ## Contribute
 
