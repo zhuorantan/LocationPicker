@@ -13,6 +13,7 @@ A ready for use and fully customizable location picker for your app.
 * [Installation](#installation)
     - [Cocoapods](#cocoapods)
     - [Carthage](#carthage)
+    - [Swift Package Manager](#swift-package-manager)
     - [Manually](#manually)
 * [Quick Start](#quick-start)
     - [Programmatically](#programmatically)
@@ -76,10 +77,30 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate Permission into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate `LocationPicker` into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
 github "JeromeTan1997/LocationPicker"
+```
+
+### Swift Package Manager
+
+[Swift Package Manager](#https://swift.org/package-manager/) is a tool for managing the distribution of Swift code.
+
+Swift Package Manager is currently only available with the Swift 3 development [snapshots](#https://swift.org/download/).
+
+To integrate `LocationPicker` into your Xcode project using Swift Package Manager, specify it in your `Packages.swift`:
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "Your Project Name",
+    targets: [],
+    dependencies: [
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.1" ..< Version.max)
+    ]
+)
 ```
 
 ### Manually
@@ -419,6 +440,7 @@ If you don't want to store `LocationItem` objects as `NSData`, you can just stor
 * If you want to add more features to `LocationPicker`, you are more than welcome to create pull requests.
 * If you are good at English, please correct my English.
 * If you like the project, please star it and share with others.
+* If you have used LocationPicker in your App, please tell me by creating an issue.
 
 ## License
 
