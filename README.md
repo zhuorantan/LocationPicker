@@ -99,14 +99,14 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.1" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.2" ..< Version.max)
     ]
 )
 ```
 
 ### Manually
 
-Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.1/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
+Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.2/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
 
 ![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/framework.png)
 
@@ -174,7 +174,7 @@ This method aims to set colors more conveniently. `themColor` will be set to `cu
 
 This method provides the texts of `locationDeniedAlertController` simultaneously.
 
-If this method is not called, the alert controller will presented like this
+If this method is not called, the alert controller will be presented like this
 
 ![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/location-access.png)
 
