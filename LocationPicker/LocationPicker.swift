@@ -119,7 +119,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var deleteCompletion: ((LocationItem) -> Void)?
     
     /**
-     Handler closure executed when user try to fetch current location without location permission.
+     Handler closure executed when user try to fetch current location without location access.
      
      - important:
      If you override `func locationDidDeny(locationPicker: LocationPicker)` without calling `super`, this closure would not be called.
@@ -209,8 +209,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
     public var searchBarPlaceholder = "Search for location"
     
-        /// Text of location denied alert title. __Default__ is __`"No location access"`__
-    public var locationDeniedAlertTitle = "No location access"
+        /// Text of location denied alert title. __Default__ is __`"Location access denied"`__
+    public var locationDeniedAlertTitle = "Location access denied"
     
         /// Text of location denied alert message. __Default__ is __`"Grant location access to use current location"`__
     public var locationDeniedAlertMessage = "Grant location access to use current location"
@@ -662,7 +662,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     /**
-     This method would be called when user try to fetch current location without location permission.
+     This method would be called when user try to fetch current location without granting location access.
      
      - important:
      This method includes the following codes:

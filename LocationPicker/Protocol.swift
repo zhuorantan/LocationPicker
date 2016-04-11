@@ -86,7 +86,7 @@ import Foundation
     optional func locationDidPick(locationItem: LocationItem)
     
     /**
-     This delegate method would be called when user try to fetch current location without location permission.
+     This delegate method would be called when user try to fetch current location without granting location access.
      
      - Note:
      If you wish to present an alert view controller, just ignore this method. You can provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`, or configure the alert view controller provided by `LocationPicker` using `func customizeLocationDeniedAlertController`.
