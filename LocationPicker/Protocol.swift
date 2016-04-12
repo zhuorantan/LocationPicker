@@ -89,7 +89,7 @@ import Foundation
      This delegate method would be called when user try to fetch current location without granting location access.
      
      - Note:
-     If you wish to present an alert view controller, just ignore this method. You can provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`, or configure the alert view controller provided by `LocationPicker` using `func customizeLocationDeniedAlertController`.
+     If you wish to present an alert view controller, just ignore this method. You can provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`, or configure the alert view controller provided by `LocationPicker` using `func setLocationDeniedAlertControllerTitle`.
      
      Alternatively, the same result can be achieved by:
      * Closure
@@ -105,7 +105,7 @@ import Foundation
      
      `var locationDeniedAlertController`
      
-     `func customizeLocationDeniedAlertController`
+     `func setLocationDeniedAlertControllerTitle`
      
      - parameter locationPicker `LocationPicker` instance that needs to response to user's location request
      */

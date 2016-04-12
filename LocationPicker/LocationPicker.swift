@@ -125,7 +125,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      If you override `func locationDidDeny(locationPicker: LocationPicker)` without calling `super`, this closure would not be called.
      
      - Note:
-     If this neither this closure is not set and the delegate method with the same purpose is not provided, an alert view controller will be presented, you can configure it using `func customizeLocationDeniedAlertController` or provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`.
+     If this neither this closure is not set and the delegate method with the same purpose is not provided, an alert view controller will be presented, you can configure it using `func setLocationDeniedAlertControllerTitle` or provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`.
      
      Alternatively, the same result can be achieved by:
      * Delegate
@@ -143,7 +143,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      
      `var locationDeniedAlertController`
      
-     `func customizeLocationDeniedAlertController`
+     `func setLocationDeniedAlertControllerTitle`
      
      */
     public var locationDeniedHandler: ((LocationPicker) -> Void)?
@@ -181,7 +181,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alert Controller shows when user try to fetch current location without location permission.
      
      - Note:
-     If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func customizeLocationDeniedAlertController` or change the following text directly.
+     If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func setLocationDeniedAlertControllerTitle` or change the following text directly.
      
             var locationDeniedAlertTitle
             var locationDeniedAlertMessage
@@ -189,7 +189,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             var locationDeniedCancelText
      
      - SeeAlso:
-     `func customizeLocationDeniedAlertController`
+     `func setLocationDeniedAlertControllerTitle`
      
      `var locationDeniedHandler: ((LocationPicker) -> Void)?`
      
@@ -470,14 +470,16 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
      - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
      */
-    public func addButtons(doneButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil),
-                           cancelButtonItem: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil),
+    public func addButtons(doneButtonItem: UIBarButtonItem? = nil,
+                           cancelButtonItem: UIBarButtonItem? = nil,
                            doneButtonOrientation: NavigationItemOrientation = .Right) {
+        let doneButtonItem = doneButtonItem ?? UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil)
         doneButtonItem.enabled = false
         doneButtonItem.target = self
         doneButtonItem.action = #selector(doneButtonDidTap(_:))
         self.doneButtonItem = doneButtonItem
         
+        let cancelButtonItem = cancelButtonItem ?? UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
         cancelButtonItem.target = self
         cancelButtonItem.action = #selector(cancelButtonDidTap(_:))
         
@@ -538,7 +540,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - parameter grantText:  Text of location denied alert _Grant_ button text
      - parameter cancelText: Text of location denied alert _Cancel_ button text
      */
-    public func customizeLocationDeniedAlertController(title: String? = nil, message: String? = nil, grantText: String? = nil, cancelText: String? = nil) {
+    public func setLocationDeniedAlertControllerTitle(title: String? = nil, message: String? = nil, grantText: String? = nil, cancelText: String? = nil) {
         self.locationDeniedAlertTitle = title ?? self.locationDeniedAlertTitle
         self.locationDeniedAlertMessage = message ?? self.locationDeniedAlertMessage
         self.locationDeniedGrantText = grantText ?? self.locationDeniedGrantText
@@ -673,7 +675,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      So, if you override it without calling `super.locationDidDeny(locationPicker)`, completion closure and delegate method would not be called.
      
      - Note:
-     If you wish to present an alert view controller, just ignore this method. You can provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`, or configure the alert view controller provided by `LocationPicker` using `func customizeLocationDeniedAlertController`.
+     If you wish to present an alert view controller, just ignore this method. You can provide a fully cutomized `UIAlertController` to `var locationDeniedAlertController`, or configure the alert view controller provided by `LocationPicker` using `func setLocationDeniedAlertControllerTitle`.
      
      Alternatively, the same result can be achieved by:
      * Closure
@@ -690,7 +692,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      
      `var locationDeniedAlertController`
      
-     `func customizeLocationDeniedAlertController`
+     `func setLocationDeniedAlertControllerTitle`
      
      - parameter locationPicker `LocationPicker` instance that needs to response to user's location request
      */

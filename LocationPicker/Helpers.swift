@@ -29,13 +29,13 @@
 import Foundation
 import MapKit
 
-public enum LocationType {
+@objc public enum LocationType: Int {
     case CurrentLocation
     case SearchLocation
     case AlternativeLocation
 }
 
-public enum NavigationItemOrientation {
+@objc public enum NavigationItemOrientation: Int {
     case Left
     case Right
 }
