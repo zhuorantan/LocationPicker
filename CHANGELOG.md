@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.0.3](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.0.3) (2016-04-12)
+
+#### API breaking changes
+
+- Rename `func customizeLocationDeniedAlertController` to `func setLocationDeniedAlertControllerTitle`
+
+#### Enhancements
+
+- Support Objective-C [#1](https://github.com/JeromeTan1997/LocationPicker/issues/1)
+
 ## [1.0.2](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.0.2) (2016-04-12)
 
 #### Enhancements

@@ -181,7 +181,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Alert Controller shows when user try to fetch current location without location permission.
      
      - Note:
-     If you are content with the default alert controller, don't set this property, just change the texts in it by calling `func setLocationDeniedAlertControllerTitle` or change the following text directly.
+     If you are content with the default alert controller, don't set this property, just change the text in it by calling `func setLocationDeniedAlertControllerTitle` or change the following text directly.
      
             var locationDeniedAlertTitle
             var locationDeniedAlertMessage
@@ -528,9 +528,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     /**
-     Set texts of alert controller presented when user try to get current location but denied app's authorization.
+     Set text of alert controller presented when user try to get current location but denied app's authorization.
      
-     If you are content with the default alert controller provided by `LocationPicker`, just call this method to change the alert texts to your any language you like.
+     If you are content with the default alert controller provided by `LocationPicker`, just call this method to change the alert text to your any language you like.
      
      - Note: 
      If you are not satisfied with the default alert controller, just set `var locationDeniedAlertController` to your fully customized alert controller. If you don't want to present an alert controller at all in such situation, you can customize the behavior of `LocationPicker` by setting closure, using delegate or overriding.

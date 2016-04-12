@@ -39,9 +39,10 @@ A ready for use and fully customizable location picker for your app.
 * [License](#license)
 
 ## Features
-* Easy to use - A fully functional location picker can be integrated to your app within __5 lines__ of codes. `LocationPicker` can be subclassed both in storyboard and programmatically.
-* Comprehensive - `LocationPicker` provides [Closure](#closure), [Delegate and Data Source](#delegate-and-data-source), [Override](#override) to suit your need.
-* Fully customizable - `LocationPicker` equips with many customization attributes and methods. Original UI elements like `SearchBar`, `UITableView`, `MKMapItem` are accessible if you want to do some deep customization.
+* Easy to use - A fully functional location picker can be integrated to your app within __5 lines__ of codes. `LocationPicker` can be subclassed in storyboard or programmatically.
+* Comprehensive - `LocationPicker` provides [Closure](#closure), [Delegate and Data Source](#delegate-and-data-source), [Override](#override) for callback to suit your need.
+* All kinds of locations to pick - Users can pick locations from their current location, search results or a list of locations provided by your app.
+* Fully customizable - `LocationPicker` provides a great deal of customizability allowing all text to be customized along with the colors and icons. Original UI elements like `UISearchBar`, `UITableView`, `MKMapItem` are also accessible if you want to do some deep customization.
 * Permission worry free - `LocationPicker` requests location access for you.
 
 ## Installation
@@ -99,14 +100,14 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.2" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.3" ..< Version.max)
     ]
 )
 ```
 
 ### Manually
 
-Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.2/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
+Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.3/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
 
 ![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/framework.png)
 
@@ -185,7 +186,7 @@ This method aims to set colors more conveniently. `themColor` will be set to `cu
 
 ##### `func setLocationDeniedAlertControllerTitle`
 
-This method provides the texts of `locationDeniedAlertController` simultaneously.
+This method provides the text of `locationDeniedAlertController` simultaneously.
 
 If this method is not called, the alert controller will be presented like this
 
@@ -246,7 +247,7 @@ __Note__: If `alternativeLocationEditable` is set to true, please adopt __Locati
 
 __Note__:
 * Alternative locations can also be provided via __Data Source__.
-* You don't need to set the `locationDeniedAlertController` if you are satisfied with the alert controller included in `LocationPicker`. You can change the texts of the default alert controller via `func setLocationDeniedAlertControllerTitle`. If you want to do something other than presenting an alert controller, you can adopt __Permission Denied Handler__ callback.
+* You don't need to set the `locationDeniedAlertController` if you are satisfied with the alert controller included in `LocationPicker`. You can change the text of the default alert controller via `func setLocationDeniedAlertControllerTitle`. If you want to do something other than presenting an alert controller, you can adopt __Permission Denied Handler__ callback.
 
 ## Callbacks
 
@@ -286,7 +287,7 @@ locationPicker.deleteCompletion = { (deletedLocationItem) in
 
 ##### Permission Denied Handler
 
-By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this closure.
+By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the text in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this closure.
 
 ```swift
 locationPicker.locationDeniedHandler = { (locationPicker) in
@@ -356,7 +357,7 @@ func commitAlternativeLocationDeletion(locationItem: LocationItem) {
 
 ##### Permission Denied Handler
 
-By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this delegate method.
+By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the text in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this delegate method.
 
 ```swift
 func locationDidDeny(locationPicker: LocationPicker) {
@@ -402,7 +403,7 @@ override func alternativeLocationDidDelete(locationItem: LocationItem) {
 
 ##### Permission Denied Handler
 
-By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the texts in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this method.
+By default, when user request current location but denied the app's location access, `LocationPicker` will present an alert controller that links to the Settings. You can change the text in the alert controller by calling `func setLocationDeniedAlertControllerTitle`. If you need to do something other than presenting an alert controller, you can set this method.
 
 ```swift
 override func locationDidDeny(locationPicker: LocationPicker) {
