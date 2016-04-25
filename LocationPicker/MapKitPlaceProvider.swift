@@ -10,14 +10,15 @@ import MapKit
 
 public class MapKitPlaceProvider: PlaceProvider {
     
-    public func searchForLocations(searchText: String, callback: (items: [LocationItem]) -> Void) {
+    public func searchForLocations(searchText: String, region: MKCoordinateRegion?, callback: (items: [LocationItem]) -> Void) {
         
         let localSearchRequest = MKLocalSearchRequest()
-        localSearchRequest.naturalLanguageQuery = searchText
         
-//        if let currentCoordinate = locationManager.location?.coordinate {
-//            localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
-//        }
+        if let region = region {
+            localSearchRequest.region = region
+        }
+        
+        localSearchRequest.naturalLanguageQuery = searchText
         
         MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
             guard error == nil else { return }

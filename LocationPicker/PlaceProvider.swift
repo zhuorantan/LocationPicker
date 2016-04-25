@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import MapKit
 
 public protocol PlaceProvider {
     
-    func searchForLocations(searchText: String, callback: (items: [LocationItem]) -> Void)
+    func searchForLocations(searchText: String, region: MKCoordinateRegion?, callback: (items: [LocationItem]) -> Void)
 }

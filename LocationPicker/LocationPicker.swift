@@ -152,8 +152,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Optional varaiables
     
-     /// Location Provider for Search
-    public var locationProvider: PlaceProvider?
+     /// Place Provider for Search
+    public var placeProvider: PlaceProvider?
     
         /// Delegate of `protocol LocationPickerDelegate`
     public var delegate: LocationPickerDelegate?
@@ -754,7 +754,13 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         
         if searchText.characters.count > 0 {
             
-            locationProvider?.searchForLocations(searchText) {
+            var region: MKCoordinateRegion? = nil
+            
+            if let currentCoordinate = locationManager.location?.coordinate {
+                region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
+            }
+            
+            placeProvider?.searchForLocations(searchText, region: region) {
                 self.searchResultLocations = $0
                 self.tableView.reloadData()
             }
