@@ -152,6 +152,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Optional varaiables
     
+     /// Location Provider for Search
+    public var locationProvider: PlaceProvider?
+    
         /// Delegate of `protocol LocationPickerDelegate`
     public var delegate: LocationPickerDelegate?
     
@@ -748,21 +751,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     // MARK: Search Bar Delegate
     
     public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
         if searchText.characters.count > 0 {
-            let localSearchRequest = MKLocalSearchRequest()
-            localSearchRequest.naturalLanguageQuery = searchText
             
-            if let currentCoordinate = locationManager.location?.coordinate {
-                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
-            }
-            MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
-                guard error == nil else { return }
-                guard let localSearchResponse = localSearchResponse else { return }
-                guard localSearchResponse.mapItems.count > 0 else { return }
-                
-                self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+            locationProvider?.searchForLocations(searchText) {
+                self.searchResultLocations = $0
                 self.tableView.reloadData()
-            })
+            }
+            
         } else {
             selectedLocationItem = nil
             searchResultLocations.removeAll()

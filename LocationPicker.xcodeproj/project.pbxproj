@@ -14,6 +14,8 @@
 		0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0228892B1CACE58A00D7E11A /* Helpers.swift */; };
 		0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268267C1CAF94A900B18185 /* LocationCell.swift */; };
 		0268268A1CAFB74A00B18185 /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026826891CAFB74A00B18185 /* StyleKit.swift */; };
+		74B68E531CCE78B600031836 /* PlaceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B68E521CCE78B600031836 /* PlaceProvider.swift */; };
+		74B68E561CCE78F100031836 /* MapKitPlaceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B68E551CCE78F100031836 /* MapKitPlaceProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		022E3F9B1CB11C88006BF665 /* LocationPickerDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationPickerDemo.xcodeproj; path = LocationPickerDemo/LocationPickerDemo.xcodeproj; sourceTree = "<group>"; };
 		0268267C1CAF94A900B18185 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		026826891CAFB74A00B18185 /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
+		74B68E521CCE78B600031836 /* PlaceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceProvider.swift; sourceTree = "<group>"; };
+		74B68E551CCE78F100031836 /* MapKitPlaceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapKitPlaceProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 				0228892B1CACE58A00D7E11A /* Helpers.swift */,
 				026826891CAFB74A00B18185 /* StyleKit.swift */,
 				0228887C1CA9398D00D7E11A /* Info.plist */,
+				74B68E521CCE78B600031836 /* PlaceProvider.swift */,
+				74B68E551CCE78F100031836 /* MapKitPlaceProvider.swift */,
 			);
 			path = LocationPicker;
 			sourceTree = "<group>";
@@ -188,10 +194,12 @@
 			files = (
 				0268268A1CAFB74A00B18185 /* StyleKit.swift in Sources */,
 				0228892A1CAC297E00D7E11A /* Protocol.swift in Sources */,
+				74B68E561CCE78F100031836 /* MapKitPlaceProvider.swift in Sources */,
 				0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */,
 				022889121CA939FB00D7E11A /* LocationPicker.swift in Sources */,
 				022889281CABDAF500D7E11A /* LocationItem.swift in Sources */,
 				0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */,
+				74B68E531CCE78B600031836 /* PlaceProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
