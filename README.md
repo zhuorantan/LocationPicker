@@ -14,7 +14,6 @@ A ready for use and fully customizable location picker for your app.
     - [Cocoapods](#cocoapods)
     - [Carthage](#carthage)
     - [Swift Package Manager](#swift-package-manager)
-    - [Manually](#manually)
 * [Quick Start](#quick-start)
     - [Programmatically](#programmatically)
     - [Storyboard](#storyboard)
@@ -100,16 +99,10 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.3" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.4" ..< Version.max)
     ]
 )
 ```
-
-### Manually
-
-Download [LocationPicker Framework](https://github.com/JeromeTan1997/LocationPicker/releases/download/1.0.3/LocationPicker.framework.zip), add it to __Embedded Binaries__ and __Linked Frameworks and Libraries__ in your __Target__.
-
-![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/framework.png)
 
 ## Quick Start
 

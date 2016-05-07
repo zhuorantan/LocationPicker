@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.0.4](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.0.4) (2016-05-06)
+
+#### Bug fixes
+
+- Fix the issue with Carthage [#3](https://github.com/JeromeTan1997/LocationPicker/issues/3)
+
 ## [1.0.3](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.0.3) (2016-04-12)
 
 #### API breaking changes
