@@ -99,7 +99,7 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.0.4" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.1.0" ..< Version.max)
     ]
 )
 ```

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.1.0](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.0) (2016-05-08)
+
+#### Enhancements
+
+- Support offline location entry [#5](https://github.com/JeromeTan1997/LocationPicker/pull/5)
+
 ## [1.0.4](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.0.4) (2016-05-06)
 
 #### Bug fixes
