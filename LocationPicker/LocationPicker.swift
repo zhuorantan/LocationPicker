@@ -756,9 +756,16 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
-                guard error == nil else { return }
-                guard let localSearchResponse = localSearchResponse else { return }
-                guard localSearchResponse.mapItems.count > 0 else { return }
+                guard error == nil,
+                    let localSearchResponse = localSearchResponse where localSearchResponse.mapItems.count > 0 else {
+                    // Create map item with name and invalid placemark coordinate (since placemark is not optional in MKMapItem)
+                    let placemark = MKPlacemark(coordinate: kCLLocationCoordinate2DInvalid, addressDictionary: nil)
+                    let mapItem = MKMapItem(placemark: placemark)
+                    mapItem.name = searchText
+                    self.searchResultLocations = [LocationItem(mapItem: mapItem)]
+                    self.tableView.reloadData()
+                    return
+                }
                 
                 self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
                 self.tableView.reloadData()
@@ -942,7 +949,11 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
         let coordinate = coordinateObjectFromTuple(locationItem.coordinate)
-        showMapViewWithCenterCoordinate(coordinate, WithDistance: longitudinalDistance)
+        if CLLocationCoordinate2DIsValid(coordinate) {
+            showMapViewWithCenterCoordinate(coordinate, WithDistance: longitudinalDistance)
+        } else {
+            closeMapView()
+        }
         
         doneButtonItem?.enabled = true
         locationDidSelect(locationItem)

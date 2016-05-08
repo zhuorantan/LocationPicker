@@ -94,7 +94,11 @@ public class LocationItem: NSObject, NSCoding {
     
     public override var hashValue: Int {
         get {
-            return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
+            if CLLocationCoordinate2DIsValid(coordinateObjectFromTuple(coordinate)) {
+                return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
+            } else {
+                return mapItem.name?.hashValue ?? "".hashValue
+            }
         }
     }
     
