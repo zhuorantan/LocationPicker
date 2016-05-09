@@ -758,11 +758,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
                 guard error == nil,
                     let localSearchResponse = localSearchResponse where localSearchResponse.mapItems.count > 0 else {
-                    // Create map item with name and invalid placemark coordinate (since placemark is not optional in MKMapItem)
-                    let placemark = MKPlacemark(coordinate: kCLLocationCoordinate2DInvalid, addressDictionary: nil)
-                    let mapItem = MKMapItem(placemark: placemark)
-                    mapItem.name = searchText
-                    self.searchResultLocations = [LocationItem(mapItem: mapItem)]
+                    let locationItem = LocationItem(locationName: searchText)
+                    self.searchResultLocations = [locationItem]
                     self.tableView.reloadData()
                     return
                 }
@@ -948,9 +945,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     private func selectLocationItem(locationItem: LocationItem) {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
-        let coordinate = coordinateObjectFromTuple(locationItem.coordinate)
-        if CLLocationCoordinate2DIsValid(coordinate) {
-            showMapViewWithCenterCoordinate(coordinate, WithDistance: longitudinalDistance)
+        if let coordinate = locationItem.coordinate {
+            showMapViewWithCenterCoordinate(coordinateObjectFromTuple(coordinate), WithDistance: longitudinalDistance)
         } else {
             closeMapView()
         }
