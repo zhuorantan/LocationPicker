@@ -111,7 +111,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         return historyLocationList.reverse()[index]
     }
     
-    func commitHistoryLocationDeletion(locationItem: LocationItem) {
+    func commitAlternativeLocationDeletion(locationItem: LocationItem) {
         historyLocationList.removeAtIndex(historyLocationList.indexOf(locationItem)!)
     }
     

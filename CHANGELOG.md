@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.1.1](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.1) (2016-05-09)
+
+#### Enhancements
+
+- Support offline location for `LocationItem`
+
+#### Bug fixes
+
+- Fix a typo in demo
+
 ## [1.1.0](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.0) (2016-05-08)
 
 #### Enhancements
