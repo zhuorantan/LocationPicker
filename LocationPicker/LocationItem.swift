@@ -67,10 +67,14 @@ public class LocationItem: NSObject, NSCoding {
     }
     
         /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple.
-    public var coordinate: (latitude: Double, longitude: Double) {
+    public var coordinate: (latitude: Double, longitude: Double)? {
         get {
             let coordinate = mapItem.placemark.coordinate
-            return coordinateTupleFromObject(coordinate)
+            if CLLocationCoordinate2DIsValid(coordinate) {
+                return coordinateTupleFromObject(coordinate)
+            } else {
+                return nil
+            }
         }
     }
     
@@ -94,7 +98,7 @@ public class LocationItem: NSObject, NSCoding {
     
     public override var hashValue: Int {
         get {
-            if CLLocationCoordinate2DIsValid(coordinateObjectFromTuple(coordinate)) {
+            if let coordinate = coordinate {
                 return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
             } else {
                 return mapItem.name?.hashValue ?? "".hashValue
@@ -120,6 +124,13 @@ public class LocationItem: NSObject, NSCoding {
         self.mapItem = MKMapItem(placemark: placeMark)
     }
     
+    public init(locationName: String) {
+        // Create map item with name and invalid placemark coordinate (since placemark is not optional in MKMapItem)
+        let placeMark = MKPlacemark(coordinate: kCLLocationCoordinate2DInvalid, addressDictionary: nil)
+        self.mapItem = MKMapItem(placemark: placeMark)
+        self.mapItem.name = locationName
+    }
+    
     public override func isEqual(object: AnyObject?) -> Bool {
         return object?.hashValue == hashValue
     }
@@ -134,8 +145,8 @@ public class LocationItem: NSObject, NSCoding {
     }
     
     public func encodeWithCoder(coder: NSCoder) {
-        coder.encodeObject(coordinate.latitude, forKey: "latitude")
-        coder.encodeObject(coordinate.longitude, forKey: "longitude")
+        coder.encodeObject(mapItem.placemark.coordinate.latitude, forKey: "latitude")
+        coder.encodeObject(mapItem.placemark.coordinate.longitude, forKey: "longitude")
         coder.encodeObject(addressDictionary, forKey: "addressDictionary")
     }
     
