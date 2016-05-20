@@ -13,7 +13,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     @IBOutlet weak var locationNameTextField: UITextField!
     @IBOutlet weak var locationAddressTextField: UITextField!
-
+    @IBOutlet weak var arbitraryLocationSwitch: UISwitch!
+    
     var historyLocationList: [LocationItem] {
         get {
             if let locationDataList = NSUserDefaults.standardUserDefaults().arrayForKey("HistoryLocationList") as? [NSData] {
@@ -51,6 +52,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             locationPicker.delegate = self
             locationPicker.dataSource = self
             locationPicker.alternativeLocationEditable = true
+            locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
         }
     }
     
@@ -60,6 +62,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         // Present Location Picker subclass via codes.
         // Create LocationPicker subclass.
         let customLocationPicker = CustomLocationPicker()
+        customLocationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
         customLocationPicker.viewController = self
         let navigationController = UINavigationController(rootViewController: customLocationPicker)
         presentViewController(navigationController, animated: true, completion: nil)
@@ -71,6 +74,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         let locationPicker = LocationPicker()
         locationPicker.alternativeLocations = historyLocationList.reverse()
         locationPicker.alternativeLocationEditable = true
+        locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
         
         // Completion closures
         locationPicker.selectCompletion = { selectedLocationItem in

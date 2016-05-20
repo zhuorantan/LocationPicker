@@ -200,6 +200,15 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public var locationDeniedAlertController: UIAlertController?
     
     
+    /**
+     Allows the selection of locations that did not exactly match search results.
+     
+     - Note:
+     If an arbitrary location is selected, its coordinate in `LocationItem` will be `nil`. __Default__ is __`false`__.
+    */
+    public var allowArbitraryLocation = false
+    
+    
     
     // MARK: UI Customizations
     
@@ -765,6 +774,18 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 }
                 
                 self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                
+                if self.allowArbitraryLocation {
+                    let locationFound = self.searchResultLocations.filter({
+                        $0.name.lowercaseString == searchText.lowercaseString}).count > 0
+                    
+                    if !locationFound {
+                        // Insert arbitrary location without coordinate
+                        let locationItem = LocationItem(locationName: searchText)
+                        self.searchResultLocations.insert(locationItem, atIndex: 0)
+                    }
+                }
+                
                 self.tableView.reloadData()
             })
         } else {
