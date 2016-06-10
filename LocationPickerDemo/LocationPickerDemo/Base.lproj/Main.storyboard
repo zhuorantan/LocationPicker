@@ -49,6 +49,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow arbitrary location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oaq-4C-746">
+                                <rect key="frame" x="153" y="411" width="157" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="leg-9r-pnZ">
+                                <rect key="frame" x="399" y="404" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -58,14 +67,18 @@
                             <constraint firstAttribute="trailingMargin" secondItem="uYU-2y-4mL" secondAttribute="trailing" id="6GG-wJ-ryt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MUL-27-w1D" secondAttribute="trailing" id="7er-uf-MPw"/>
                             <constraint firstItem="MUL-27-w1D" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AB3-4e-MN3"/>
+                            <constraint firstItem="oaq-4C-746" firstAttribute="top" secondItem="30v-yE-BNj" secondAttribute="bottom" constant="20" id="EP3-Ac-Jai"/>
                             <constraint firstItem="ghW-a7-332" firstAttribute="top" secondItem="MUL-27-w1D" secondAttribute="bottom" constant="8" symbolic="YES" id="FCj-Fi-eHc"/>
                             <constraint firstItem="uYU-2y-4mL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GtS-pP-g6k"/>
+                            <constraint firstItem="oaq-4C-746" firstAttribute="leading" secondItem="DfY-5R-8rm" secondAttribute="leading" id="MHK-MK-INj"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerX" secondItem="ghW-a7-332" secondAttribute="centerX" id="SX1-z9-4hh"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="top" secondItem="ghW-a7-332" secondAttribute="bottom" constant="8" symbolic="YES" id="WcN-da-Kau"/>
+                            <constraint firstItem="leg-9r-pnZ" firstAttribute="trailing" secondItem="DfY-5R-8rm" secondAttribute="trailing" id="aWl-WA-xmb"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="centerX" secondItem="DfY-5R-8rm" secondAttribute="centerX" id="cUP-5h-73n"/>
                             <constraint firstAttribute="leadingMargin" secondItem="uYU-2y-4mL" secondAttribute="leading" id="g5S-aC-hsM"/>
                             <constraint firstItem="DfY-5R-8rm" firstAttribute="centerY" secondItem="ghW-a7-332" secondAttribute="centerY" id="iDH-Nx-bZS"/>
                             <constraint firstItem="30v-yE-BNj" firstAttribute="top" secondItem="DfY-5R-8rm" secondAttribute="bottom" constant="8" symbolic="YES" id="khc-Iy-ruU"/>
+                            <constraint firstItem="leg-9r-pnZ" firstAttribute="centerY" secondItem="oaq-4C-746" secondAttribute="centerY" id="y5c-It-6s1"/>
                             <constraint firstItem="ghW-a7-332" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yi0-sM-je5"/>
                         </constraints>
                         <variation key="default">
@@ -76,6 +89,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="8p0-gq-VJw"/>
                     <connections>
+                        <outlet property="arbitraryLocationSwitch" destination="leg-9r-pnZ" id="VvW-wb-jQx"/>
                         <outlet property="locationAddressTextField" destination="MUL-27-w1D" id="fZA-UV-3PF"/>
                         <outlet property="locationNameTextField" destination="uYU-2y-4mL" id="Mxi-WN-fLe"/>
                     </connections>
