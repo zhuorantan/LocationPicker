@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.1.2](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.2) (2016-06-10)
+
+#### API breaking changes
+
+- Rename `func addButtons` to `func addBarButtons`
+- Move `doneButtonItem` property to tuple `barButtonsItems`
+
+#### Enhancements
+
+- Make `cancelButtonItem` public
+
+#### Bug fixes
+
+- Fix the issue that the **LocatiobPicker.framework** is missing in demo app [#7](https://github.com/JeromeTan1997/LocationPicker/issues/7)
+
 ## [1.1.1](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.1) (2016-05-09)
 
 #### Enhancements

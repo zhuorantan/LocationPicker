@@ -99,7 +99,7 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.1.1" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.1.2" ..< Version.max)
     ]
 )
 ```
@@ -172,6 +172,8 @@ __Note__: To use current location, don't forget to add `NSLocationWhenInUseUsage
 ##### `func addButtons`
 
 This method provides 3 optional parameter. `doneButtonItem` and `cancelButtonItem` can be set as the customized `UIBarButtonItem` object. `doneButtonOrientation` is used to determine how to align these two buttons. If none of the parameters is provided, two system style buttons would be used, and the done button would be put on the right side.
+
+After this method is called, these two buttons can be accessed via `barButtonItems` property.
 
 ##### `func setColors`
 
