@@ -293,7 +293,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public let mapView = MKMapView()
     public let pinView = UIImageView()
     
-    public private(set) var doneButtonItem: UIBarButtonItem?
+    public private(set) var barButtonItems: (doneButtonItem: UIBarButtonItem, cancelButtonItem: UIBarButtonItem)?
     
     
     
@@ -346,7 +346,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        guard doneButtonItem == nil else { return }
+        guard barButtonItems?.doneButtonItem == nil else { return }
         if let locationItem = selectedLocationItem {
             locationDidPick(locationItem)
         }
@@ -460,7 +460,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      Add two bar buttons that confirm and cancel user's location pick.
      
      - important:
-     If this method is called, only when user tap this button can the pick closure, method and delegate method be called.
+     If this method is called, only when user tap done button can the pick closure, method and delegate method be called.
      If you don't provide `UIBarButtonItem` object, default system style bar button will be used.
      
      - Note:
@@ -470,14 +470,13 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
      - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
      */
-    public func addButtons(doneButtonItem: UIBarButtonItem? = nil,
+    public func addBarButtons(doneButtonItem: UIBarButtonItem? = nil,
                            cancelButtonItem: UIBarButtonItem? = nil,
                            doneButtonOrientation: NavigationItemOrientation = .Right) {
         let doneButtonItem = doneButtonItem ?? UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil)
         doneButtonItem.enabled = false
         doneButtonItem.target = self
         doneButtonItem.action = #selector(doneButtonDidTap(_:))
-        self.doneButtonItem = doneButtonItem
         
         let cancelButtonItem = cancelButtonItem ?? UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
         cancelButtonItem.target = self
@@ -491,6 +490,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             navigationItem.leftBarButtonItem = doneButtonItem
             navigationItem.rightBarButtonItem = cancelButtonItem
         }
+        
+        barButtonItems = (doneButtonItem, cancelButtonItem)
         
     }
     
@@ -731,7 +732,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
                 tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
             }
-            if let doneButtonItem = doneButtonItem {
+            if let doneButtonItem = barButtonItems?.doneButtonItem {
                 doneButtonItem.enabled = false
             }
         default:
@@ -773,7 +774,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             tableView.reloadData()
             closeMapView()
             
-            if let doneButtonItem = doneButtonItem {
+            if let doneButtonItem = barButtonItems?.doneButtonItem {
                 doneButtonItem.enabled = false
             }
         }
@@ -951,7 +952,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             closeMapView()
         }
         
-        doneButtonItem?.enabled = true
+        barButtonItems?.doneButtonItem.enabled = true
         locationDidSelect(locationItem)
     }
     

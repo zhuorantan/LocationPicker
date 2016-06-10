@@ -14,7 +14,7 @@ class CustomLocationPicker: LocationPicker {
     var viewController: ViewController!
 
     override func viewDidLoad() {
-        super.addButtons() // Handle over the button to LocationPicker and let it do the rest.
+        super.addBarButtons()
         super.viewDidLoad()
     }
     
