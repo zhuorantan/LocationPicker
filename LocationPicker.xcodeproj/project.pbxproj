@@ -16,16 +16,6 @@
 		0268268A1CAFB74A00B18185 /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026826891CAFB74A00B18185 /* StyleKit.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		022E3FA41CB11C89006BF665 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 022E3F9B1CB11C88006BF665 /* LocationPickerDemo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 022E3F6A1CB11C87006BF665;
-			remoteInfo = LocationPickerDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		022888771CA9398D00D7E11A /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocationPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0228887A1CA9398D00D7E11A /* LocationPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationPicker.h; sourceTree = "<group>"; };
@@ -34,7 +24,6 @@
 		022889271CABDAF500D7E11A /* LocationItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
 		022889291CAC297E00D7E11A /* Protocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		0228892B1CACE58A00D7E11A /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		022E3F9B1CB11C88006BF665 /* LocationPickerDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationPickerDemo.xcodeproj; path = LocationPickerDemo/LocationPickerDemo.xcodeproj; sourceTree = "<group>"; };
 		0268267C1CAF94A900B18185 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		026826891CAFB74A00B18185 /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,7 +42,6 @@
 		0228886D1CA9398D00D7E11A = {
 			isa = PBXGroup;
 			children = (
-				022E3F9B1CB11C88006BF665 /* LocationPickerDemo.xcodeproj */,
 				022888791CA9398D00D7E11A /* LocationPicker */,
 				022888781CA9398D00D7E11A /* Products */,
 			);
@@ -80,14 +68,6 @@
 				0228887C1CA9398D00D7E11A /* Info.plist */,
 			);
 			path = LocationPicker;
-			sourceTree = "<group>";
-		};
-		022E3F9C1CB11C88006BF665 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				022E3FA51CB11C89006BF665 /* LocationPickerDemo.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,28 +128,12 @@
 			mainGroup = 0228886D1CA9398D00D7E11A;
 			productRefGroup = 022888781CA9398D00D7E11A /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 022E3F9C1CB11C88006BF665 /* Products */;
-					ProjectRef = 022E3F9B1CB11C88006BF665 /* LocationPickerDemo.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				022888761CA9398D00D7E11A /* LocationPicker */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		022E3FA51CB11C89006BF665 /* LocationPickerDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = LocationPickerDemo.app;
-			remoteRef = 022E3FA41CB11C89006BF665 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		022888751CA9398D00D7E11A /* Resources */ = {
