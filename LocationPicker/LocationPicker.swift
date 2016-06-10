@@ -201,7 +201,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     /**
-     Allows the selection of locations that did not exactly match search results.
+     Allows the selection of locations that did not match or exactly match search results.
      
      - Note:
      If an arbitrary location is selected, its coordinate in `LocationItem` will be `nil`. __Default__ is __`false`__.
@@ -768,10 +768,14 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
                 guard error == nil,
                     let localSearchResponse = localSearchResponse where localSearchResponse.mapItems.count > 0 else {
-                    let locationItem = LocationItem(locationName: searchText)
-                    self.searchResultLocations = [locationItem]
-                    self.tableView.reloadData()
-                    return
+                        if self.allowArbitraryLocation {
+                            let locationItem = LocationItem(locationName: searchText)
+                            self.searchResultLocations = [locationItem]
+                        } else {
+                            self.searchResultLocations = []
+                        }
+                        self.tableView.reloadData()
+                        return
                 }
                 
                 self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })

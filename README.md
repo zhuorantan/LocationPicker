@@ -99,7 +99,7 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.1.2" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.2.0" ..< Version.max)
     ]
 )
 ```
@@ -193,6 +193,7 @@ __Grant__ button will direct user to the Settings where location access can be c
 
 | Property name | Default | Target | Remark |
 | ------------- |:-------:| ------ | ------ |
+| allowArbitraryLocation | false | | Allows the selection of locations that did not match or exactly match search results |
 | mapViewZoomEnabled | true | mapView.zoomEnabled | Whether the map view can zoom in and out |
 | mapViewShowsUserLocation | true | mapView.showsUserLocation | Whether the map view shows user's location |
 | mapViewScrollEnabled | true | mapView.scrollEnabled | Whether user can scroll the map view |
@@ -428,7 +429,7 @@ The hash value of `LocationItem` is `"\(coordinate.latitude), \(coordinate.longi
 | Property name | Type | Target | Remark |
 | ------------- |:----:| ------ | ------ |
 | name | String | mapItem.name | The name of the location |
-| coordinate | (latitude: Double, longitude: Double)? | mapItem.placemark.coordinate | The coordinate of the location and converted to tuple. If the user is offline or there is no search result, this property will be `nil` |
+| coordinate | (latitude: Double, longitude: Double)? | mapItem.placemark.coordinate | The coordinate of the location and converted to tuple. If the user is offline or there is no search result and the `allowArbitraryLocation` property of `LocationPicker` is set to `true`, this property will be `nil` |
 | addressDictionary | [NSObject: AnyObject]? | mapItem.placemark.addressDictionary | The address dictionary of the location |
 | formattedAddressString | String? | addressDictionary?["FormattedAddressLines"] | The address text formatted according to user's region |
 

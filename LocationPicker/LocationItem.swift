@@ -66,7 +66,7 @@ public class LocationItem: NSObject, NSCoding {
         }
     }
     
-        /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple.
+        /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
     public var coordinate: (latitude: Double, longitude: Double)? {
         get {
             let coordinate = mapItem.placemark.coordinate

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.0](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.2.0) (2016-06-10)
+
+#### Enhancements
+
+- Add the capability to allow the selection of locations that did not match or exactly match search results [#6](https://github.com/JeromeTan1997/LocationPicker/pull/6)
+
 ## [1.1.2](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.1.2) (2016-06-10)
 
 #### API breaking changes
