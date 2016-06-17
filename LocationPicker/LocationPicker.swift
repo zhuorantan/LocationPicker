@@ -727,6 +727,20 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     }
     
     
+    /**
+     This method would be called whenever a user selects search result or an alternative location from the table view.
+     If you return true, the location will be reverse geocoded. This is helpful if you require an exact
+     location (e.g. providing street), but the user just searched for a town name.
+     The default behavior is to not geocode any additional search result.
+     
+     - parameter locationItem `LocationItem` LocationItem that the user selected
+     - return `Bool` Whether to force reverse geocoding or not
+     */
+    public func forceReverseGeocoding(locationItem: LocationItem) -> Bool {
+        return false
+    }
+    
+    
     
     // MARK: - Gesture Recognizer
     
@@ -866,7 +880,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         } else {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
             let locationItem = cell.locationItem!
-            selectLocationItem(locationItem)
+            let coordinate = locationItem.coordinate
+            if coordinate != nil && self.forceReverseGeocoding(locationItem) {
+                reverseGeocodeLocation(CLLocation(latitude: coordinate!.latitude, longitude: coordinate!.longitude))
+            } else {
+                selectLocationItem(locationItem)
+            }
         }
         
     }

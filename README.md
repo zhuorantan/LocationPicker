@@ -407,6 +407,18 @@ override func locationDidDeny(locationPicker: LocationPicker) {
 }
 ```
 
+##### Reverse geocoding
+
+By default, reverse geocoding (obtaining an address for a location) will only be performed for the current location and whenever the user drags the map to select a new address. There are cases in which a search result can contain a city name but no street name. However, an exact position will be marked on the map. By overriding the following method, you can force reverse geocoding:
+
+```swift
+override public func forceReverseGeocoding(locationItem: LocationItem) -> Bool {
+    // in this case, reverse geocoding will always be performed if the street is not present
+    return locationItem.addressDictionary?["Street"] == nil
+}
+```
+
+
 ## Location Item
 
 `LocationItem` is a encapsulation class of `MKMapItem` to save you from importing `MapKit` everywhere in your project. To make it more convenient to use, it equips with several computing properties to access the `MKMapItem`.
