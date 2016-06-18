@@ -29,9 +29,9 @@
 import UIKit
 import MapKit
 
-public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
-    // MARK: - Completion closures
+    // MARK: Completion closures
     
     /**
      Completion closure executed after everytime user select a location.
@@ -295,7 +295,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
-    // MARK: - UI Elements
+    // MARK: UI Elements
     
     public let searchBar = UISearchBar()
     public let tableView = UITableView()
@@ -339,7 +339,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
 
     
     
-    // MARK: - View Controller
+    // MARK: View Controller
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -461,7 +461,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
-    // MARK: - Customs
+    // MARK: Customs
     
     /**
      Add two bar buttons that confirm and cancel user's location pick.
@@ -557,6 +557,94 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     
     
+    // MARK: Gesture Recognizer
+    
+    func panGestureInMapViewDidRecognize(sender: UIPanGestureRecognizer) {
+        switch(sender.state) {
+        case .Began:
+            mapViewCenterChanged = true
+            selectedLocationItem = nil
+            geocoder.cancelGeocode()
+            
+            searchBar.text = nil
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
+            }
+            if let doneButtonItem = barButtonItems?.doneButtonItem {
+                doneButtonItem.enabled = false
+            }
+        default:
+            break
+        }
+    }
+    
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    
+    
+    // MARK: Buttons
+    
+    func doneButtonDidTap(sender: UIBarButtonItem) {
+        if let locationItem = selectedLocationItem {
+            dismissViewControllerAnimated(true, completion: nil)
+            locationDidPick(locationItem)
+        }
+    }
+    
+    func cancelButtonDidTap(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    
+    // MARK: UI Mainipulations
+    
+    private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
+        mapViewHeightConstraint.constant = mapViewHeight
+        
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    private func closeMapView() {
+        mapViewHeightConstraint.constant = 0
+    }
+    
+    // MARK: Location Handlers
+    
+    private func selectLocationItem(locationItem: LocationItem) {
+        selectedLocationItem = locationItem
+        searchBar.text = locationItem.name
+        if let coordinate = locationItem.coordinate {
+            showMapViewWithCenterCoordinate(coordinateObjectFromTuple(coordinate), WithDistance: longitudinalDistance)
+        } else {
+            closeMapView()
+        }
+        
+        barButtonItems?.doneButtonItem.enabled = true
+        locationDidSelect(locationItem)
+    }
+    
+    private func reverseGeocodeLocation(location: CLLocation) {
+        geocoder.cancelGeocode()
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placeMarks, error) -> Void in
+            guard error == nil else {
+                print(error)
+                return
+            }
+            guard let placeMarks = placeMarks else { return }
+            
+            if !self.searchBar.isFirstResponder() {
+                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
+                self.selectLocationItem(LocationItem(mapItem: mapItem))
+            }
+        })
+    }
+}
+
+extension LocationPicker {
     // MARK: Callbacks
     
     /**
@@ -565,8 +653,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - important:
      This method includes the following codes:
      
-            selectCompletion?(locationItem)
-            delegate?.locationDidSelect?(locationItem)
+     selectCompletion?(locationItem)
+     delegate?.locationDidSelect?(locationItem)
      
      So, if you override it without calling `super.locationDidSelect(locationItem)`, completion closure and delegate method would not be called.
      
@@ -603,8 +691,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - important:
      This method includes the following codes:
      
-            pickCompletion?(locationItem)
-            delegate?.locationDidPick?(locationItem)
+     pickCompletion?(locationItem)
+     delegate?.locationDidPick?(locationItem)
      
      So, if you override it without calling `super.locationDidPick(locationItem)`, completion closure and delegate method would not be called.
      
@@ -641,8 +729,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - important:
      This method includes the following codes:
      
-            deleteCompletion?(locationItem)
-            dataSource?.commitAlternativeLocationDeletion?(locationItem)
+     deleteCompletion?(locationItem)
+     dataSource?.commitAlternativeLocationDeletion?(locationItem)
      
      So, if you override it without calling `super.alternativeLocationDidDelete(locationItem)`, completion closure and delegate method would not be called.
      
@@ -677,8 +765,8 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
      - important:
      This method includes the following codes:
      
-            locationDeniedHandler?(self)
-            delegate?.locationDidDeny?(self)
+     locationDeniedHandler?(self)
+     delegate?.locationDidDeny?(self)
      
      So, if you override it without calling `super.locationDidDeny(locationPicker)`, completion closure and delegate method would not be called.
      
@@ -723,36 +811,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             }
         }
     }
-    
-    
-    
-    // MARK: - Gesture Recognizer
-    
-    func panGestureInMapViewDidRecognize(sender: UIPanGestureRecognizer) {
-        switch(sender.state) {
-        case .Began:
-            mapViewCenterChanged = true
-            selectedLocationItem = nil
-            geocoder.cancelGeocode()
-            
-            searchBar.text = nil
-            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-                tableView.deselectRowAtIndexPath(indexPathForSelectedRow, animated: true)
-            }
-            if let doneButtonItem = barButtonItems?.doneButtonItem {
-                doneButtonItem.enabled = false
-            }
-        default:
-            break
-        }
-    }
-    
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
-    
-    
+}
+
+extension LocationPicker: UISearchBarDelegate {
     // MARK: Search Bar Delegate
     
     public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -806,9 +867,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.endEditing(true)
     }
-    
-    
-    
+}
+
+extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
     // MAKR: Table View Delegate and Data Source
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -885,9 +946,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
-    
-    
-    
+}
+
+extension LocationPicker: MKMapViewDelegate {
     // MARK: Map View Delegate
     
     public func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
@@ -912,40 +973,10 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                 }, completion: nil)
         }
     }
-    
-    
-    
-    // MARK: Buttons
-    
-    func doneButtonDidTap(sender: UIBarButtonItem) {
-        if let locationItem = selectedLocationItem {
-            dismissViewControllerAnimated(true, completion: nil)
-            locationDidPick(locationItem)
-        }
-    }
-    
-    func cancelButtonDidTap(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    
-    // MARK: - UI Mainipulations
-    
-    private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
-        mapViewHeightConstraint.constant = mapViewHeight
-        
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
-    private func closeMapView() {
-        mapViewHeightConstraint.constant = 0
-    }
-    
-    
-    
-    // MARK: - Location Manager Delegate
+}
+
+extension LocationPicker: CLLocationManagerDelegate {
+    // MARK: Location Manager Delegate
     
     public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error)
@@ -961,38 +992,4 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
             }
         }
     }
-    
-    
-    
-    // MARK: Location Handlers
-    
-    private func selectLocationItem(locationItem: LocationItem) {
-        selectedLocationItem = locationItem
-        searchBar.text = locationItem.name
-        if let coordinate = locationItem.coordinate {
-            showMapViewWithCenterCoordinate(coordinateObjectFromTuple(coordinate), WithDistance: longitudinalDistance)
-        } else {
-            closeMapView()
-        }
-        
-        barButtonItems?.doneButtonItem.enabled = true
-        locationDidSelect(locationItem)
-    }
-    
-    private func reverseGeocodeLocation(location: CLLocation) {
-        geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(location, completionHandler: { (placeMarks, error) -> Void in
-            guard error == nil else {
-                print(error)
-                return
-            }
-            guard let placeMarks = placeMarks else { return }
-            
-            if !self.searchBar.isFirstResponder() {
-                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
-                self.selectLocationItem(LocationItem(mapItem: mapItem))
-            }
-        })
-    }
-    
 }
