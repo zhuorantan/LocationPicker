@@ -109,12 +109,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Jerome Tan";
 				TargetAttributes = {
 					022888761CA9398D00D7E11A = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = V976P88RM9;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -271,6 +272,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -291,6 +293,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JeromeTan.LocationPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

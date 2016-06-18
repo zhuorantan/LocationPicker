@@ -417,11 +417,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         pinView.translatesAutoresizingMaskIntoConstraints = false
         
         if #available(iOS 9.0, *) {
-            let margins = view.layoutMarginsGuide
-            
             searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
-            searchBar.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: -view.layoutMargins.left * 2).active = true
-            searchBar.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: view.layoutMargins.right * 2).active = true
+            searchBar.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor).active = true
+            searchBar.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
             
             tableView.topAnchor.constraintEqualToAnchor(searchBar.bottomAnchor).active = true
             tableView.leadingAnchor.constraintEqualToAnchor(searchBar.leadingAnchor).active = true
