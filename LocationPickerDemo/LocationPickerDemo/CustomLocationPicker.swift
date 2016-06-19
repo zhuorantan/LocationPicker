@@ -23,8 +23,8 @@ class CustomLocationPicker: LocationPicker {
     }
     
     override func locationDidPick(locationItem: LocationItem) {
-        viewController.showLocation(locationItem)
-        viewController.storeLocation(locationItem)
+        viewController.showLocation(locationItem: locationItem)
+        viewController.storeLocation(locationItem: locationItem)
     }
 
 }
