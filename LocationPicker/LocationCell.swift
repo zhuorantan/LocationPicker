@@ -50,7 +50,7 @@ public class LocationCell: UITableViewCell {
     private func setupViews() {
         let length = contentView.bounds.height
         
-        backgroundColor = UIColor.clear()
+        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         separatorInset.left = length
         
         iconView.frame = CGRect(x: 0, y: 0, width: length, height: length)
