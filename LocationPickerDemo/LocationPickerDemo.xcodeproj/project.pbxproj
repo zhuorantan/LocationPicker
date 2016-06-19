@@ -7,43 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		021C0D991D094D1C00DB0BEE /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C0D981D094D1C00DB0BEE /* LocationPicker.framework */; };
-		021C0D9A1D094D1C00DB0BEE /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 021C0D981D094D1C00DB0BEE /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		022E3F6E1CB11C87006BF665 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F6D1CB11C87006BF665 /* AppDelegate.swift */; };
 		022E3F701CB11C87006BF665 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F6F1CB11C87006BF665 /* ViewController.swift */; };
 		022E3F731CB11C87006BF665 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F711CB11C87006BF665 /* Main.storyboard */; };
 		022E3F751CB11C87006BF665 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F741CB11C87006BF665 /* Assets.xcassets */; };
 		022E3F781CB11C87006BF665 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F761CB11C87006BF665 /* LaunchScreen.storyboard */; };
 		022E3FAF1CB11D21006BF665 /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */; };
+		028D87681D16213200F3AE0F /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028D87671D16213200F3AE0F /* LocationPicker.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		021C0DA11D09660800DB0BEE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 021C0D9C1D09660800DB0BEE /* LocationPicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 022888771CA9398D00D7E11A;
-			remoteInfo = LocationPicker;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		028335C21CDCFE3700D5CD37 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				021C0D9A1D094D1C00DB0BEE /* LocationPicker.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		021C0D981D094D1C00DB0BEE /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LocationPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		021C0D9C1D09660800DB0BEE /* LocationPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LocationPicker.xcodeproj; path = ../LocationPicker.xcodeproj; sourceTree = "<group>"; };
 		022E3F6A1CB11C87006BF665 /* LocationPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		022E3F6D1CB11C87006BF665 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		022E3F6F1CB11C87006BF665 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +25,7 @@
 		022E3F771CB11C87006BF665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		022E3F791CB11C87006BF665 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
+		028D87671D16213200F3AE0F /* LocationPicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocationPicker.framework; path = "../Debug-iphonesimulator/LocationPicker.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,26 +33,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021C0D991D094D1C00DB0BEE /* LocationPicker.framework in Frameworks */,
+				028D87681D16213200F3AE0F /* LocationPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		021C0D9D1D09660800DB0BEE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				021C0DA21D09660800DB0BEE /* LocationPicker.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		022E3F611CB11C87006BF665 = {
 			isa = PBXGroup;
 			children = (
-				021C0D9C1D09660800DB0BEE /* LocationPicker.xcodeproj */,
-				021C0D981D094D1C00DB0BEE /* LocationPicker.framework */,
+				028D87671D16213200F3AE0F /* LocationPicker.framework */,
 				022E3F6C1CB11C87006BF665 /* LocationPickerDemo */,
 				022E3F6B1CB11C87006BF665 /* Products */,
 			);
@@ -116,7 +81,6 @@
 				022E3F661CB11C87006BF665 /* Sources */,
 				022E3F671CB11C87006BF665 /* Frameworks */,
 				022E3F681CB11C87006BF665 /* Resources */,
-				028335C21CDCFE3700D5CD37 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,6 +103,8 @@
 				TargetAttributes = {
 					022E3F691CB11C87006BF665 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = V976P88RM9;
+						DevelopmentTeamName = "Zhuoran Tan";
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -154,28 +120,12 @@
 			mainGroup = 022E3F611CB11C87006BF665;
 			productRefGroup = 022E3F6B1CB11C87006BF665 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 021C0D9D1D09660800DB0BEE /* Products */;
-					ProjectRef = 021C0D9C1D09660800DB0BEE /* LocationPicker.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				022E3F691CB11C87006BF665 /* LocationPickerDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		021C0DA21D09660800DB0BEE /* LocationPicker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LocationPicker.framework;
-			remoteRef = 021C0DA11D09660800DB0BEE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		022E3F681CB11C87006BF665 /* Resources */ = {
@@ -315,6 +265,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = LocationPickerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JeromeTan.LocationPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -331,6 +282,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = LocationPickerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JeromeTan.LocationPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
