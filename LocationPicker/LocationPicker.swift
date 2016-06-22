@@ -771,6 +771,7 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Search Bar Delegate
     
+    
     public func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count > 0 {
             let localSearchRequest = MKLocalSearchRequest()
@@ -792,7 +793,9 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
                         return
                 }
                 
-                self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                self.searchResultLocations = localSearchResponse.mapItems.filter({ (mapItem) -> Bool in
+                    return self.shouldShowSearchResult(mapItem)
+                }).map({ LocationItem(mapItem: $0) })
                 
                 if self.allowArbitraryLocation {
                     let locationFound = self.searchResultLocations.filter({
@@ -823,6 +826,15 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
         searchBar.endEditing(true)
     }
     
+    
+    /**
+     Decide if an item from MKLocalSearch should be displayed or not
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func shouldShowSearchResult(mapItem: MKMapItem) -> Bool {
+        return true
+    }
     
     
     // MAKR: Table View Delegate and Data Source
