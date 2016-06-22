@@ -987,7 +987,12 @@ public class LocationPicker: UIViewController, UISearchBarDelegate, UITableViewD
     
     // MARK: Location Handlers
     
-    private func selectLocationItem(locationItem: LocationItem) {
+    /**
+     Set the given LocationItem as the currently selected one. This will update the searchBar and show the map if possible.
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func selectLocationItem(locationItem: LocationItem) {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
         if let coordinate = locationItem.coordinate {
