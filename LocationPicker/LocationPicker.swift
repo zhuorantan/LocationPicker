@@ -557,6 +557,32 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     
     
+    /**
+     This method would be called whenever a user selects search result or an alternative location from the table view.
+     If you return true, the location will be reverse geocoded. This is helpful if you require an exact
+     location (e.g. providing street), but the user just searched for a town name.
+     The default behavior is to not geocode any additional search result.
+     
+     - parameter locationItem `LocationItem` LocationItem that the user selected
+     - return `Bool` Whether to force reverse geocoding or not
+     */
+    public func forceReverseGeocoding(locationItem: LocationItem) -> Bool {
+        return false
+    }
+    
+    
+    
+    /**
+     Decide if an item from MKLocalSearch should be displayed or not
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func shouldShowSearchResult(mapItem: MKMapItem) -> Bool {
+        return true
+    }
+    
+    
+    
     // MARK: Gesture Recognizer
     
     func panGestureInMapViewDidRecognize(sender: UIPanGestureRecognizer) {
@@ -612,9 +638,16 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         mapViewHeightConstraint.constant = 0
     }
     
+    
+    
     // MARK: Location Handlers
     
-    private func selectLocationItem(locationItem: LocationItem) {
+    /**
+     Set the given LocationItem as the currently selected one. This will update the searchBar and show the map if possible.
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func selectLocationItem(locationItem: LocationItem) {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
         if let coordinate = locationItem.coordinate {
@@ -837,7 +870,9 @@ extension LocationPicker: UISearchBarDelegate {
                         return
                 }
                 
-                self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                self.searchResultLocations = localSearchResponse.mapItems.filter({ (mapItem) -> Bool in
+                    return self.shouldShowSearchResult(mapItem)
+                }).map({ LocationItem(mapItem: $0) })
                 
                 if self.allowArbitraryLocation {
                     let locationFound = self.searchResultLocations.filter({
@@ -925,7 +960,12 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocationCell
             let locationItem = cell.locationItem!
-            selectLocationItem(locationItem)
+            let coordinate = locationItem.coordinate
+            if (coordinate != nil && self.forceReverseGeocoding(locationItem)) {
+                reverseGeocodeLocation(CLLocation(latitude: coordinate!.latitude, longitude: coordinate!.longitude))
+            } else {
+                selectLocationItem(locationItem)
+            }
         }
         
     }

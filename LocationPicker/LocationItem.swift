@@ -90,7 +90,8 @@ public class LocationItem: NSObject, NSCoding {
         /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
     public var formattedAddressString: String? {
         get {
-            return (addressDictionary?["FormattedAddressLines"] as? [String])?[0]
+            let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String])
+            return addressParts?.count > 1 ? addressParts?[1] : addressParts?[0]
         }
     }
     
