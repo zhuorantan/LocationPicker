@@ -256,13 +256,18 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      */
     public var alternativeLocationEditable = false
     
+    /**
+     Whether to force reverse geocoding or not. If this propertyis set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
+     The default behavior is to not geocode any additional search result.
+     */
+    public var forceReverseGeocoding = false
+    
     
     
         /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
     public var tableViewBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
         /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
-//    public var currentLocationIconColor = UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)
     public var currentLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
         /// The color of the icon showed in search result location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
@@ -558,6 +563,17 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     
     
+    /**
+     Decide if an item from MKLocalSearch should be displayed or not
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func shouldShowSearchResult(forMapItem: MKMapItem) -> Bool {
+        return true
+    }
+    
+    
+    
     // MARK: Gesture Recognizer
     
     func panGestureInMapViewDidRecognize(panGestureRecognizer: UIPanGestureRecognizer) {
@@ -613,8 +629,15 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         mapViewHeightConstraint.constant = 0
     }
     
+    
+    
     // MARK: Location Handlers
     
+    /**
+     Set the given LocationItem as the currently selected one. This will update the searchBar and show the map if possible.
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
     private func selectLocationItem(_ locationItem: LocationItem) {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
@@ -643,9 +666,11 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             }
         })
     }
+    
 }
 
 extension LocationPicker {
+    
     // MARK: Callbacks
     
     /**
@@ -812,9 +837,11 @@ extension LocationPicker {
             }
         }
     }
+    
 }
 
 extension LocationPicker: UISearchBarDelegate {
+    
     // MARK: Search Bar Delegate
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -838,7 +865,9 @@ extension LocationPicker: UISearchBarDelegate {
                         return
                 }
                 
-                self.searchResultLocations = localSearchResponse.mapItems.map({ LocationItem(mapItem: $0) })
+                self.searchResultLocations = localSearchResponse.mapItems.filter({ (mapItem) -> Bool in
+                    return self.shouldShowSearchResult(forMapItem: mapItem)
+                }).map({ LocationItem(mapItem: $0) })
                 
                 if self.allowArbitraryLocation {
                     let locationFound = self.searchResultLocations.filter({
@@ -868,10 +897,12 @@ extension LocationPicker: UISearchBarDelegate {
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
     }
+    
 }
 
 extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
-    // MAKR: Table View Delegate and Data Source
+    
+    // MARK: Table View Delegate and Data Source
     
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -926,7 +957,12 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.cellForRow(at: indexPath) as! LocationCell
             let locationItem = cell.locationItem!
-            selectLocationItem(locationItem)
+            let coordinate = locationItem.coordinate
+            if (coordinate != nil && self.forceReverseGeocoding) {
+                reverseGeocodeLocation(CLLocation(latitude: coordinate!.latitude, longitude: coordinate!.longitude))
+            } else {
+                selectLocationItem(locationItem)
+            }
         }
         
     }
@@ -947,9 +983,11 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+    
 }
 
 extension LocationPicker: MKMapViewDelegate {
+    
     // MARK: Map View Delegate
     
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
@@ -974,9 +1012,11 @@ extension LocationPicker: MKMapViewDelegate {
                 }, completion: nil)
         }
     }
+    
 }
 
 extension LocationPicker: CLLocationManagerDelegate {
+    
     // MARK: Location Manager Delegate
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
