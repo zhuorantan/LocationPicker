@@ -660,7 +660,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             }
             guard let placeMarks = placeMarks else { return }
             
-            if !self.searchBar.isFirstResponder() {
+            if !self.searchBar.isFirstResponder {
                 let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
                 self.selectLocationItem(LocationItem(mapItem: mapItem))
             }
@@ -829,7 +829,7 @@ extension LocationPicker {
                 let alertController = UIAlertController(title: locationDeniedAlertTitle, message: locationDeniedAlertMessage, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: locationDeniedGrantText, style: .default, handler: { (alertAction) in
                     if let url = URL(string: UIApplicationOpenSettingsURLString) {
-                        UIApplication.shared().openURL(url)
+                        UIApplication.shared.openURL(url)
                     }
                 }))
                 alertController.addAction(UIAlertAction(title: locationDeniedCancelText, style: .cancel, handler: nil))
@@ -854,7 +854,7 @@ extension LocationPicker: UISearchBarDelegate {
             }
             MKLocalSearch(request: localSearchRequest).start(completionHandler: { (localSearchResponse, error) -> Void in
                 guard error == nil,
-                    let localSearchResponse = localSearchResponse where localSearchResponse.mapItems.count > 0 else {
+                    let localSearchResponse = localSearchResponse, localSearchResponse.mapItems.count > 0 else {
                         if self.allowArbitraryLocation {
                             let locationItem = LocationItem(locationName: searchText)
                             self.searchResultLocations = [locationItem]
@@ -1002,7 +1002,8 @@ extension LocationPicker: MKMapViewDelegate {
         longitudinalDistance = getLongitudinalDistance(fromMapRect: mapView.visibleMapRect)
         if mapViewCenterChanged {
             mapViewCenterChanged = false
-            let revisedCoordinate = gcjToWgs(coordinate: mapView.centerCoordinate)
+//            let revisedCoordinate = gcjToWgs(coordinate: mapView.centerCoordinate)
+            let revisedCoordinate = mapView.centerCoordinate
             reverseGeocodeLocation(CLLocation(latitude: revisedCoordinate.latitude, longitude: revisedCoordinate.longitude))
         }
         
@@ -1019,7 +1020,7 @@ extension LocationPicker: CLLocationManagerDelegate {
     
     // MARK: Location Manager Delegate
     
-    public func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
+    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
     

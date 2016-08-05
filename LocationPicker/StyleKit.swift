@@ -16,21 +16,21 @@ class StyleKit: NSObject {
     
     /// Page 1
     
-    class func drawMapPointerIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) {
+    class func drawMapPointerIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
         context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        context.translate(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        context.scale(x: resizedScale.width, y: resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_map_pointer
         do {
             context.saveGState()
-            context.translate(x: 12, y: 12)
+            context.translateBy(x: 12, y: 12)
             
             /// Capa_1
             do {
@@ -53,7 +53,7 @@ class StyleKit: NSObject {
                 shape.close()
                 shape.move(to: CGPoint(x: 19.15, y: 0.05))
                 context.saveGState()
-                context.translate(x: 0, y: 0.04)
+                context.translateBy(x: 0, y: 0.04)
                 shape.lineWidth = 2
                 color.setStroke()
                 shape.stroke()
@@ -68,28 +68,28 @@ class StyleKit: NSObject {
         context.restoreGState()
     }
     
-    class func drawSearchIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) {
+    class func drawSearchIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
         context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        context.translate(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        context.scale(x: resizedScale.width, y: resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// Group 2
         do {
             context.saveGState()
-            context.translate(x: 18.68, y: 24.68)
-            context.rotate(byAngle: 45 * CGFloat(M_PI/180))
-            context.translate(x: -10, y: -15)
+            context.translateBy(x: 18.68, y: 24.68)
+            context.rotate(by: 45 * CGFloat(M_PI/180))
+            context.translateBy(x: -10, y: -15)
             
             /// Oval 167
             let oval167 = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 8, height: 8))
             context.saveGState()
-            context.translate(x: 6, y: 6)
+            context.translateBy(x: 6, y: 6)
             oval167.lineWidth = 2
             color.setStroke()
             oval167.stroke()
@@ -122,26 +122,26 @@ class StyleKit: NSObject {
         context.restoreGState()
     }
     
-    class func drawPinIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) {
+    class func drawPinIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
         context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        context.translate(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        context.scale(x: resizedScale.width, y: resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_icon_pin
         do {
             context.saveGState()
-            context.translate(x: 12, y: 6)
+            context.translateBy(x: 12, y: 6)
             
             /// Layer_1
             do {
                 context.saveGState()
-                context.translate(x: 1, y: 0)
+                context.translateBy(x: 1, y: 0)
                 
                 // Empty.
                 
@@ -184,16 +184,16 @@ class StyleKit: NSObject {
         context.restoreGState()
     }
     
-    class func drawPinIconFilled(frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) {
+    class func drawPinIconFilled(frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
         context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 20, height: 32), target: frame)
-        context.translate(x: resizedFrame.minX, y: resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 20, height: resizedFrame.height / 32)
-        context.scale(x: resizedScale.width, y: resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_icon_pin
         do {
@@ -202,7 +202,7 @@ class StyleKit: NSObject {
             /// Layer_1
             do {
                 context.saveGState()
-                context.translate(x: 1, y: 0)
+                context.translateBy(x: 1, y: 0)
                 
                 // Empty.
                 
@@ -251,7 +251,7 @@ class StyleKit: NSObject {
     
     /// Page 1
     
-    class func imageOfMapPointerIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) -> UIImage {
+    class func imageOfMapPointerIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -262,7 +262,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfSearchIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) -> UIImage {
+    class func imageOfSearchIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -273,7 +273,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfPinIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) -> UIImage {
+    class func imageOfPinIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -284,7 +284,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfPinIconFilled(size: CGSize = CGSize(width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black()) -> UIImage {
+    class func imageOfPinIconFilled(size: CGSize = CGSize(width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)

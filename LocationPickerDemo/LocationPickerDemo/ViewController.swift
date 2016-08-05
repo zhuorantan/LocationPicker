@@ -17,7 +17,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     var historyLocationList: [LocationItem] {
         get {
-            if let locationDataList = UserDefaults.standard().array(forKey: "HistoryLocationList") as? [Data] {
+            if let locationDataList = UserDefaults.standard.array(forKey: "HistoryLocationList") as? [Data] {
                 // Decode NSData into LocationItem object.
                 return locationDataList.map({ NSKeyedUnarchiver.unarchiveObject(with: $0) as! LocationItem })
             } else {
@@ -27,7 +27,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         set {
             // Encode LocationItem object.
             let locationDataList = newValue.map({ NSKeyedArchiver.archivedData(withRootObject: $0) })
-            UserDefaults.standard().set(locationDataList, forKey: "HistoryLocationList")
+            UserDefaults.standard.set(locationDataList, forKey: "HistoryLocationList")
         }
     }
     
@@ -47,7 +47,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         // Show Location Picker via push segue.
         // LocationPicker in Storyboard.
         if segue.identifier == "LocationPicker" {
-            let locationPicker = segue.destinationViewController as! LocationPicker
+            let locationPicker = segue.destination as! LocationPicker
             // User delegate and dataSource.
             locationPicker.delegate = self
             locationPicker.dataSource = self

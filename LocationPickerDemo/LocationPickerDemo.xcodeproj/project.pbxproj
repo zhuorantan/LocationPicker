@@ -7,16 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0228C14F1D5440FA00C05C9E /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0228C14E1D5440FA00C05C9E /* LocationPicker.framework */; };
+		0228C1501D5440FA00C05C9E /* LocationPicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0228C14E1D5440FA00C05C9E /* LocationPicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		022E3F6E1CB11C87006BF665 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F6D1CB11C87006BF665 /* AppDelegate.swift */; };
 		022E3F701CB11C87006BF665 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3F6F1CB11C87006BF665 /* ViewController.swift */; };
 		022E3F731CB11C87006BF665 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F711CB11C87006BF665 /* Main.storyboard */; };
 		022E3F751CB11C87006BF665 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F741CB11C87006BF665 /* Assets.xcassets */; };
 		022E3F781CB11C87006BF665 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022E3F761CB11C87006BF665 /* LaunchScreen.storyboard */; };
 		022E3FAF1CB11D21006BF665 /* CustomLocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */; };
-		028D87681D16213200F3AE0F /* LocationPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028D87671D16213200F3AE0F /* LocationPicker.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0228C1511D5440FB00C05C9E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0228C1501D5440FA00C05C9E /* LocationPicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0228C14E1D5440FA00C05C9E /* LocationPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LocationPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		022E3F6A1CB11C87006BF665 /* LocationPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		022E3F6D1CB11C87006BF665 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		022E3F6F1CB11C87006BF665 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,7 +41,6 @@
 		022E3F771CB11C87006BF665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		022E3F791CB11C87006BF665 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022E3FAE1CB11D21006BF665 /* CustomLocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLocationPicker.swift; sourceTree = "<group>"; };
-		028D87671D16213200F3AE0F /* LocationPicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocationPicker.framework; path = "../Debug-iphonesimulator/LocationPicker.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				028D87681D16213200F3AE0F /* LocationPicker.framework in Frameworks */,
+				0228C14F1D5440FA00C05C9E /* LocationPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,7 +58,7 @@
 		022E3F611CB11C87006BF665 = {
 			isa = PBXGroup;
 			children = (
-				028D87671D16213200F3AE0F /* LocationPicker.framework */,
+				0228C14E1D5440FA00C05C9E /* LocationPicker.framework */,
 				022E3F6C1CB11C87006BF665 /* LocationPickerDemo */,
 				022E3F6B1CB11C87006BF665 /* Products */,
 			);
@@ -81,6 +96,7 @@
 				022E3F661CB11C87006BF665 /* Sources */,
 				022E3F671CB11C87006BF665 /* Frameworks */,
 				022E3F681CB11C87006BF665 /* Resources */,
+				0228C1511D5440FB00C05C9E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
