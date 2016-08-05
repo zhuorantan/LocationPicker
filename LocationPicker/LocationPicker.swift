@@ -31,7 +31,21 @@ import MapKit
 
 public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
-    // MARK: Completion closures
+    // MARK: Types
+    
+    public enum NavigationItemOrientation {
+        case left
+        case right
+    }
+    
+    public enum LocationType: Int {
+        case currentLocation
+        case searchLocation
+        case alternativeLocation
+    }
+    
+    
+    // MARK: - Completion closures
     
     /**
      Completion closure executed after everytime user select a location.
@@ -149,13 +163,12 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public var locationDeniedHandler: ((LocationPicker) -> Void)?
     
     
-    
     // MARK: Optional varaiables
     
-        /// Delegate of `protocol LocationPickerDelegate`
+    /// Delegate of `protocol LocationPickerDelegate`
     public var delegate: LocationPickerDelegate?
     
-        /// DataSource of `protocol LocationPickerDataSource`
+    /// DataSource of `protocol LocationPickerDataSource`
     public var dataSource: LocationPickerDataSource?
     
     /**
@@ -206,102 +219,96 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      - Note:
      If an arbitrary location is selected, its coordinate in `LocationItem` will be `nil`. __Default__ is __`false`__.
     */
-    public var allowArbitraryLocation = false
-    
+    public var isAllowArbitraryLocation = false
     
     
     // MARK: UI Customizations
     
-        /// Text that indicates user's current location. __Default__ is __`"Current Location"`__.
+    /// Text that indicates user's current location. __Default__ is __`"Current Location"`__.
     public var currentLocationText = "Current Location"
     
-        /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
+    /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
     public var searchBarPlaceholder = "Search for location"
     
-        /// Text of location denied alert title. __Default__ is __`"Location access denied"`__
+    /// Text of location denied alert title. __Default__ is __`"Location access denied"`__
     public var locationDeniedAlertTitle = "Location access denied"
     
-        /// Text of location denied alert message. __Default__ is __`"Grant location access to use current location"`__
+    /// Text of location denied alert message. __Default__ is __`"Grant location access to use current location"`__
     public var locationDeniedAlertMessage = "Grant location access to use current location"
     
-        /// Text of location denied alert _Grant_ button. __Default__ is __`"Grant"`__
+    /// Text of location denied alert _Grant_ button. __Default__ is __`"Grant"`__
     public var locationDeniedGrantText = "Grant"
     
-        /// Text of location denied alert _Cancel_ button. __Default__ is __`"Cancel"`__
+    /// Text of location denied alert _Cancel_ button. __Default__ is __`"Cancel"`__
     public var locationDeniedCancelText = "Cancel"
     
     
-    
-        /// Longitudinal distance in meters that the map view shows when user select a location and before zoom in or zoom out. __Default__ is __`1000`__.
+    /// Longitudinal distance in meters that the map view shows when user select a location and before zoom in or zoom out. __Default__ is __`1000`__.
     public var defaultLongitudinalDistance: Double = 1000
     
-        /// Distance in meters that is used to search locations. __Default__ is __`10000`__
+    /// Distance in meters that is used to search locations. __Default__ is __`10000`__
     public var searchDistance: Double = 10000
     
     
+    /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
+    public var isMapViewZoomEnabled = true
     
-        /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
-    public var mapViewZoomEnabled = true
+    /// `mapView.showsUserLocation` is set to this property's value after view is loaded. __Default__ is __`true`__
+    public var isMapViewShowsUserLocation = true
     
-        /// `mapView.showsUserLocation` is set to this property's value after view is loaded. __Default__ is __`true`__
-    public var mapViewShowsUserLocation = true
-    
-        /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
-    public var mapViewScrollEnabled = true
+    /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
+    public var isMapViewScrollEnabled = true
     
     /**
      Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
      - important:
      If this property is set to `true`, remember to update your models by closure, delegate, or override.
      */
-    public var alternativeLocationEditable = false
+    public var isAlternativeLocationEditable = false
     
     /**
      Whether to force reverse geocoding or not. If this propertyis set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
      The default behavior is to not geocode any additional search result.
      */
-    public var forceReverseGeocoding = false
+    public var isForceReverseGeocoding = false
     
     
-    
-        /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
+    /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
     public var tableViewBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
-        /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var currentLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
-        /// The color of the icon showed in search result location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    /// The color of the icon showed in search result location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var searchResultLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
-        /// The color of the icon showed in alternative location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    /// The color of the icon showed in alternative location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var alternativeLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
-        /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
+    /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     public var pinColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
-        /// The color of primary text color. __Default__ is __`UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)`__
+    /// The color of primary text color. __Default__ is __`UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)`__
     public var primaryTextColor = #colorLiteral(red: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)
     
-        /// The color of secondary text color. __Default__ is __`UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)`__
+    /// The color of secondary text color. __Default__ is __`UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)`__
     public var secondaryTextColor = #colorLiteral(red: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)
     
     
+    /// The image of the icon showed in current location cell. If this property is set, the `var currentLocationIconColor` won't be adopted.
+    public var currentLocationIcon: UIImage? = nil
     
-        /// The image of the icon showed in current location cell. If this property is set, the `var currentLocationIconColor` won't be adopted.
-    public var currentLocationIconImage: UIImage? = nil
+    /// The image of the icon showed in search result location cells. If this property is set, the `var searchResultLocationIconColor` won't be adopted.
+    public var searchResultLocationIcon: UIImage? = nil
     
-        /// The image of the icon showed in search result location cells. If this property is set, the `var searchResultLocationIconColor` won't be adopted.
-    public var searchResultLocationIconImage: UIImage? = nil
+    /// The image of the icon showed in alternative location cells. If this property is set, the `var alternativeLocationIconColor` won't be adopted.
+    public var alternativeLocationIcon: UIImage? = nil
     
-        /// The image of the icon showed in alternative location cells. If this property is set, the `var alternativeLocationIconColor` won't be adopted.
-    public var alternativeLocationIconImage: UIImage? = nil
-    
-        /// The image of the pin showed in the center of map view. If this property is set, the `var pinColor` won't be adopted.
+    /// The image of the pin showed in the center of map view. If this property is set, the `var pinColor` won't be adopted.
     public var pinImage: UIImage? = nil
     
     
-    
-    // MARK: UI Elements
+    // MARK: - UI Elements
     
     public let searchBar = UISearchBar()
     public let tableView = UITableView()
@@ -309,7 +316,6 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public let pinView = UIImageView()
     
     public private(set) var barButtonItems: (doneButtonItem: UIBarButtonItem, cancelButtonItem: UIBarButtonItem)?
-    
     
     
     // MARK: Attributes
@@ -326,8 +332,13 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    private var longitudinalDistance: Double!   // This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
-    private var mapViewCenterChanged = false    // This property is used to record whether the map view center changes. This is neccessary because private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation), and this method calls private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) back, this would lead to an infinite loop.
+    
+    /// This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
+    private var longitudinalDistance: Double!
+    
+    
+    /// This property is used to record whether the map view center changes. This is neccessary because private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation), and this method calls private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) back, this would lead to an infinite loop.
+    private var isMapViewCenterChanged = false
     
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
@@ -342,10 +353,113 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             return pinView.image!.size.height
         }
     }
-
     
     
-    // MARK: View Controller
+    // MARK: Customs
+    
+    /**
+     Add two bar buttons that confirm and cancel user's location pick.
+     
+     - important:
+     If this method is called, only when user tap done button can the pick closure, method and delegate method be called.
+     If you don't provide `UIBarButtonItem` object, default system style bar button will be used.
+     
+     - Note:
+     You don't need to set the `target` and `action` property of the buttons, `LocationPicker` will handle the dismission of this view controller.
+     
+     - parameter doneButtonItem:      An `UIBarButtonItem` tapped to confirm selection, default is a _Done_ `barButtonSystemItem`
+     - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
+     - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
+     */
+    public func addBarButtons(doneButtonItem: UIBarButtonItem? = nil,
+                           cancelButtonItem: UIBarButtonItem? = nil,
+                           doneButtonOrientation: NavigationItemOrientation = .right) {
+        let doneButtonItem = doneButtonItem ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+        doneButtonItem.isEnabled = false
+        doneButtonItem.target = self
+        doneButtonItem.action = #selector(doneButtonDidTap(barButtonItem:))
+        
+        let cancelButtonItem = cancelButtonItem ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+        cancelButtonItem.target = self
+        cancelButtonItem.action = #selector(cancelButtonDidTap(barButtonItem:))
+        
+        switch doneButtonOrientation {
+        case .right:
+            navigationItem.leftBarButtonItem = cancelButtonItem
+            navigationItem.rightBarButtonItem = doneButtonItem
+        case .left:
+            navigationItem.leftBarButtonItem = doneButtonItem
+            navigationItem.rightBarButtonItem = cancelButtonItem
+        }
+        
+        barButtonItems = (doneButtonItem, cancelButtonItem)
+    }
+    
+    /**
+     If you are content with the icons provided in `LocaitonPicker` but not with the colors, you can change them by calling this method.
+     
+     This mehod can also change the color of text color all over the UI.
+     
+     - Note:
+     You can set the color of three icons and the pin in map view by setting the attributes listed below, but to keep the UI consistent, this is not recommanded.
+     
+            var currentLocationIconColor
+            var searchResultLocationIconColor
+            var alternativeLocationIconColor
+            var pinColor
+     
+     If you are not satisified with the shape of icons and pin image, you can change them by setting the attributes below.
+     
+            var currentLocationIconImage
+            var searchResultLocationIconImage
+            var alternativeLocationIconImage
+            var pinImage
+     
+     - parameter themeColor:         The color of all icons
+     - parameter primaryTextColor:   The color of primary text
+     - parameter secondaryTextColor: The color of secondary text
+     */
+    public func setColors(themeColor: UIColor? = nil, primaryTextColor: UIColor? = nil, secondaryTextColor: UIColor? = nil) {
+        self.currentLocationIconColor = themeColor ?? self.currentLocationIconColor
+        self.searchResultLocationIconColor = themeColor ?? self.searchResultLocationIconColor
+        self.alternativeLocationIconColor = themeColor ?? self.alternativeLocationIconColor
+        self.pinColor = themeColor ?? self.pinColor
+        self.primaryTextColor = primaryTextColor ?? self.primaryTextColor
+        self.secondaryTextColor = secondaryTextColor ?? self.secondaryTextColor
+    }
+    
+    /**
+     Set text of alert controller presented when user try to get current location but denied app's authorization.
+     
+     If you are content with the default alert controller provided by `LocationPicker`, just call this method to change the alert text to your any language you like.
+     
+     - Note: 
+     If you are not satisfied with the default alert controller, just set `var locationDeniedAlertController` to your fully customized alert controller. If you don't want to present an alert controller at all in such situation, you can customize the behavior of `LocationPicker` by setting closure, using delegate or overriding.
+     
+     - parameter title:      Text of location denied alert title
+     - parameter message:    Text of location denied alert message
+     - parameter grantText:  Text of location denied alert _Grant_ button text
+     - parameter cancelText: Text of location denied alert _Cancel_ button text
+     */
+    public func setLocationDeniedAlertControllerTexts(title: String? = nil, message: String? = nil, grantText: String? = nil, cancelText: String? = nil) {
+        self.locationDeniedAlertTitle = title ?? self.locationDeniedAlertTitle
+        self.locationDeniedAlertMessage = message ?? self.locationDeniedAlertMessage
+        self.locationDeniedGrantText = grantText ?? self.locationDeniedGrantText
+        self.locationDeniedCancelText = cancelText ?? self.locationDeniedCancelText
+    }
+    
+    
+    /**
+     Decide if an item from MKLocalSearch should be displayed or not
+     
+     - parameter locationItem:      An instance of `LocationItem`
+     */
+    public func shouldShowSearchResult(forMapItem: MKMapItem) -> Bool {
+        return true
+    }
+    
+    
+    // MARK: - View Controller
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -355,18 +469,17 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         setupLocationManager()
         setupViews()
         layoutViews()
-        
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         guard barButtonItems?.doneButtonItem == nil else { return }
+        
         if let locationItem = selectedLocationItem {
             locationDidPick(locationItem: locationItem)
         }
     }
-    
     
     
     // MARK: Initializations
@@ -395,16 +508,16 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = tableViewBackgroundColor
         
-        mapView.isZoomEnabled = mapViewZoomEnabled
+        mapView.isZoomEnabled = isMapViewZoomEnabled
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
-        mapView.isScrollEnabled = mapViewScrollEnabled
-        mapView.showsUserLocation = mapViewShowsUserLocation
+        mapView.isScrollEnabled = isMapViewScrollEnabled
+        mapView.showsUserLocation = isMapViewShowsUserLocation
         mapView.delegate = self
         
         pinView.image = pinImage ?? StyleKit.imageOfPinIconFilled(color: pinColor)
         
-        if mapViewScrollEnabled {
+        if isMapViewScrollEnabled {
             let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureInMapViewDidRecognize(panGestureRecognizer:)))
             panGestureRecognizer.delegate = self
             mapView.addGestureRecognizer(panGestureRecognizer)
@@ -466,120 +579,12 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-    
-    // MARK: Customs
-    
-    /**
-     Add two bar buttons that confirm and cancel user's location pick.
-     
-     - important:
-     If this method is called, only when user tap done button can the pick closure, method and delegate method be called.
-     If you don't provide `UIBarButtonItem` object, default system style bar button will be used.
-     
-     - Note:
-     You don't need to set the `target` and `action` property of the buttons, `LocationPicker` will handle the dismission of this view controller.
-     
-     - parameter doneButtonItem:      An `UIBarButtonItem` tapped to confirm selection, default is a _Done_ `barButtonSystemItem`
-     - parameter cancelButtonItem:    An `UIBarButtonITem` tapped to cancel selection, default is a _Cancel_ `barButtonSystemItem`
-     - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
-     */
-    public func addBarButtons(doneButtonItem: UIBarButtonItem? = nil,
-                           cancelButtonItem: UIBarButtonItem? = nil,
-                           doneButtonOrientation: NavigationItemOrientation = .right) {
-        let doneButtonItem = doneButtonItem ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
-        doneButtonItem.isEnabled = false
-        doneButtonItem.target = self
-        doneButtonItem.action = #selector(doneButtonDidTap(barButtonItem:))
-        
-        let cancelButtonItem = cancelButtonItem ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
-        cancelButtonItem.target = self
-        cancelButtonItem.action = #selector(cancelButtonDidTap(barButtonItem:))
-        
-        switch doneButtonOrientation {
-        case .right:
-            navigationItem.leftBarButtonItem = cancelButtonItem
-            navigationItem.rightBarButtonItem = doneButtonItem
-        case .left:
-            navigationItem.leftBarButtonItem = doneButtonItem
-            navigationItem.rightBarButtonItem = cancelButtonItem
-        }
-        
-        barButtonItems = (doneButtonItem, cancelButtonItem)
-        
-    }
-    
-    /**
-     If you are content with the icons provided in `LocaitonPicker` but not with the colors, you can change them by calling this method.
-     
-     This mehod can also change the color of text color all over the UI.
-     
-     - Note:
-     You can set the color of three icons and the pin in map view by setting the attributes listed below, but to keep the UI consistent, this is not recommanded.
-     
-            var currentLocationIconColor
-            var searchResultLocationIconColor
-            var alternativeLocationIconColor
-            var pinColor
-     
-     If you are not satisified with the shape of icons and pin image, you can change them by setting the attributes below.
-     
-            var currentLocationIconImage
-            var searchResultLocationIconImage
-            var alternativeLocationIconImage
-            var pinImage
-     
-     - parameter themeColor:         The color of all icons
-     - parameter primaryTextColor:   The color of primary text
-     - parameter secondaryTextColor: The color of secondary text
-     */
-    public func setColors(themeColor: UIColor? = nil, primaryTextColor: UIColor? = nil, secondaryTextColor: UIColor? = nil) {
-        self.currentLocationIconColor = themeColor ?? self.currentLocationIconColor
-        self.searchResultLocationIconColor = themeColor ?? self.searchResultLocationIconColor
-        self.alternativeLocationIconColor = themeColor ?? self.alternativeLocationIconColor
-        self.pinColor = themeColor ?? self.pinColor
-        self.primaryTextColor = primaryTextColor ?? self.primaryTextColor
-        self.secondaryTextColor = secondaryTextColor ?? self.secondaryTextColor
-    }
-    
-    /**
-     Set text of alert controller presented when user try to get current location but denied app's authorization.
-     
-     If you are content with the default alert controller provided by `LocationPicker`, just call this method to change the alert text to your any language you like.
-     
-     - Note: 
-     If you are not satisfied with the default alert controller, just set `var locationDeniedAlertController` to your fully customized alert controller. If you don't want to present an alert controller at all in such situation, you can customize the behavior of `LocationPicker` by setting closure, using delegate or overriding.
-     
-     - parameter title:      Text of location denied alert title
-     - parameter message:    Text of location denied alert message
-     - parameter grantText:  Text of location denied alert _Grant_ button text
-     - parameter cancelText: Text of location denied alert _Cancel_ button text
-     */
-    public func setLocationDeniedAlertControllerTexts(title: String? = nil, message: String? = nil, grantText: String? = nil, cancelText: String? = nil) {
-        self.locationDeniedAlertTitle = title ?? self.locationDeniedAlertTitle
-        self.locationDeniedAlertMessage = message ?? self.locationDeniedAlertMessage
-        self.locationDeniedGrantText = grantText ?? self.locationDeniedGrantText
-        self.locationDeniedCancelText = cancelText ?? self.locationDeniedCancelText
-    }
-    
-    
-    
-    /**
-     Decide if an item from MKLocalSearch should be displayed or not
-     
-     - parameter locationItem:      An instance of `LocationItem`
-     */
-    public func shouldShowSearchResult(forMapItem: MKMapItem) -> Bool {
-        return true
-    }
-    
-    
-    
     // MARK: Gesture Recognizer
     
     func panGestureInMapViewDidRecognize(panGestureRecognizer: UIPanGestureRecognizer) {
         switch(panGestureRecognizer.state) {
         case .began:
-            mapViewCenterChanged = true
+            isMapViewCenterChanged = true
             selectedLocationItem = nil
             geocoder.cancelGeocode()
             
@@ -600,7 +605,6 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-    
     // MARK: Buttons
     
     func doneButtonDidTap(barButtonItem: UIBarButtonItem) {
@@ -615,7 +619,6 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
-    
     // MARK: UI Mainipulations
     
     private func showMapView(withCenterCoordinate coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
@@ -628,7 +631,6 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     private func closeMapView() {
         mapViewHeightConstraint.constant = 0
     }
-    
     
     
     // MARK: Location Handlers
@@ -669,9 +671,10 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
 }
 
+
+// MARK: - Callbacks
+
 extension LocationPicker {
-    
-    // MARK: Callbacks
     
     /**
      This method would be called everytime user select a location including the change of region of the map view.
@@ -840,9 +843,10 @@ extension LocationPicker {
     
 }
 
+
+// MARK: Search Bar Delegate
+
 extension LocationPicker: UISearchBarDelegate {
-    
-    // MARK: Search Bar Delegate
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.characters.count > 0 {
@@ -855,7 +859,7 @@ extension LocationPicker: UISearchBarDelegate {
             MKLocalSearch(request: localSearchRequest).start(completionHandler: { (localSearchResponse, error) -> Void in
                 guard error == nil,
                     let localSearchResponse = localSearchResponse, localSearchResponse.mapItems.count > 0 else {
-                        if self.allowArbitraryLocation {
+                        if self.isAllowArbitraryLocation {
                             let locationItem = LocationItem(locationName: searchText)
                             self.searchResultLocations = [locationItem]
                         } else {
@@ -869,7 +873,7 @@ extension LocationPicker: UISearchBarDelegate {
                     return self.shouldShowSearchResult(forMapItem: mapItem)
                 }).map({ LocationItem(mapItem: $0) })
                 
-                if self.allowArbitraryLocation {
+                if self.isAllowArbitraryLocation {
                     let locationFound = self.searchResultLocations.filter({
                         $0.name.lowercased() == searchText.lowercased()}).count > 0
                     
@@ -900,9 +904,10 @@ extension LocationPicker: UISearchBarDelegate {
     
 }
 
+
+// MARK: Table View Delegate and Data Source
+
 extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
-    
-    // MARK: Table View Delegate and Data Source
     
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -918,16 +923,16 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             cell = LocationCell(locationType: .currentLocation, locationItem: nil)
             cell.locationNameLabel.text = currentLocationText
-            cell.iconView.image = currentLocationIconImage ?? StyleKit.imageOfMapPointerIcon(color: currentLocationIconColor)
+            cell.iconView.image = currentLocationIcon ?? StyleKit.imageOfMapPointerIcon(color: currentLocationIconColor)
         } else if indexPath.row > 0 && indexPath.row <= searchResultLocations.count {
             let index = indexPath.row - 1
             cell = LocationCell(locationType: .searchLocation, locationItem: searchResultLocations[index])
-            cell.iconView.image = searchResultLocationIconImage ?? StyleKit.imageOfSearchIcon(color: searchResultLocationIconColor)
+            cell.iconView.image = searchResultLocationIcon ?? StyleKit.imageOfSearchIcon(color: searchResultLocationIconColor)
         } else if indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count {
             let index = indexPath.row - 1 - searchResultLocations.count
             let locationItem = (alternativeLocations?[index] ?? dataSource?.alternativeLocation(at: index))!
             cell = LocationCell(locationType: .alternativeLocation, locationItem: locationItem)
-            cell.iconView.image = alternativeLocationIconImage ?? StyleKit.imageOfPinIcon(color: alternativeLocationIconColor)
+            cell.iconView.image = alternativeLocationIcon ?? StyleKit.imageOfPinIcon(color: alternativeLocationIconColor)
         }
         cell.locationNameLabel.textColor = primaryTextColor
         cell.locationAddressLabel.textColor = secondaryTextColor
@@ -958,7 +963,7 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.cellForRow(at: indexPath) as! LocationCell
             let locationItem = cell.locationItem!
             let coordinate = locationItem.coordinate
-            if (coordinate != nil && self.forceReverseGeocoding) {
+            if (coordinate != nil && self.isForceReverseGeocoding) {
                 reverseGeocodeLocation(CLLocation(latitude: coordinate!.latitude, longitude: coordinate!.longitude))
             } else {
                 selectLocationItem(locationItem)
@@ -968,7 +973,7 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return alternativeLocationEditable && indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count
+        return isAlternativeLocationEditable && indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count
     }
     
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -986,9 +991,10 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+
+// MARK: Map View Delegate
+
 extension LocationPicker: MKMapViewDelegate {
-    
-    // MARK: Map View Delegate
     
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         if !animated {
@@ -1000,8 +1006,8 @@ extension LocationPicker: MKMapViewDelegate {
     
     public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         longitudinalDistance = getLongitudinalDistance(fromMapRect: mapView.visibleMapRect)
-        if mapViewCenterChanged {
-            mapViewCenterChanged = false
+        if isMapViewCenterChanged {
+            isMapViewCenterChanged = false
 //            let revisedCoordinate = gcjToWgs(coordinate: mapView.centerCoordinate)
             let revisedCoordinate = mapView.centerCoordinate
             reverseGeocodeLocation(CLLocation(latitude: revisedCoordinate.latitude, longitude: revisedCoordinate.longitude))
@@ -1016,9 +1022,10 @@ extension LocationPicker: MKMapViewDelegate {
     
 }
 
+
+// MARK: Location Manager Delegate
+
 extension LocationPicker: CLLocationManagerDelegate {
-    
-    // MARK: Location Manager Delegate
     
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
@@ -1028,9 +1035,9 @@ extension LocationPicker: CLLocationManagerDelegate {
         if (tableView.indexPathForSelectedRow as NSIndexPath?)?.row == 0 {
             let currentLocation = locations[0]
             reverseGeocodeLocation(currentLocation)
-            if #available(iOS 9.0, *) {
-            } else {
+            guard #available(iOS 9.0, *) else {
                 locationManager.stopUpdatingLocation()
+                return
             }
         }
     }

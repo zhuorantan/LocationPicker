@@ -29,18 +29,6 @@
 import Foundation
 import MapKit
 
-@objc public enum LocationType: Int {
-    case currentLocation
-    case searchLocation
-    case alternativeLocation
-}
-
-@objc public enum NavigationItemOrientation: Int {
-    case left
-    case right
-}
-
-
 
 func coordinateObject(fromTuple coordinateTuple: (latitude: Double, longitude: Double)) -> CLLocationCoordinate2D {
     return CLLocationCoordinate2D(latitude: coordinateTuple.latitude, longitude: coordinateTuple.longitude)

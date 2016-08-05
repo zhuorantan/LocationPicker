@@ -51,8 +51,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             // User delegate and dataSource.
             locationPicker.delegate = self
             locationPicker.dataSource = self
-            locationPicker.alternativeLocationEditable = true
-            locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.isOn
+            locationPicker.isAlternativeLocationEditable = true
+            locationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         }
     }
     
@@ -62,7 +62,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         // Present Location Picker subclass via codes.
         // Create LocationPicker subclass.
         let customLocationPicker = CustomLocationPicker()
-        customLocationPicker.allowArbitraryLocation = arbitraryLocationSwitch.isOn
+        customLocationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         customLocationPicker.viewController = self
         let navigationController = UINavigationController(rootViewController: customLocationPicker)
         present(navigationController, animated: true, completion: nil)
@@ -73,8 +73,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         // Push Location Picker via codes.
         let locationPicker = LocationPicker()
         locationPicker.alternativeLocations = historyLocationList.reversed()
-        locationPicker.alternativeLocationEditable = true
-        locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.isOn
+        locationPicker.isAlternativeLocationEditable = true
+        locationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         
         // Completion closures
         locationPicker.selectCompletion = { selectedLocationItem in

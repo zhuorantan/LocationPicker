@@ -58,15 +58,14 @@ public class LocationItem: NSObject, NSCoding {
     public let mapItem: MKMapItem
     
     
-    
-        /// The name of the location. A reference to `MKMapItem` object's property `name`.
+    /// The name of the location. A reference to `MKMapItem` object's property `name`.
     public var name: String {
         get {
             return mapItem.name ?? ""
         }
     }
     
-        /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
+    /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
     public var coordinate: (latitude: Double, longitude: Double)? {
         get {
             let coordinate = mapItem.placemark.coordinate
@@ -78,23 +77,23 @@ public class LocationItem: NSObject, NSCoding {
         }
     }
     
-        /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
-        /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
+    /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
+    /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
     public var addressDictionary: [NSObject: AnyObject]? {
         get {
             return mapItem.placemark.addressDictionary
         }
     }
     
-        /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
-        /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
+    /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
+    /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
+    
     public var formattedAddressString: String? {
         get {
             let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String])
             return addressParts?.count > 1 ? addressParts?[1] : addressParts?[0]
         }
     }
-    
     
     
     public override var hashValue: Int {
@@ -112,7 +111,6 @@ public class LocationItem: NSObject, NSCoding {
             return "Location item with map item: " + mapItem.description
         }
     }
-    
     
     
     public init(mapItem: MKMapItem) {
@@ -134,7 +132,6 @@ public class LocationItem: NSObject, NSCoding {
     public override func isEqual(_ object: AnyObject?) -> Bool {
         return object?.hashValue == hashValue
     }
-    
     
     
     public required convenience init(coder aDecoder: NSCoder) {
