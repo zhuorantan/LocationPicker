@@ -259,6 +259,9 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
     public var isMapViewScrollEnabled = true
     
+    /// Whether redirect to the exact coordinate after queried. __Default__ is __`true`__
+    public var isRedirectToExactCoordinate = true
+    
     /**
      Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
      - important:
@@ -267,7 +270,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public var isAlternativeLocationEditable = false
     
     /**
-     Whether to force reverse geocoding or not. If this propertyis set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
+     Whether to force reverse geocoding or not. If this property is set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
      The default behavior is to not geocode any additional search result.
      */
     public var isForceReverseGeocoding = false
@@ -655,15 +658,20 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     private func reverseGeocodeLocation(_ location: CLLocation) {
         geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(location, completionHandler: { (placeMarks, error) -> Void in
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             guard error == nil else {
                 print(error)
                 return
             }
-            guard let placeMarks = placeMarks else { return }
+            guard let placemarks = placemarks else { return }
             
+            var placemark = placemarks[0]
+            if !self.isRedirectToExactCoordinate {
+                placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: placemark.addressDictionary as? [String : NSObject])
+            }
+
             if !self.searchBar.isFirstResponder {
-                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placeMarks[0]))
+                let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placemark))
                 self.selectLocationItem(LocationItem(mapItem: mapItem))
             }
         })

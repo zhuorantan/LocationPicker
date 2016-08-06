@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.0.0](https://github.com/JeromeTan1997/LocationPicker/releases/tag/2.0.0) (2016-08-06)
+
+#### Enhancements
+
+- Add a Bool property `var forceReverseGeocoding` to decide if reverse geocoding should be performed [#9](https://github.com/JeromeTan1997/LocationPicker/pull/9)
+- Migrate to Swift 2.3 and support iOS 10
+- `func selectLocaitonItem` is now public in order to allow setting a default location [#9](https://github.com/JeromeTan1997/LocationPicker/pull/9)
+- Enable filtering search results [#9](https://github.com/JeromeTan1997/LocationPicker/pull/9)
+- Add a Bool property `var isRedirectToExactCoordinate` to decide whether redirect to the exact coordinate after queried
+- Avoid duplicate texts in table view cells
+
+#### Bug fixes
+
+- Fix the misuse of NSCoding
+- Fix the misuse of layout guide
+- Fix the framework linking problem in demo
+- Fix the coordinate offset in iOS 10
+
 ## [1.2.0](https://github.com/JeromeTan1997/LocationPicker/releases/tag/1.2.0) (2016-06-10)
 
 #### Enhancements
