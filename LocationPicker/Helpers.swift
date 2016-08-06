@@ -39,7 +39,6 @@ func coordinateTuple(fromObject coordinateObject: CLLocationCoordinate2D) -> (la
 }
 
 
-
 private func isOutsideChina(coordinate: CLLocationCoordinate2D) -> Bool {
     if coordinate.longitude < 72.004 || coordinate.longitude > 137.8347 {
         return true
@@ -105,7 +104,6 @@ func gcjToWgs(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
     let revisedCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude - deltaLatitude, longitude: coordinate.longitude - deltaLongitude)
     return revisedCoordinate
 }
-
 
 
 func getLongitudinalDistance(fromMapRect mapRect: MKMapRect) -> Double {

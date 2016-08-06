@@ -454,7 +454,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      - parameter locationItem:      An instance of `LocationItem`
      */
-    public func shouldShowSearchResult(forMapItem: MKMapItem) -> Bool {
+    public func shouldShowSearchResult(for mapItem: MKMapItem) -> Bool {
         return true
     }
     
@@ -621,7 +621,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: UI Mainipulations
     
-    private func showMapView(withCenterCoordinate coordinate: CLLocationCoordinate2D, WithDistance distance: Double) {
+    private func showMapView(withCenter coordinate: CLLocationCoordinate2D, distance: Double) {
         mapViewHeightConstraint.constant = mapViewHeight
         
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
@@ -644,7 +644,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
         if let coordinate = locationItem.coordinate {
-            showMapView(withCenterCoordinate: coordinateObject(fromTuple: coordinate), WithDistance: longitudinalDistance)
+            showMapView(withCenter: coordinateObject(fromTuple: coordinate), distance: longitudinalDistance)
         } else {
             closeMapView()
         }
@@ -870,7 +870,7 @@ extension LocationPicker: UISearchBarDelegate {
                 }
                 
                 self.searchResultLocations = localSearchResponse.mapItems.filter({ (mapItem) -> Bool in
-                    return self.shouldShowSearchResult(forMapItem: mapItem)
+                    return self.shouldShowSearchResult(for: mapItem)
                 }).map({ LocationItem(mapItem: $0) })
                 
                 if self.isAllowArbitraryLocation {
@@ -1008,9 +1008,13 @@ extension LocationPicker: MKMapViewDelegate {
         longitudinalDistance = getLongitudinalDistance(fromMapRect: mapView.visibleMapRect)
         if isMapViewCenterChanged {
             isMapViewCenterChanged = false
-//            let revisedCoordinate = gcjToWgs(coordinate: mapView.centerCoordinate)
-            let revisedCoordinate = mapView.centerCoordinate
-            reverseGeocodeLocation(CLLocation(latitude: revisedCoordinate.latitude, longitude: revisedCoordinate.longitude))
+            if #available(iOS 10, *) {
+                let coordinate = mapView.centerCoordinate
+                reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+            } else {
+                let adjustedCoordinate = gcjToWgs(coordinate: mapView.centerCoordinate)
+                reverseGeocodeLocation(CLLocation(latitude: adjustedCoordinate.latitude, longitude: adjustedCoordinate.longitude))
+            }
         }
         
         if !animated {
