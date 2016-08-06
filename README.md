@@ -99,7 +99,7 @@ let package = Package(
     name: "Your Project Name",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "1.2.0" ..< Version.max)
+        .Package(url: "https://github.com/JeromeTan1997/LocationPicker.git", versions: "2.0.0" ..< Version.max)
     ]
 )
 ```
@@ -197,7 +197,9 @@ __Grant__ button will direct user to the Settings where location access can be c
 | mapViewZoomEnabled | true | mapView.zoomEnabled | Whether the map view can zoom in and out |
 | mapViewShowsUserLocation | true | mapView.showsUserLocation | Whether the map view shows user's location |
 | mapViewScrollEnabled | true | mapView.scrollEnabled | Whether user can scroll the map view |
+| isRedirectToExactCoordinate | true | | Whether redirect to the exact coordinate after queried |
 | alternativeLocationEditable | false | tableViewDataSource.tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) | Whether user can delete the provided locations in table view |
+| forceReverseGeocoding | false | | Whether to force reverse geocoding or not. If this property is set to `true`, the location will be reverse geocoded |
 
 __Note__: If `alternativeLocationEditable` is set to true, please adopt __Location Deletion__ callback to delete the location from database or memory.
 
@@ -406,18 +408,6 @@ override func locationDidDeny(locationPicker: LocationPicker) {
     // Ask user to grant location access of this app.
 }
 ```
-
-##### Reverse geocoding
-
-By default, reverse geocoding (obtaining an address for a location) will only be performed for the current location and whenever the user drags the map to select a new address. There are cases in which a search result can contain a city name but no street name. However, an exact position will be marked on the map. By overriding the following method, you can force reverse geocoding:
-
-```swift
-override public func forceReverseGeocoding(locationItem: LocationItem) -> Bool {
-    // in this case, reverse geocoding will always be performed if the street is not present
-    return locationItem.addressDictionary?["Street"] == nil
-}
-```
-
 
 ## Location Item
 

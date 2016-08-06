@@ -249,7 +249,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
     public var mapViewScrollEnabled = true
     
-    /// Whether redirect to the exact coordinate after querried. __Default__ is __`true`__
+    /// Whether redirect to the exact coordinate after queried. __Default__ is __`true`__
     public var isRedirectToExactCoordinate = true
     
     /**
@@ -260,7 +260,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public var alternativeLocationEditable = false
     
     /**
-     Whether to force reverse geocoding or not. If this propertyis set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
+     Whether to force reverse geocoding or not. If this property is set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
      The default behavior is to not geocode any additional search result.
      */
     public var forceReverseGeocoding = false
