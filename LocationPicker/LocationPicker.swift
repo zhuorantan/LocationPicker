@@ -323,13 +323,13 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Attributes
     
-    private let locationManager = CLLocationManager()
+    fileprivate let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
-    private var selectedLocationItem: LocationItem?
-    private var searchResultLocations = [LocationItem]()
+    fileprivate var selectedLocationItem: LocationItem?
+    fileprivate var searchResultLocations = [LocationItem]()
     
-    private var alternativeLocationCount: Int {
+    fileprivate var alternativeLocationCount: Int {
         get {
             return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
         }
@@ -351,7 +351,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private var pinViewCenterYConstraint: NSLayoutConstraint!
-    private var pinViewImageHeight: CGFloat {
+    fileprivate var pinViewImageHeight: CGFloat {
         get {
             return pinView.image!.size.height
         }
@@ -631,7 +631,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    private func closeMapView() {
+    fileprivate func closeMapView() {
         mapViewHeightConstraint.constant = 0
     }
     
@@ -656,7 +656,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         locationDidSelect(locationItem: locationItem)
     }
     
-    private func reverseGeocodeLocation(_ location: CLLocation) {
+    fileprivate func reverseGeocodeLocation(_ location: CLLocation) {
         geocoder.cancelGeocode()
         geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             guard error == nil else {
