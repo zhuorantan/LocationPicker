@@ -43,7 +43,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     // MARK: Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Show Location Picker via push segue.
         // LocationPicker in Storyboard.
         if segue.identifier == "LocationPicker" {

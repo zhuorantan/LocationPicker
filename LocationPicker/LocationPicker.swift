@@ -29,7 +29,7 @@
 import UIKit
 import MapKit
 
-public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
+open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Types
     
@@ -337,11 +337,11 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     
     /// This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
-    private var longitudinalDistance: Double!
+    public var longitudinalDistance: Double!
     
     
     /// This property is used to record whether the map view center changes. This is neccessary because private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation), and this method calls private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) back, this would lead to an infinite loop.
-    private var isMapViewCenterChanged = false
+    public var isMapViewCenterChanged = false
     
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
@@ -457,14 +457,14 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      - parameter locationItem:      An instance of `LocationItem`
      */
-    public func shouldShowSearchResult(for mapItem: MKMapItem) -> Bool {
+    open func shouldShowSearchResult(for mapItem: MKMapItem) -> Bool {
         return true
     }
     
     
     // MARK: - View Controller
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         longitudinalDistance = defaultLongitudinalDistance
@@ -474,7 +474,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         layoutViews()
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         guard barButtonItems?.doneButtonItem == nil else { return }
@@ -643,7 +643,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      - parameter locationItem:      An instance of `LocationItem`
      */
-    private func selectLocationItem(_ locationItem: LocationItem) {
+    public func selectLocationItem(_ locationItem: LocationItem) {
         selectedLocationItem = locationItem
         searchBar.text = locationItem.name
         if let coordinate = locationItem.coordinate {
@@ -667,7 +667,9 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             
             var placemark = placemarks[0]
             if !self.isRedirectToExactCoordinate {
-                placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: placemark.addressDictionary as? [String : NSObject])
+                var addressDictionary = [String : Any]()
+                placemark.addressDictionary?.forEach({ addressDictionary[$0.key.base as! String] = $0.value })
+                placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: addressDictionary)
             }
 
             if !self.searchBar.isFirstResponder {
@@ -717,7 +719,7 @@ extension LocationPicker {
      
      - parameter locationItem: The location item user selected
      */
-    public func locationDidSelect(locationItem: LocationItem) {
+    open func locationDidSelect(locationItem: LocationItem) {
         selectCompletion?(locationItem)
         delegate?.locationDidSelect?(locationItem: locationItem)
     }
@@ -755,7 +757,7 @@ extension LocationPicker {
      
      - parameter locationItem: The location item user picked
      */
-    public func locationDidPick(locationItem: LocationItem) {
+    open func locationDidPick(locationItem: LocationItem) {
         pickCompletion?(locationItem)
         delegate?.locationDidPick?(locationItem: locationItem)
     }
@@ -791,7 +793,7 @@ extension LocationPicker {
      
      - parameter locationItem: The location item needs to be deleted
      */
-    public func alternativeLocationDidDelete(locationItem: LocationItem) {
+    open func alternativeLocationDidDelete(locationItem: LocationItem) {
         deleteCompletion?(locationItem)
         dataSource?.commitAlternativeLocationDeletion?(locationItem: locationItem)
     }

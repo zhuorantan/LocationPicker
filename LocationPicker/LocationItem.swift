@@ -79,7 +79,7 @@ public class LocationItem: NSObject, NSCoding {
     
     /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
     /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
-    public var addressDictionary: [NSObject: AnyObject]? {
+    public var addressDictionary: [AnyHashable: Any]? {
         get {
             return mapItem.placemark.addressDictionary
         }
@@ -90,8 +90,8 @@ public class LocationItem: NSObject, NSCoding {
     
     public var formattedAddressString: String? {
         get {
-            let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String])
-            return addressParts?.count > 1 ? addressParts?[1] : addressParts?[0]
+            guard let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String]) else { return nil }
+            return addressParts.count > 1 ? addressParts[1] : addressParts[0]
         }
     }
     
@@ -129,8 +129,9 @@ public class LocationItem: NSObject, NSCoding {
         self.mapItem.name = locationName
     }
     
-    public override func isEqual(_ object: AnyObject?) -> Bool {
-        return object?.hashValue == hashValue
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object else { return false }
+        return (object as AnyObject).hashValue == hashValue
     }
     
     
