@@ -238,6 +238,9 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         /// Distance in meters that is used to search locations. __Default__ is __`10000`__
     public var searchDistance: Double = 10000
     
+        /// Default coordinate to use when current location information is not available. If not set, none is used.
+    public var defaultSearchCoordinate: CLLocationCoordinate2D?
+    
     
     
         /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
@@ -859,6 +862,8 @@ extension LocationPicker: UISearchBarDelegate {
             
             if let currentCoordinate = locationManager.location?.coordinate {
                 localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
+            } else if let defaultSearchCoordinate = defaultSearchCoordinate where CLLocationCoordinate2DIsValid(defaultSearchCoordinate) {
+                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(defaultSearchCoordinate, searchDistance, searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
                 guard error == nil,
