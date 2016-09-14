@@ -866,6 +866,10 @@ extension LocationPicker: UISearchBarDelegate {
                 localSearchRequest.region = MKCoordinateRegionMakeWithDistance(defaultSearchCoordinate, searchDistance, searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).startWithCompletionHandler({ (localSearchResponse, error) -> Void in
+                guard searchText == searchBar.text else {
+                    // Ensure that the result is valid for the most recent searched text
+                    return
+                }
                 guard error == nil,
                     let localSearchResponse = localSearchResponse where localSearchResponse.mapItems.count > 0 else {
                         if self.allowArbitraryLocation {
