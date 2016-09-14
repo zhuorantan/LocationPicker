@@ -305,6 +305,8 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         /// The image of the pin showed in the center of map view. If this property is set, the `var pinColor` won't be adopted.
     public var pinImage: UIImage? = nil
     
+        /// The size of the pin's shadow. Set this value to zero to hide the shadow. __Default__ is __`5`__
+    public var pinShadowViewDiameter: CGFloat = 5
     
     
     // MARK: UI Elements
@@ -313,6 +315,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public let tableView = UITableView()
     public let mapView = MKMapView()
     public let pinView = UIImageView()
+    public let pinShadowView = UIView()
     
     public private(set) var barButtonItems: (doneButtonItem: UIBarButtonItem, cancelButtonItem: UIBarButtonItem)?
     
@@ -410,6 +413,14 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         
         pinView.image = pinImage ?? StyleKit.imageOfPinIconFilled(color: pinColor)
         
+        pinShadowView.layer.cornerRadius = pinShadowViewDiameter / 2
+        pinShadowView.clipsToBounds = false
+        pinShadowView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.8)
+        pinShadowView.layer.shadowColor = UIColor.blackColor().CGColor
+        pinShadowView.layer.shadowOffset = CGSizeMake(0, 0)
+        pinShadowView.layer.shadowRadius = 2
+        pinShadowView.layer.shadowOpacity = 1
+        
         if mapViewScrollEnabled {
             let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panGestureInMapViewDidRecognize(_:)))
             panGestureRecognizer.delegate = self
@@ -419,6 +430,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(mapView)
+        mapView.addSubview(pinShadowView)
         mapView.addSubview(pinView)
     }
     
@@ -427,6 +439,7 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         mapView.translatesAutoresizingMaskIntoConstraints = false
         pinView.translatesAutoresizingMaskIntoConstraints = false
+        pinShadowView.translatesAutoresizingMaskIntoConstraints = false
         
         if #available(iOS 9.0, *) {
             searchBar.topAnchor.constraintEqualToAnchor(topLayoutGuide.bottomAnchor).active = true
@@ -448,6 +461,11 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             pinView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
             pinViewCenterYConstraint = pinView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor, constant: -pinViewImageHeight / 2)
             pinViewCenterYConstraint.active = true
+            
+            pinShadowView.centerXAnchor.constraintEqualToAnchor(mapView.centerXAnchor).active = true
+            pinShadowView.centerYAnchor.constraintEqualToAnchor(mapView.centerYAnchor).active = true
+            pinShadowView.widthAnchor.constraintEqualToConstant(pinShadowViewDiameter).active = true
+            pinShadowView.heightAnchor.constraintEqualToConstant(pinShadowViewDiameter).active = true
         } else {
             NSLayoutConstraint(item: searchBar, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0).active = true
             NSLayoutConstraint(item: searchBar, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0).active = true
@@ -468,6 +486,11 @@ public class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
             NSLayoutConstraint(item: pinView, attribute: .CenterX, relatedBy: .Equal, toItem: mapView, attribute: .CenterX, multiplier: 1, constant: 0).active = true
             pinViewCenterYConstraint = NSLayoutConstraint(item: pinView, attribute: .CenterY, relatedBy: .Equal, toItem: mapView, attribute: .CenterY, multiplier: 1, constant: -pinViewImageHeight / 2)
             pinViewCenterYConstraint.active = true
+            
+            NSLayoutConstraint(item: pinShadowView, attribute: .CenterX, relatedBy: .Equal, toItem: mapView, attribute: .CenterX, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: pinShadowView, attribute: .CenterY, relatedBy: .Equal, toItem: mapView, attribute: .CenterY, multiplier: 1, constant: 0).active = true
+            NSLayoutConstraint(item: pinShadowView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1, constant: pinShadowViewDiameter).active = true
+            NSLayoutConstraint(item: pinShadowView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: pinShadowViewDiameter).active = true
         }
     }
     
