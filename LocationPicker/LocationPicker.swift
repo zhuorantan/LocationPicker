@@ -249,6 +249,9 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     /// Distance in meters that is used to search locations. __Default__ is __`10000`__
     public var searchDistance: Double = 10000
     
+        /// Default coordinate to use when current location information is not available. If not set, none is used.
+    public var defaultSearchCoordinate: CLLocationCoordinate2D?
+    
     
     /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
     public var isMapViewZoomEnabled = true
@@ -664,14 +667,11 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
                 return
             }
             guard let placemarks = placemarks else { return }
-            
             var placemark = placemarks[0]
             if !self.isRedirectToExactCoordinate {
-                var addressDictionary = [String : Any]()
-                placemark.addressDictionary?.forEach({ addressDictionary[$0.key.base as! String] = $0.value })
-                placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: addressDictionary)
+                placemark = MKPlacemark(coordinate: location.coordinate, addressDictionary: placemark.addressDictionary as? [String : NSObject])
             }
-
+            
             if !self.searchBar.isFirstResponder {
                 let mapItem = MKMapItem(placemark: MKPlacemark(placemark: placemark))
                 self.selectLocationItem(LocationItem(mapItem: mapItem))
@@ -865,8 +865,14 @@ extension LocationPicker: UISearchBarDelegate {
             
             if let currentCoordinate = locationManager.location?.coordinate {
                 localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
+            } else if let defaultSearchCoordinate = defaultSearchCoordinate, CLLocationCoordinate2DIsValid(defaultSearchCoordinate) {
+                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(defaultSearchCoordinate, searchDistance, searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).start(completionHandler: { (localSearchResponse, error) -> Void in
+                guard searchText == searchBar.text else {
+                    // Ensure that the result is valid for the most recent searched text
+                    return
+                }
                 guard error == nil,
                     let localSearchResponse = localSearchResponse, localSearchResponse.mapItems.count > 0 else {
                         if self.isAllowArbitraryLocation {
