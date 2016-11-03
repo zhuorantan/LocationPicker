@@ -58,43 +58,42 @@ public class LocationItem: NSObject, NSCoding {
     public let mapItem: MKMapItem
     
     
-    
-        /// The name of the location. A reference to `MKMapItem` object's property `name`.
+    /// The name of the location. A reference to `MKMapItem` object's property `name`.
     public var name: String {
         get {
             return mapItem.name ?? ""
         }
     }
     
-        /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
+    /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
     public var coordinate: (latitude: Double, longitude: Double)? {
         get {
             let coordinate = mapItem.placemark.coordinate
             if CLLocationCoordinate2DIsValid(coordinate) {
-                return coordinateTupleFromObject(coordinate)
+                return coordinateTuple(fromObject: coordinate)
             } else {
                 return nil
             }
         }
     }
     
-        /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
-        /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
-    public var addressDictionary: [NSObject: AnyObject]? {
+    /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
+    /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
+    public var addressDictionary: [AnyHashable: Any]? {
         get {
             return mapItem.placemark.addressDictionary
         }
     }
     
-        /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
-        /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
+    /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
+    /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
+    
     public var formattedAddressString: String? {
         get {
-            let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String])
-            return addressParts?.count > 1 ? addressParts?[1] : addressParts?[0]
+            guard let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String]) else { return nil }
+            return addressParts.count > 1 ? addressParts[1] : addressParts[0]
         }
     }
-    
     
     
     public override var hashValue: Int {
@@ -114,14 +113,12 @@ public class LocationItem: NSObject, NSCoding {
     }
     
     
-    
     public init(mapItem: MKMapItem) {
         self.mapItem = mapItem
     }
     
     public init(coordinate: (latitude: Double, longitude: Double), addressDictionary: [String: AnyObject]) {
-        let coordinateObject = coordinateObjectFromTuple(coordinate)
-        let placeMark = MKPlacemark(coordinate: coordinateObject, addressDictionary: addressDictionary)
+        let placeMark = MKPlacemark(coordinate: coordinateObject(fromTuple: coordinate), addressDictionary: addressDictionary)
         self.mapItem = MKMapItem(placemark: placeMark)
     }
     
@@ -132,23 +129,23 @@ public class LocationItem: NSObject, NSCoding {
         self.mapItem.name = locationName
     }
     
-    public override func isEqual(object: AnyObject?) -> Bool {
-        return object?.hashValue == hashValue
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object else { return false }
+        return (object as AnyObject).hashValue == hashValue
     }
     
     
-    
-    public required convenience init(coder decoder: NSCoder) {
-        let latitude = decoder.decodeDoubleForKey("latitude")
-        let longitude = decoder.decodeDoubleForKey("longitude")
-        let addressDictionary = decoder.decodeObjectForKey("addressDictionary") as! [String: AnyObject]
+    public required convenience init(coder aDecoder: NSCoder) {
+        let latitude = aDecoder.decodeDouble(forKey: "latitude")
+        let longitude = aDecoder.decodeDouble(forKey: "longitude")
+        let addressDictionary = aDecoder.decodeObject(forKey: "addressDictionary") as! [String: AnyObject]
         self.init(coordinate: (latitude, longitude), addressDictionary: addressDictionary)
     }
     
-    public func encodeWithCoder(coder: NSCoder) {
-        coder.encodeDouble(mapItem.placemark.coordinate.latitude, forKey: "latitude")
-        coder.encodeDouble(mapItem.placemark.coordinate.longitude, forKey: "longitude")
-        coder.encodeObject(addressDictionary, forKey: "addressDictionary")
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(mapItem.placemark.coordinate.latitude, forKey: "latitude")
+        aCoder.encode(mapItem.placemark.coordinate.longitude, forKey: "longitude")
+        aCoder.encode(addressDictionary, forKey: "addressDictionary")
     }
     
 }

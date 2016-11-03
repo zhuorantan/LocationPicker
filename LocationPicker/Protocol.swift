@@ -57,7 +57,7 @@ import Foundation
      
      - parameter locationItem: The location item user selected
      */
-    optional func locationDidSelect(locationItem: LocationItem)
+    @objc optional func locationDidSelect(locationItem: LocationItem)
     
     /**
      This delegate method would be called after user finally pick a location.
@@ -83,7 +83,7 @@ import Foundation
      
      - parameter locationItem: The location item user picked
      */
-    optional func locationDidPick(locationItem: LocationItem)
+    @objc optional func locationDidPick(locationItem: LocationItem)
     
     /**
      This delegate method would be called when user try to fetch current location without granting location access.
@@ -109,7 +109,7 @@ import Foundation
      
      - parameter locationPicker `LocationPicker` instance that needs to response to user's location request
      */
-    optional func locationDidDeny(locationPicker: LocationPicker)
+    @objc optional func locationDidDeny(locationPicker: LocationPicker)
     
 }
 
@@ -129,7 +129,7 @@ import Foundation
      
      - returns: The location item in the specific index
      */
-    func alternativeLocationAtIndex(index: Int) -> LocationItem
+    func alternativeLocation(at index: Int) -> LocationItem
     
     /**
      This delegate method would be called after user delete an alternative location.
@@ -153,6 +153,6 @@ import Foundation
      
      - parameter locationItem: The location item needs to be deleted
      */
-    optional func commitAlternativeLocationDeletion(locationItem: LocationItem)
+    @objc optional func commitAlternativeLocationDeletion(locationItem: LocationItem)
     
 }

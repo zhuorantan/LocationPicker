@@ -17,17 +17,17 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     var historyLocationList: [LocationItem] {
         get {
-            if let locationDataList = NSUserDefaults.standardUserDefaults().arrayForKey("HistoryLocationList") as? [NSData] {
+            if let locationDataList = UserDefaults.standard.array(forKey: "HistoryLocationList") as? [Data] {
                 // Decode NSData into LocationItem object.
-                return locationDataList.map({ NSKeyedUnarchiver.unarchiveObjectWithData($0) as! LocationItem })
+                return locationDataList.map({ NSKeyedUnarchiver.unarchiveObject(with: $0) as! LocationItem })
             } else {
                 return []
             }
         }
         set {
             // Encode LocationItem object.
-            let locationDataList = newValue.map({ NSKeyedArchiver.archivedDataWithRootObject($0) })
-            NSUserDefaults.standardUserDefaults().setObject(locationDataList, forKey: "HistoryLocationList")
+            let locationDataList = newValue.map({ NSKeyedArchiver.archivedData(withRootObject: $0) })
+            UserDefaults.standard.set(locationDataList, forKey: "HistoryLocationList")
         }
     }
     
@@ -35,7 +35,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         super.viewDidLoad()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationNameTextField.text = nil
         locationAddressTextField.text = nil
@@ -43,49 +43,49 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     
     // MARK: Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Show Location Picker via push segue.
         // LocationPicker in Storyboard.
         if segue.identifier == "LocationPicker" {
-            let locationPicker = segue.destinationViewController as! LocationPicker
+            let locationPicker = segue.destination as! LocationPicker
             // User delegate and dataSource.
             locationPicker.delegate = self
             locationPicker.dataSource = self
-            locationPicker.alternativeLocationEditable = true
-            locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
+            locationPicker.isAlternativeLocationEditable = true
+            locationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         }
     }
     
     
     
-    @IBAction func presentLocationPickerButtonDidTap(sender: UIButton) {
+    @IBAction func presentLocationPickerButtonDidTap(button: UIButton) {
         // Present Location Picker subclass via codes.
         // Create LocationPicker subclass.
         let customLocationPicker = CustomLocationPicker()
-        customLocationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
+        customLocationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         customLocationPicker.viewController = self
         let navigationController = UINavigationController(rootViewController: customLocationPicker)
-        presentViewController(navigationController, animated: true, completion: nil)
+        present(navigationController, animated: true, completion: nil)
     }
     
     // Push LocationPicker to navigation controller.
-    @IBAction func pushLocationPickerButtonDidTap(sender: UIButton) {
+    @IBAction func pushLocationPickerButtonDidTap(button: UIButton) {
         // Push Location Picker via codes.
         let locationPicker = LocationPicker()
-        locationPicker.alternativeLocations = historyLocationList.reverse()
-        locationPicker.alternativeLocationEditable = true
-        locationPicker.allowArbitraryLocation = arbitraryLocationSwitch.on
+        locationPicker.alternativeLocations = historyLocationList.reversed()
+        locationPicker.isAlternativeLocationEditable = true
+        locationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         
         // Completion closures
         locationPicker.selectCompletion = { selectedLocationItem in
             print("Select completion closure: " + selectedLocationItem.name)
         }
         locationPicker.pickCompletion = { pickedLocationItem in
-            self.showLocation(pickedLocationItem)
-            self.storeLocation(pickedLocationItem)
+            self.showLocation(locationItem: pickedLocationItem)
+            self.storeLocation(locationItem: pickedLocationItem)
         }
         locationPicker.deleteCompletion = { locationItem in
-            self.historyLocationList.removeAtIndex(self.historyLocationList.indexOf(locationItem)!)
+            self.historyLocationList.remove(at: self.historyLocationList.index(of: locationItem)!)
         }
         navigationController!.pushViewController(locationPicker, animated: true)
     }
@@ -99,8 +99,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     }
     
     func locationDidPick(locationItem: LocationItem) {
-        showLocation(locationItem)
-        storeLocation(locationItem)
+        showLocation(locationItem: locationItem)
+        storeLocation(locationItem: locationItem)
     }
     
     
@@ -111,12 +111,12 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         return historyLocationList.count
     }
     
-    func alternativeLocationAtIndex(index: Int) -> LocationItem {
-        return historyLocationList.reverse()[index]
+    func alternativeLocation(at index: Int) -> LocationItem {
+        return historyLocationList.reversed()[index]
     }
     
     func commitAlternativeLocationDeletion(locationItem: LocationItem) {
-        historyLocationList.removeAtIndex(historyLocationList.indexOf(locationItem)!)
+        historyLocationList.remove(at: historyLocationList.index(of: locationItem)!)
     }
     
     
@@ -127,8 +127,8 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     }
     
     func storeLocation(locationItem: LocationItem) {
-        if let index = historyLocationList.indexOf(locationItem) {
-            historyLocationList.removeAtIndex(index)
+        if let index = historyLocationList.index(of: locationItem) {
+            historyLocationList.remove(at: index)
         }
         historyLocationList.append(locationItem)
     }

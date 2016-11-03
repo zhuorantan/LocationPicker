@@ -29,30 +29,17 @@
 import Foundation
 import MapKit
 
-@objc public enum LocationType: Int {
-    case CurrentLocation
-    case SearchLocation
-    case AlternativeLocation
-}
 
-@objc public enum NavigationItemOrientation: Int {
-    case Left
-    case Right
-}
-
-
-
-func coordinateObjectFromTuple(coordinateTuple: (latitude: Double, longitude: Double)) -> CLLocationCoordinate2D {
+func coordinateObject(fromTuple coordinateTuple: (latitude: Double, longitude: Double)) -> CLLocationCoordinate2D {
     return CLLocationCoordinate2D(latitude: coordinateTuple.latitude, longitude: coordinateTuple.longitude)
 }
 
-func coordinateTupleFromObject(coordinateObject: CLLocationCoordinate2D) -> (latitude: Double, longitude: Double) {
+func coordinateTuple(fromObject coordinateObject: CLLocationCoordinate2D) -> (latitude: Double, longitude: Double) {
     return (latitude: coordinateObject.latitude, longitude: coordinateObject.longitude)
 }
 
 
-
-private func isCoordinateOutOfChina(coordinate: CLLocationCoordinate2D) -> Bool {
+private func isOutsideChina(coordinate: CLLocationCoordinate2D) -> Bool {
     if coordinate.longitude < 72.004 || coordinate.longitude > 137.8347 {
         return true
     }
@@ -62,25 +49,29 @@ private func isCoordinateOutOfChina(coordinate: CLLocationCoordinate2D) -> Bool 
     return false
 }
 
-private func transformLatitude(x x: Double, y: Double) -> Double {
+private func transformLatitude(x: Double, y: Double) -> Double {
+    let a = sin(6.0 * x * M_PI), b = sin(2.0 * x * M_PI), c = sin(y * M_PI), d = sin(y / 3.0 * M_PI), e = sin(y / 12.0 * M_PI), f = sin(y * M_PI / 30.0)
+    
     var deltaLatitude = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y
     deltaLatitude += 0.1 * x * y + 0.2 * sqrt(abs(x))
-    deltaLatitude += (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0
-    deltaLatitude += (20.0 * sin(y * M_PI) + 40.0 * sin(y / 3.0 * M_PI)) * 2.0 / 3.0
-    deltaLatitude += (160.0 * sin(y / 12.0 * M_PI) + 320 * sin(y * M_PI / 30.0)) * 2.0 / 3.0
+    deltaLatitude += (20.0 * a + 20.0 * b) * 2.0 / 3.0
+    deltaLatitude += (20.0 * c + 40.0 * d) * 2.0 / 3.0
+    deltaLatitude += (160.0 * e + 320 * f) * 2.0 / 3.0
     return deltaLatitude
 }
 
-private func transformLongitude(x x: Double, y: Double) -> Double {
+private func transformLongitude(x: Double, y: Double) -> Double {
+    let a = sin(6.0 * x * M_PI), b = sin(2.0 * x * M_PI), c = sin(x * M_PI), d = sin(x / 3.0 * M_PI), e = sin(x / 12.0 * M_PI), f = sin(x / 30.0 * M_PI)
+    
     var deltaLongitude = 300.0 + x + 2.0 * y + 0.1 * x * x
     deltaLongitude += 0.1 * x * y + 0.1 * sqrt(abs(x))
-    deltaLongitude += (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0
-    deltaLongitude += (20.0 * sin(x * M_PI) + 40.0 * sin(x / 3.0 * M_PI)) * 2.0 / 3.0
-    deltaLongitude += (150.0 * sin(x / 12.0 * M_PI) + 300.0 * sin(x / 30.0 * M_PI)) * 2.0 / 3.0
+    deltaLongitude += (20.0 * a + 20.0 * b) * 2.0 / 3.0
+    deltaLongitude += (20.0 * c + 40.0 * d) * 2.0 / 3.0
+    deltaLongitude += (150.0 * e + 300.0 * f) * 2.0 / 3.0
     return deltaLongitude
 }
 
-private func delta(latitude latitude: Double, longitude: Double) -> (Double, Double) {
+private func delta(latitude: Double, longitude: Double) -> (Double, Double) {
     let r = 6378245.0
     let ee = 0.00669342162296594323
     let radLatitude = latitude / 180.0 * M_PI
@@ -94,8 +85,8 @@ private func delta(latitude latitude: Double, longitude: Double) -> (Double, Dou
     return (deltaLatitude, deltaLongitude)
 }
 
-func wgs2gcj(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-    if isCoordinateOutOfChina(coordinate) {
+func wgsToGcj(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+    if isOutsideChina(coordinate: coordinate) {
         return coordinate
     }
     
@@ -104,8 +95,8 @@ func wgs2gcj(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
     return revisedCoordinate
 }
 
-func gcj2wgs(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-    if isCoordinateOutOfChina(coordinate) {
+func gcjToWgs(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+    if isOutsideChina(coordinate: coordinate) {
         return coordinate
     }
     
@@ -115,8 +106,7 @@ func gcj2wgs(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
 }
 
 
-
-func longitudinalDistanceFromMapRect(mapRect: MKMapRect) -> Double {
+func getLongitudinalDistance(fromMapRect mapRect: MKMapRect) -> Double {
     let westMapPoint = MKMapPointMake(MKMapRectGetMaxX(mapRect), MKMapRectGetMidY(mapRect))
     let eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mapRect), MKMapRectGetMidY(mapRect))
     return MKMetersBetweenMapPoints(westMapPoint, eastMapPoint)

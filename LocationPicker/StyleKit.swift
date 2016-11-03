@@ -16,234 +16,234 @@ class StyleKit: NSObject {
     
     /// Page 1
     
-    class func drawMapPointerIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
+    class func drawMapPointerIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
-        CGContextSaveGState(context)
+        context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        CGContextTranslateCTM(context, resizedFrame.minX, resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_map_pointer
         do {
-            CGContextSaveGState(context)
-            CGContextTranslateCTM(context, 12, 12)
+            context.saveGState()
+            context.translateBy(x: 12, y: 12)
             
             /// Capa_1
             do {
-                CGContextSaveGState(context)
+                context.saveGState()
                 
                 /// Shape
                 let shape = UIBezierPath()
-                shape.moveToPoint(CGPoint(x: 19.15, y: 0.05))
-                shape.addLineToPoint(CGPoint(x: 0.34, y: 8.7))
-                shape.addCurveToPoint(CGPoint(x: 0, y: 9.25), controlPoint1: CGPoint(x: 0.12, y: 8.8), controlPoint2: CGPoint(x: -0.01, y: 9.02))
-                shape.addCurveToPoint(CGPoint(x: 0.39, y: 9.77), controlPoint1: CGPoint(x: 0.01, y: 9.49), controlPoint2: CGPoint(x: 0.17, y: 9.69))
-                shape.addLineToPoint(CGPoint(x: 6.17, y: 11.74))
-                shape.addCurveToPoint(CGPoint(x: 8.2, y: 13.77), controlPoint1: CGPoint(x: 7.13, y: 12.07), controlPoint2: CGPoint(x: 7.87, y: 12.82))
-                shape.addLineToPoint(CGPoint(x: 10.18, y: 19.54))
-                shape.addCurveToPoint(CGPoint(x: 10.7, y: 19.93), controlPoint1: CGPoint(x: 10.26, y: 19.76), controlPoint2: CGPoint(x: 10.46, y: 19.91))
-                shape.addCurveToPoint(CGPoint(x: 11.25, y: 19.59), controlPoint1: CGPoint(x: 10.94, y: 19.94), controlPoint2: CGPoint(x: 11.16, y: 19.8))
-                shape.addLineToPoint(CGPoint(x: 19.92, y: 0.82))
-                shape.addCurveToPoint(CGPoint(x: 19.8, y: 0.17), controlPoint1: CGPoint(x: 20.02, y: 0.6), controlPoint2: CGPoint(x: 19.97, y: 0.34))
-                shape.addCurveToPoint(CGPoint(x: 19.15, y: 0.05), controlPoint1: CGPoint(x: 19.63, y: -0), controlPoint2: CGPoint(x: 19.37, y: -0.05))
-                shape.closePath()
-                shape.moveToPoint(CGPoint(x: 19.15, y: 0.05))
-                CGContextSaveGState(context)
-                CGContextTranslateCTM(context, 0, 0.04)
+                shape.move(to: CGPoint(x: 19.15, y: 0.05))
+                shape.addLine(to: CGPoint(x: 0.34, y: 8.7))
+                shape.addCurve(to: CGPoint(x: 0, y: 9.25), controlPoint1: CGPoint(x: 0.12, y: 8.8), controlPoint2: CGPoint(x: -0.01, y: 9.02))
+                shape.addCurve(to: CGPoint(x: 0.39, y: 9.77), controlPoint1: CGPoint(x: 0.01, y: 9.49), controlPoint2: CGPoint(x: 0.17, y: 9.69))
+                shape.addLine(to: CGPoint(x: 6.17, y: 11.74))
+                shape.addCurve(to: CGPoint(x: 8.2, y: 13.77), controlPoint1: CGPoint(x: 7.13, y: 12.07), controlPoint2: CGPoint(x: 7.87, y: 12.82))
+                shape.addLine(to: CGPoint(x: 10.18, y: 19.54))
+                shape.addCurve(to: CGPoint(x: 10.7, y: 19.93), controlPoint1: CGPoint(x: 10.26, y: 19.76), controlPoint2: CGPoint(x: 10.46, y: 19.91))
+                shape.addCurve(to: CGPoint(x: 11.25, y: 19.59), controlPoint1: CGPoint(x: 10.94, y: 19.94), controlPoint2: CGPoint(x: 11.16, y: 19.8))
+                shape.addLine(to: CGPoint(x: 19.92, y: 0.82))
+                shape.addCurve(to: CGPoint(x: 19.8, y: 0.17), controlPoint1: CGPoint(x: 20.02, y: 0.6), controlPoint2: CGPoint(x: 19.97, y: 0.34))
+                shape.addCurve(to: CGPoint(x: 19.15, y: 0.05), controlPoint1: CGPoint(x: 19.63, y: -0), controlPoint2: CGPoint(x: 19.37, y: -0.05))
+                shape.close()
+                shape.move(to: CGPoint(x: 19.15, y: 0.05))
+                context.saveGState()
+                context.translateBy(x: 0, y: 0.04)
                 shape.lineWidth = 2
                 color.setStroke()
                 shape.stroke()
-                CGContextRestoreGState(context)
+                context.restoreGState()
                 
-                CGContextRestoreGState(context)
+                context.restoreGState()
             }
             
-            CGContextRestoreGState(context)
+            context.restoreGState()
         }
         
-        CGContextRestoreGState(context)
+        context.restoreGState()
     }
     
-    class func drawSearchIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
+    class func drawSearchIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
-        CGContextSaveGState(context)
+        context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        CGContextTranslateCTM(context, resizedFrame.minX, resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// Group 2
         do {
-            CGContextSaveGState(context)
-            CGContextTranslateCTM(context, 18.68, 24.68)
-            CGContextRotateCTM(context, 45 * CGFloat(M_PI/180))
-            CGContextTranslateCTM(context, -10, -15)
+            context.saveGState()
+            context.translateBy(x: 18.68, y: 24.68)
+            context.rotate(by: 45 * CGFloat(M_PI/180))
+            context.translateBy(x: -10, y: -15)
             
             /// Oval 167
-            let oval167 = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: 8, height: 8))
-            CGContextSaveGState(context)
-            CGContextTranslateCTM(context, 6, 6)
+            let oval167 = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 8, height: 8))
+            context.saveGState()
+            context.translateBy(x: 6, y: 6)
             oval167.lineWidth = 2
             color.setStroke()
             oval167.stroke()
-            CGContextRestoreGState(context)
+            context.restoreGState()
             
             /// Oval 166
             let oval166 = UIBezierPath()
-            oval166.moveToPoint(CGPoint(x: 6.03, y: 19.18))
-            oval166.addCurveToPoint(CGPoint(x: 7, y: 19.93), controlPoint1: CGPoint(x: 6.35, y: 19.32), controlPoint2: CGPoint(x: 6.99, y: 19.38))
-            oval166.addCurveToPoint(CGPoint(x: 7, y: 27), controlPoint1: CGPoint(x: 7.01, y: 20.47), controlPoint2: CGPoint(x: 7, y: 27))
-            oval166.addCurveToPoint(CGPoint(x: 10, y: 30), controlPoint1: CGPoint(x: 7, y: 28), controlPoint2: CGPoint(x: 8, y: 30))
-            oval166.addCurveToPoint(CGPoint(x: 13, y: 27), controlPoint1: CGPoint(x: 12, y: 30), controlPoint2: CGPoint(x: 13, y: 28))
-            oval166.addLineToPoint(CGPoint(x: 13, y: 20))
-            oval166.addCurveToPoint(CGPoint(x: 14.02, y: 19.16), controlPoint1: CGPoint(x: 13, y: 19.38), controlPoint2: CGPoint(x: 13.65, y: 19.32))
-            oval166.addCurveToPoint(CGPoint(x: 20, y: 10), controlPoint1: CGPoint(x: 17.55, y: 17.6), controlPoint2: CGPoint(x: 20, y: 14.09))
-            oval166.addCurveToPoint(CGPoint(x: 10, y: 0), controlPoint1: CGPoint(x: 20, y: 4.48), controlPoint2: CGPoint(x: 15.52, y: 0))
-            oval166.addCurveToPoint(CGPoint(x: 0, y: 10), controlPoint1: CGPoint(x: 4.48, y: 0), controlPoint2: CGPoint(x: 0, y: 4.48))
-            oval166.addCurveToPoint(CGPoint(x: 6.03, y: 19.18), controlPoint1: CGPoint(x: 0, y: 14.11), controlPoint2: CGPoint(x: 2.48, y: 17.64))
-            oval166.closePath()
-            oval166.moveToPoint(CGPoint(x: 6.03, y: 19.18))
-            CGContextSaveGState(context)
+            oval166.move(to: CGPoint(x: 6.03, y: 19.18))
+            oval166.addCurve(to: CGPoint(x: 7, y: 19.93), controlPoint1: CGPoint(x: 6.35, y: 19.32), controlPoint2: CGPoint(x: 6.99, y: 19.38))
+            oval166.addCurve(to: CGPoint(x: 7, y: 27), controlPoint1: CGPoint(x: 7.01, y: 20.47), controlPoint2: CGPoint(x: 7, y: 27))
+            oval166.addCurve(to: CGPoint(x: 10, y: 30), controlPoint1: CGPoint(x: 7, y: 28), controlPoint2: CGPoint(x: 8, y: 30))
+            oval166.addCurve(to: CGPoint(x: 13, y: 27), controlPoint1: CGPoint(x: 12, y: 30), controlPoint2: CGPoint(x: 13, y: 28))
+            oval166.addLine(to: CGPoint(x: 13, y: 20))
+            oval166.addCurve(to: CGPoint(x: 14.02, y: 19.16), controlPoint1: CGPoint(x: 13, y: 19.38), controlPoint2: CGPoint(x: 13.65, y: 19.32))
+            oval166.addCurve(to: CGPoint(x: 20, y: 10), controlPoint1: CGPoint(x: 17.55, y: 17.6), controlPoint2: CGPoint(x: 20, y: 14.09))
+            oval166.addCurve(to: CGPoint(x: 10, y: 0), controlPoint1: CGPoint(x: 20, y: 4.48), controlPoint2: CGPoint(x: 15.52, y: 0))
+            oval166.addCurve(to: CGPoint(x: 0, y: 10), controlPoint1: CGPoint(x: 4.48, y: 0), controlPoint2: CGPoint(x: 0, y: 4.48))
+            oval166.addCurve(to: CGPoint(x: 6.03, y: 19.18), controlPoint1: CGPoint(x: 0, y: 14.11), controlPoint2: CGPoint(x: 2.48, y: 17.64))
+            oval166.close()
+            oval166.move(to: CGPoint(x: 6.03, y: 19.18))
+            context.saveGState()
             oval166.lineWidth = 2
             color.setStroke()
             oval166.stroke()
-            CGContextRestoreGState(context)
+            context.restoreGState()
             
-            CGContextRestoreGState(context)
+            context.restoreGState()
         }
         
-        CGContextRestoreGState(context)
+        context.restoreGState()
     }
     
-    class func drawPinIcon(frame frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
+    class func drawPinIcon(frame: CGRect = CGRect(x: 0, y: 0, width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
-        CGContextSaveGState(context)
+        context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 44, height: 44), target: frame)
-        CGContextTranslateCTM(context, resizedFrame.minX, resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 44, height: resizedFrame.height / 44)
-        CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_icon_pin
         do {
-            CGContextSaveGState(context)
-            CGContextTranslateCTM(context, 12, 6)
+            context.saveGState()
+            context.translateBy(x: 12, y: 6)
             
             /// Layer_1
             do {
-                CGContextSaveGState(context)
-                CGContextTranslateCTM(context, 1, 0)
+                context.saveGState()
+                context.translateBy(x: 1, y: 0)
                 
                 // Empty.
                 
-                CGContextRestoreGState(context)
+                context.restoreGState()
             }
             
             /// map_x5F_pin_x5F_fill
             do {
-                CGContextSaveGState(context)
+                context.saveGState()
                 
                 /// Shape
                 let shape = UIBezierPath()
-                shape.moveToPoint(CGPoint(x: 2.93, y: 2.93))
-                shape.addCurveToPoint(CGPoint(x: 2.93, y: 17.07), controlPoint1: CGPoint(x: -0.98, y: 6.83), controlPoint2: CGPoint(x: -0.98, y: 13.17))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 32), controlPoint1: CGPoint(x: 2.93, y: 17.07), controlPoint2: CGPoint(x: 10, y: 24))
-                shape.addCurveToPoint(CGPoint(x: 17.07, y: 17.07), controlPoint1: CGPoint(x: 10, y: 24), controlPoint2: CGPoint(x: 17.07, y: 17.07))
-                shape.addCurveToPoint(CGPoint(x: 17.07, y: 2.93), controlPoint1: CGPoint(x: 20.98, y: 13.17), controlPoint2: CGPoint(x: 20.98, y: 6.83))
-                shape.addCurveToPoint(CGPoint(x: 2.93, y: 2.93), controlPoint1: CGPoint(x: 13.16, y: -0.98), controlPoint2: CGPoint(x: 6.84, y: -0.98))
-                shape.closePath()
-                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
-                shape.addCurveToPoint(CGPoint(x: 6, y: 10.01), controlPoint1: CGPoint(x: 7.79, y: 14.01), controlPoint2: CGPoint(x: 6, y: 12.22))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 6.01), controlPoint1: CGPoint(x: 6, y: 7.79), controlPoint2: CGPoint(x: 7.79, y: 6.01))
-                shape.addCurveToPoint(CGPoint(x: 14, y: 10.01), controlPoint1: CGPoint(x: 12.21, y: 6.01), controlPoint2: CGPoint(x: 14, y: 7.79))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 14.01), controlPoint1: CGPoint(x: 14, y: 12.22), controlPoint2: CGPoint(x: 12.21, y: 14.01))
-                shape.addLineToPoint(CGPoint(x: 10, y: 14.01))
-                shape.closePath()
-                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
-                CGContextSaveGState(context)
+                shape.move(to: CGPoint(x: 2.93, y: 2.93))
+                shape.addCurve(to: CGPoint(x: 2.93, y: 17.07), controlPoint1: CGPoint(x: -0.98, y: 6.83), controlPoint2: CGPoint(x: -0.98, y: 13.17))
+                shape.addCurve(to: CGPoint(x: 10, y: 32), controlPoint1: CGPoint(x: 2.93, y: 17.07), controlPoint2: CGPoint(x: 10, y: 24))
+                shape.addCurve(to: CGPoint(x: 17.07, y: 17.07), controlPoint1: CGPoint(x: 10, y: 24), controlPoint2: CGPoint(x: 17.07, y: 17.07))
+                shape.addCurve(to: CGPoint(x: 17.07, y: 2.93), controlPoint1: CGPoint(x: 20.98, y: 13.17), controlPoint2: CGPoint(x: 20.98, y: 6.83))
+                shape.addCurve(to: CGPoint(x: 2.93, y: 2.93), controlPoint1: CGPoint(x: 13.16, y: -0.98), controlPoint2: CGPoint(x: 6.84, y: -0.98))
+                shape.close()
+                shape.move(to: CGPoint(x: 10, y: 14.01))
+                shape.addCurve(to: CGPoint(x: 6, y: 10.01), controlPoint1: CGPoint(x: 7.79, y: 14.01), controlPoint2: CGPoint(x: 6, y: 12.22))
+                shape.addCurve(to: CGPoint(x: 10, y: 6.01), controlPoint1: CGPoint(x: 6, y: 7.79), controlPoint2: CGPoint(x: 7.79, y: 6.01))
+                shape.addCurve(to: CGPoint(x: 14, y: 10.01), controlPoint1: CGPoint(x: 12.21, y: 6.01), controlPoint2: CGPoint(x: 14, y: 7.79))
+                shape.addCurve(to: CGPoint(x: 10, y: 14.01), controlPoint1: CGPoint(x: 14, y: 12.22), controlPoint2: CGPoint(x: 12.21, y: 14.01))
+                shape.addLine(to: CGPoint(x: 10, y: 14.01))
+                shape.close()
+                shape.move(to: CGPoint(x: 10, y: 14.01))
+                context.saveGState()
                 shape.lineWidth = 2
                 color.setStroke()
                 shape.stroke()
-                CGContextRestoreGState(context)
+                context.restoreGState()
                 
-                CGContextRestoreGState(context)
+                context.restoreGState()
             }
             
-            CGContextRestoreGState(context)
+            context.restoreGState()
         }
         
-        CGContextRestoreGState(context)
+        context.restoreGState()
     }
     
-    class func drawPinIconFilled(frame frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 32), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) {
+    class func drawPinIconFilled(frame: CGRect = CGRect(x: 0, y: 0, width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         /// Resize To Frame
-        CGContextSaveGState(context)
+        context.saveGState()
         let resizedFrame = resizing.apply(rect: CGRect(x: 0, y: 0, width: 20, height: 32), target: frame)
-        CGContextTranslateCTM(context, resizedFrame.minX, resizedFrame.minY)
+        context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         let resizedScale = CGSize(width: resizedFrame.width / 20, height: resizedFrame.height / 32)
-        CGContextScaleCTM(context, resizedScale.width, resizedScale.height)
+        context.scaleBy(x: resizedScale.width, y: resizedScale.height)
         
         /// v_u_icon_pin
         do {
-            CGContextSaveGState(context)
+            context.saveGState()
             
             /// Layer_1
             do {
-                CGContextSaveGState(context)
-                CGContextTranslateCTM(context, 1, 0)
+                context.saveGState()
+                context.translateBy(x: 1, y: 0)
                 
                 // Empty.
                 
-                CGContextRestoreGState(context)
+                context.restoreGState()
             }
             
             /// map_x5F_pin_x5F_fill
             do {
-                CGContextSaveGState(context)
+                context.saveGState()
                 
                 /// Shape
                 let shape = UIBezierPath()
-                shape.moveToPoint(CGPoint(x: 17.07, y: 2.93))
-                shape.addCurveToPoint(CGPoint(x: 2.93, y: 2.93), controlPoint1: CGPoint(x: 13.16, y: -0.98), controlPoint2: CGPoint(x: 6.84, y: -0.98))
-                shape.addCurveToPoint(CGPoint(x: 2.93, y: 17.07), controlPoint1: CGPoint(x: -0.98, y: 6.83), controlPoint2: CGPoint(x: -0.98, y: 13.17))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 32), controlPoint1: CGPoint(x: 2.93, y: 17.07), controlPoint2: CGPoint(x: 10, y: 24))
-                shape.addCurveToPoint(CGPoint(x: 17.07, y: 17.07), controlPoint1: CGPoint(x: 10, y: 24), controlPoint2: CGPoint(x: 17.07, y: 17.07))
-                shape.addCurveToPoint(CGPoint(x: 17.07, y: 2.93), controlPoint1: CGPoint(x: 20.98, y: 13.17), controlPoint2: CGPoint(x: 20.98, y: 6.83))
-                shape.addLineToPoint(CGPoint(x: 17.07, y: 2.93))
-                shape.closePath()
-                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
-                shape.addCurveToPoint(CGPoint(x: 6, y: 10.01), controlPoint1: CGPoint(x: 7.79, y: 14.01), controlPoint2: CGPoint(x: 6, y: 12.22))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 6.01), controlPoint1: CGPoint(x: 6, y: 7.79), controlPoint2: CGPoint(x: 7.79, y: 6.01))
-                shape.addCurveToPoint(CGPoint(x: 14, y: 10.01), controlPoint1: CGPoint(x: 12.21, y: 6.01), controlPoint2: CGPoint(x: 14, y: 7.79))
-                shape.addCurveToPoint(CGPoint(x: 10, y: 14.01), controlPoint1: CGPoint(x: 14, y: 12.22), controlPoint2: CGPoint(x: 12.21, y: 14.01))
-                shape.addLineToPoint(CGPoint(x: 10, y: 14.01))
-                shape.closePath()
-                shape.moveToPoint(CGPoint(x: 10, y: 14.01))
-                CGContextSaveGState(context)
+                shape.move(to: CGPoint(x: 17.07, y: 2.93))
+                shape.addCurve(to: CGPoint(x: 2.93, y: 2.93), controlPoint1: CGPoint(x: 13.16, y: -0.98), controlPoint2: CGPoint(x: 6.84, y: -0.98))
+                shape.addCurve(to: CGPoint(x: 2.93, y: 17.07), controlPoint1: CGPoint(x: -0.98, y: 6.83), controlPoint2: CGPoint(x: -0.98, y: 13.17))
+                shape.addCurve(to: CGPoint(x: 10, y: 32), controlPoint1: CGPoint(x: 2.93, y: 17.07), controlPoint2: CGPoint(x: 10, y: 24))
+                shape.addCurve(to: CGPoint(x: 17.07, y: 17.07), controlPoint1: CGPoint(x: 10, y: 24), controlPoint2: CGPoint(x: 17.07, y: 17.07))
+                shape.addCurve(to: CGPoint(x: 17.07, y: 2.93), controlPoint1: CGPoint(x: 20.98, y: 13.17), controlPoint2: CGPoint(x: 20.98, y: 6.83))
+                shape.addLine(to: CGPoint(x: 17.07, y: 2.93))
+                shape.close()
+                shape.move(to: CGPoint(x: 10, y: 14.01))
+                shape.addCurve(to: CGPoint(x: 6, y: 10.01), controlPoint1: CGPoint(x: 7.79, y: 14.01), controlPoint2: CGPoint(x: 6, y: 12.22))
+                shape.addCurve(to: CGPoint(x: 10, y: 6.01), controlPoint1: CGPoint(x: 6, y: 7.79), controlPoint2: CGPoint(x: 7.79, y: 6.01))
+                shape.addCurve(to: CGPoint(x: 14, y: 10.01), controlPoint1: CGPoint(x: 12.21, y: 6.01), controlPoint2: CGPoint(x: 14, y: 7.79))
+                shape.addCurve(to: CGPoint(x: 10, y: 14.01), controlPoint1: CGPoint(x: 14, y: 12.22), controlPoint2: CGPoint(x: 12.21, y: 14.01))
+                shape.addLine(to: CGPoint(x: 10, y: 14.01))
+                shape.close()
+                shape.move(to: CGPoint(x: 10, y: 14.01))
+                context.saveGState()
                 shape.usesEvenOddFillRule = true
                 color.setFill()
                 shape.fill()
-                CGContextRestoreGState(context)
+                context.restoreGState()
                 
-                CGContextRestoreGState(context)
+                context.restoreGState()
             }
             
-            CGContextRestoreGState(context)
+            context.restoreGState()
         }
         
-        CGContextRestoreGState(context)
+        context.restoreGState()
     }
     
     
@@ -251,7 +251,7 @@ class StyleKit: NSObject {
     
     /// Page 1
     
-    class func imageOfMapPointerIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+    class func imageOfMapPointerIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -262,7 +262,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfSearchIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+    class func imageOfSearchIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -273,7 +273,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfPinIcon(size size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+    class func imageOfPinIcon(size: CGSize = CGSize(width: 44, height: 44), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -284,7 +284,7 @@ class StyleKit: NSObject {
         return image
     }
     
-    class func imageOfPinIconFilled(size size: CGSize = CGSize(width: 20, height: 32), resizing: ResizingBehavior = .AspectFit, color: UIColor = UIColor.blackColor()) -> UIImage {
+    class func imageOfPinIconFilled(size: CGSize = CGSize(width: 20, height: 32), resizing: ResizingBehavior = .aspectFit, color: UIColor = UIColor.black) -> UIImage {
         var image: UIImage
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -299,12 +299,12 @@ class StyleKit: NSObject {
     //MARK: - Resizing Behavior
     
     enum ResizingBehavior {
-        case AspectFit /// The content is proportionally resized to fit into the target rectangle.
-        case AspectFill /// The content is proportionally resized to completely fill the target rectangle.
-        case Stretch /// The content is stretched to match the entire target rectangle.
-        case Center /// The content is centered in the target rectangle, but it is NOT resized.
+        case aspectFit /// The content is proportionally resized to fit into the target rectangle.
+        case aspectFill /// The content is proportionally resized to completely fill the target rectangle.
+        case stretch /// The content is stretched to match the entire target rectangle.
+        case center /// The content is centered in the target rectangle, but it is NOT resized.
         
-        func apply(rect rect: CGRect, target: CGRect) -> CGRect {
+        func apply(rect: CGRect, target: CGRect) -> CGRect {
             if rect == target || target == CGRect.zero {
                 return rect
             }
@@ -314,15 +314,15 @@ class StyleKit: NSObject {
             scales.height = abs(target.height / rect.height)
             
             switch self {
-                case .AspectFit:
+                case .aspectFit:
                     scales.width = min(scales.width, scales.height)
                     scales.height = scales.width
-                case .AspectFill:
+                case .aspectFill:
                     scales.width = max(scales.width, scales.height)
                     scales.height = scales.width
-                case .Stretch:
+                case .stretch:
                     break
-                case .Center:
+                case .center:
                     scales.width = 1
                     scales.height = 1
             }
