@@ -83,7 +83,7 @@ class StyleKit: NSObject {
         do {
             context.saveGState()
             context.translateBy(x: 18.68, y: 24.68)
-            context.rotate(by: 45 * CGFloat(M_PI/180))
+            context.rotate(by: 45 * CGFloat(Double.pi/180))
             context.translateBy(x: -10, y: -15)
             
             /// Oval 167

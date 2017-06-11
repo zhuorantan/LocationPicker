@@ -686,7 +686,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         geocoder.cancelGeocode()
         geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             guard error == nil else {
-                print(error)
+                print(error!)
                 return
             }
             guard let placemarks = placemarks else { return }

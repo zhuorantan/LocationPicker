@@ -50,7 +50,7 @@ private func isOutsideChina(coordinate: CLLocationCoordinate2D) -> Bool {
 }
 
 private func transformLatitude(x: Double, y: Double) -> Double {
-    let a = sin(6.0 * x * M_PI), b = sin(2.0 * x * M_PI), c = sin(y * M_PI), d = sin(y / 3.0 * M_PI), e = sin(y / 12.0 * M_PI), f = sin(y * M_PI / 30.0)
+    let a = sin(6.0 * x * Double.pi), b = sin(2.0 * x * Double.pi), c = sin(y * Double.pi), d = sin(y / 3.0 * Double.pi), e = sin(y / 12.0 * Double.pi), f = sin(y * Double.pi / 30.0)
     
     var deltaLatitude = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y
     deltaLatitude += 0.1 * x * y + 0.2 * sqrt(abs(x))
@@ -61,7 +61,7 @@ private func transformLatitude(x: Double, y: Double) -> Double {
 }
 
 private func transformLongitude(x: Double, y: Double) -> Double {
-    let a = sin(6.0 * x * M_PI), b = sin(2.0 * x * M_PI), c = sin(x * M_PI), d = sin(x / 3.0 * M_PI), e = sin(x / 12.0 * M_PI), f = sin(x / 30.0 * M_PI)
+    let a = sin(6.0 * x * Double.pi), b = sin(2.0 * x * Double.pi), c = sin(x * Double.pi), d = sin(x / 3.0 * Double.pi), e = sin(x / 12.0 * Double.pi), f = sin(x / 30.0 * Double.pi)
     
     var deltaLongitude = 300.0 + x + 2.0 * y + 0.1 * x * x
     deltaLongitude += 0.1 * x * y + 0.1 * sqrt(abs(x))
@@ -74,14 +74,14 @@ private func transformLongitude(x: Double, y: Double) -> Double {
 private func delta(latitude: Double, longitude: Double) -> (Double, Double) {
     let r = 6378245.0
     let ee = 0.00669342162296594323
-    let radLatitude = latitude / 180.0 * M_PI
+    let radLatitude = latitude / 180.0 * Double.pi
     var magic = sin(radLatitude)
     magic = 1 - ee * magic * magic
     let sqrtMagic = sqrt(magic)
     var deltaLatitude = transformLatitude(x: longitude - 105.0, y: latitude - 35.0)
     var deltaLongitude = transformLongitude(x: longitude - 105.0, y: latitude - 35.0)
-    deltaLatitude = (deltaLatitude * 180.0) / ((r * (1 - ee)) / (magic * sqrtMagic) * M_PI)
-    deltaLongitude = (deltaLongitude * 180.0) / (r / sqrtMagic * cos(radLatitude) * M_PI)
+    deltaLatitude = (deltaLatitude * 180.0) / ((r * (1 - ee)) / (magic * sqrtMagic) * Double.pi)
+    deltaLongitude = (deltaLongitude * 180.0) / (r / sqrtMagic * cos(radLatitude) * Double.pi)
     return (deltaLatitude, deltaLongitude)
 }
 
