@@ -74,7 +74,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      `protocol LocationPickerDelegate`
      */
-    public var selectCompletion: ((LocationItem) -> Void)?
+    open var selectCompletion: ((LocationItem) -> Void)?
     
     /**
      Completion closure executed after user finally pick a location.
@@ -103,7 +103,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      `protocol LocationPickerDelegate`
      */
-    public var pickCompletion: ((LocationItem) -> Void)?
+    open var pickCompletion: ((LocationItem) -> Void)?
     
     /**
      Completion closure executed after user delete an alternative location.
@@ -130,7 +130,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      `protocol LocationPickerDataSource`
      */
-    public var deleteCompletion: ((LocationItem) -> Void)?
+    open var deleteCompletion: ((LocationItem) -> Void)?
     
     /**
      Handler closure executed when user try to fetch current location without location access.
@@ -160,16 +160,16 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      `func setLocationDeniedAlertControllerTitle`
      
      */
-    public var locationDeniedHandler: ((LocationPicker) -> Void)?
+    open var locationDeniedHandler: ((LocationPicker) -> Void)?
     
     
     // MARK: Optional varaiables
     
     /// Delegate of `protocol LocationPickerDelegate`
-    public var delegate: LocationPickerDelegate?
+    open var delegate: LocationPickerDelegate?
     
     /// DataSource of `protocol LocationPickerDataSource`
-    public var dataSource: LocationPickerDataSource?
+    open var dataSource: LocationPickerDataSource?
     
     /**
      Locations that show in the location list.
@@ -188,7 +188,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      `protocol LocationPickerDataSource`
      */
-    public var alternativeLocations: [LocationItem]?
+    open var alternativeLocations: [LocationItem]?
     
     /**
      Alert Controller shows when user try to fetch current location without location permission.
@@ -210,7 +210,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      
      `protocol LocationPickerDelegate`
      */
-    public var locationDeniedAlertController: UIAlertController?
+    open var locationDeniedAlertController: UIAlertController?
     
     
     /**
@@ -219,102 +219,102 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      - Note:
      If an arbitrary location is selected, its coordinate in `LocationItem` will be `nil`. __Default__ is __`false`__.
     */
-    public var isAllowArbitraryLocation = false
+    open var isAllowArbitraryLocation = false
     
     
     // MARK: UI Customizations
     
     /// Text that indicates user's current location. __Default__ is __`"Current Location"`__.
-    public var currentLocationText = "Current Location"
+    open var currentLocationText = "Current Location"
     
     /// Text of search bar's placeholder. __Default__ is __`"Search for location"`__.
-    public var searchBarPlaceholder = "Search for location"
+    open var searchBarPlaceholder = "Search for location"
     
     /// Text of location denied alert title. __Default__ is __`"Location access denied"`__
-    public var locationDeniedAlertTitle = "Location access denied"
+    open var locationDeniedAlertTitle = "Location access denied"
     
     /// Text of location denied alert message. __Default__ is __`"Grant location access to use current location"`__
-    public var locationDeniedAlertMessage = "Grant location access to use current location"
+    open var locationDeniedAlertMessage = "Grant location access to use current location"
     
     /// Text of location denied alert _Grant_ button. __Default__ is __`"Grant"`__
-    public var locationDeniedGrantText = "Grant"
+    open var locationDeniedGrantText = "Grant"
     
     /// Text of location denied alert _Cancel_ button. __Default__ is __`"Cancel"`__
-    public var locationDeniedCancelText = "Cancel"
+    open var locationDeniedCancelText = "Cancel"
     
     
     /// Longitudinal distance in meters that the map view shows when user select a location and before zoom in or zoom out. __Default__ is __`1000`__.
-    public var defaultLongitudinalDistance: Double = 1000
+    open var defaultLongitudinalDistance: Double = 1000
     
     /// Distance in meters that is used to search locations. __Default__ is __`10000`__
-    public var searchDistance: Double = 10000
+    open var searchDistance: Double = 10000
     
         /// Default coordinate to use when current location information is not available. If not set, none is used.
-    public var defaultSearchCoordinate: CLLocationCoordinate2D?
+    open var defaultSearchCoordinate: CLLocationCoordinate2D?
     
     
     /// `mapView.zoomEnabled` will be set to this property's value after view is loaded. __Default__ is __`true`__
-    public var isMapViewZoomEnabled = true
+    open var isMapViewZoomEnabled = true
     
     /// `mapView.showsUserLocation` is set to this property's value after view is loaded. __Default__ is __`true`__
-    public var isMapViewShowsUserLocation = true
+    open var isMapViewShowsUserLocation = true
     
     /// `mapView.scrollEnabled` is set to this property's value after view is loaded. __Default__ is __`true`__
-    public var isMapViewScrollEnabled = true
+    open var isMapViewScrollEnabled = true
     
     /// Whether redirect to the exact coordinate after queried. __Default__ is __`true`__
-    public var isRedirectToExactCoordinate = true
+    open var isRedirectToExactCoordinate = true
     
     /**
      Whether the locations provided in `var alternativeLocations` or obtained from `func alternativeLocationAtIndex(index: Int) -> LocationItem` can be deleted. __Default__ is __`false`__
      - important:
      If this property is set to `true`, remember to update your models by closure, delegate, or override.
      */
-    public var isAlternativeLocationEditable = false
+    open var isAlternativeLocationEditable = false
     
     /**
      Whether to force reverse geocoding or not. If this property is set to `true`, the location will be reverse geocoded. This is helpful if you require an exact location (e.g. providing street), but the user just searched for a town name.
      The default behavior is to not geocode any additional search result.
      */
-    public var isForceReverseGeocoding = false
+    open var isForceReverseGeocoding = false
     
     
     /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
-    public var tableViewBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    open var tableViewBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
     /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
-    public var currentLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
+    open var currentLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
     /// The color of the icon showed in search result location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
-    public var searchResultLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
+    open var searchResultLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
     /// The color of the icon showed in alternative location cells. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
-    public var alternativeLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
+    open var alternativeLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
     /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
-    public var pinColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
+    open var pinColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
     /// The color of primary text color. __Default__ is __`UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)`__
-    public var primaryTextColor = #colorLiteral(red: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)
+    open var primaryTextColor = #colorLiteral(red: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)
     
     /// The color of secondary text color. __Default__ is __`UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)`__
-    public var secondaryTextColor = #colorLiteral(red: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)
+    open var secondaryTextColor = #colorLiteral(red: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)
     
     
     /// The image of the icon showed in current location cell. If this property is set, the `var currentLocationIconColor` won't be adopted.
-    public var currentLocationIcon: UIImage? = nil
+    open var currentLocationIcon: UIImage? = nil
     
     /// The image of the icon showed in search result location cells. If this property is set, the `var searchResultLocationIconColor` won't be adopted.
-    public var searchResultLocationIcon: UIImage? = nil
+    open var searchResultLocationIcon: UIImage? = nil
     
     /// The image of the icon showed in alternative location cells. If this property is set, the `var alternativeLocationIconColor` won't be adopted.
-    public var alternativeLocationIcon: UIImage? = nil
+    open var alternativeLocationIcon: UIImage? = nil
     
     /// The image of the pin showed in the center of map view. If this property is set, the `var pinColor` won't be adopted.
-    public var pinImage: UIImage? = nil
+    open var pinImage: UIImage? = nil
     
         /// The size of the pin's shadow. Set this value to zero to hide the shadow. __Default__ is __`5`__
-    public var pinShadowViewDiameter: CGFloat = 5
+    open var pinShadowViewDiameter: CGFloat = 5
     
     // MARK: - UI Elements
     
@@ -324,7 +324,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     public let pinView = UIImageView()
     public let pinShadowView = UIView()
     
-    public private(set) var barButtonItems: (doneButtonItem: UIBarButtonItem, cancelButtonItem: UIBarButtonItem)?
+    open private(set) var barButtonItems: (doneButtonItem: UIBarButtonItem, cancelButtonItem: UIBarButtonItem)?
     
     
     // MARK: Attributes
@@ -343,11 +343,11 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     
     /// This property is used to record the longitudinal distance of the map view. This is neccessary because when user zoom in or zoom out the map view, func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) will reset the region of the map view.
-    public var longitudinalDistance: Double!
+    open var longitudinalDistance: Double!
     
     
     /// This property is used to record whether the map view center changes. This is neccessary because private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) would trigger func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) which calls func reverseGeocodeLocation(location: CLLocation), and this method calls private func showMapViewWithCenterCoordinate(coordinate: CLLocationCoordinate2D, WithDistance distance: Double) back, this would lead to an infinite loop.
-    public var isMapViewCenterChanged = false
+    open var isMapViewCenterChanged = false
     
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
@@ -381,8 +381,8 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
      - parameter doneButtonOrientation: The direction of the done button, default is `.Right`
      */
     public func addBarButtons(doneButtonItem: UIBarButtonItem? = nil,
-                           cancelButtonItem: UIBarButtonItem? = nil,
-                           doneButtonOrientation: NavigationItemOrientation = .right) {
+                              cancelButtonItem: UIBarButtonItem? = nil,
+                              doneButtonOrientation: NavigationItemOrientation = .right) {
         let doneButtonItem = doneButtonItem ?? UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
         doneButtonItem.isEnabled = false
         doneButtonItem.target = self
