@@ -163,13 +163,13 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     open var locationDeniedHandler: ((LocationPicker) -> Void)?
     
     
-    // MARK: Optional varaiables
+    // MARK: Optional variables
     
     /// Delegate of `protocol LocationPickerDelegate`
-    open var delegate: LocationPickerDelegate?
+    open weak var delegate: LocationPickerDelegate?
     
     /// DataSource of `protocol LocationPickerDataSource`
-    open var dataSource: LocationPickerDataSource?
+    open weak var dataSource: LocationPickerDataSource?
     
     /**
      Locations that show in the location list.
