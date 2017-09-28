@@ -610,7 +610,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Gesture Recognizer
     
-    func panGestureInMapViewDidRecognize(panGestureRecognizer: UIPanGestureRecognizer) {
+    @objc func panGestureInMapViewDidRecognize(panGestureRecognizer: UIPanGestureRecognizer) {
         switch(panGestureRecognizer.state) {
         case .began:
             isMapViewCenterChanged = true
@@ -636,14 +636,14 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Buttons
     
-    func doneButtonDidTap(barButtonItem: UIBarButtonItem) {
+    @objc func doneButtonDidTap(barButtonItem: UIBarButtonItem) {
         if let locationItem = selectedLocationItem {
             dismiss(animated: true, completion: nil)
             locationDidPick(locationItem: locationItem)
         }
     }
     
-    func cancelButtonDidTap(barButtonItem: UIBarButtonItem) {
+    @objc func cancelButtonDidTap(barButtonItem: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -742,7 +742,7 @@ extension LocationPicker {
      
      - parameter locationItem: The location item user selected
      */
-    open func locationDidSelect(locationItem: LocationItem) {
+    @objc open func locationDidSelect(locationItem: LocationItem) {
         selectCompletion?(locationItem)
         delegate?.locationDidSelect?(locationItem: locationItem)
     }
@@ -780,7 +780,7 @@ extension LocationPicker {
      
      - parameter locationItem: The location item user picked
      */
-    open func locationDidPick(locationItem: LocationItem) {
+    @objc open func locationDidPick(locationItem: LocationItem) {
         pickCompletion?(locationItem)
         delegate?.locationDidPick?(locationItem: locationItem)
     }
@@ -882,7 +882,7 @@ extension LocationPicker {
 extension LocationPicker: UISearchBarDelegate {
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.characters.count > 0 {
+        if searchText.count > 0 {
             let localSearchRequest = MKLocalSearchRequest()
             localSearchRequest.naturalLanguageQuery = searchText
             

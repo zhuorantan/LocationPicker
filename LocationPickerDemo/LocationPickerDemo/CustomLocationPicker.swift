@@ -18,13 +18,12 @@ class CustomLocationPicker: LocationPicker {
         super.viewDidLoad()
     }
     
-    override func locationDidSelect(locationItem: LocationItem) {
+    @objc override func locationDidSelect(locationItem: LocationItem) {
         print("Select overrided method: " + locationItem.name)
     }
     
-    override func locationDidPick(locationItem: LocationItem) {
+    @objc override func locationDidPick(locationItem: LocationItem) {
         viewController.showLocation(locationItem: locationItem)
         viewController.storeLocation(locationItem: locationItem)
     }
-
 }
