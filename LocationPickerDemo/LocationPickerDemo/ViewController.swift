@@ -74,6 +74,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
         let locationPicker = LocationPicker()
         locationPicker.alternativeLocations = historyLocationList.reversed()
         locationPicker.isAlternativeLocationEditable = true
+        locationPicker.preselectedIndex = 0
         locationPicker.isAllowArbitraryLocation = arbitraryLocationSwitch.isOn
         
         // Completion closures

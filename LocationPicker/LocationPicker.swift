@@ -222,6 +222,15 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     open var isAllowArbitraryLocation = false
     
     
+    /**
+     Index of preselected location item
+     
+     - Note:
+     To set user's current location as preselected, set this to 0. To preselect a location from alternative locations, set this to the index of that location plus 1
+     */
+    open var preselectedIndex: Int?
+    
+    
     // MARK: UI Customizations
     
     /// Text that indicates user's current location. __Default__ is __`"Current Location"`__.
@@ -478,6 +487,15 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         setupLocationManager()
         setupViews()
         layoutViews()
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let index = preselectedIndex, index < 1 + searchResultLocations.count + alternativeLocationCount {
+            tableView.selectRow(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .none)
+            tableView(tableView, didSelectRowAt: IndexPath(row: index, section: 0))
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
