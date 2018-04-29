@@ -135,7 +135,7 @@ let locationPicker = LocationPicker()
 locationPicker.pickCompletion = { (pickedLocationItem) in
     // Do something with the location the user picked.
 }
-locationPicker.addButtons()
+locationPicker.addBarButtons()
 // Call this method to add a done and a cancel button to navigation bar.
 
 let navigationController = UINavigationController(rootViewController: customLocationPicker)
@@ -169,7 +169,7 @@ __Note__: To use current location, don't forget to add `NSLocationWhenInUseUsage
 
 ### Methods
 
-##### `func addButtons`
+##### `func addBarButtons`
 
 This method provides 3 optional parameter. `doneButtonItem` and `cancelButtonItem` can be set as the customized `UIBarButtonItem` object. `doneButtonOrientation` is used to determine how to align these two buttons. If none of the parameters is provided, two system style buttons would be used, and the done button would be put on the right side.
 
