@@ -4,7 +4,7 @@ A ready for use and fully customizable location picker for your app.
 
 ![](https://raw.githubusercontent.com/JeromeTan1997/LocationPicker/master/Screenshots/locationpicker.gif)
 
-![Language](https://img.shields.io/badge/language-Swift%203.1-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%204.1-orange.svg)
 [![CocoaPods](https://img.shields.io/cocoapods/v/LocationPickerViewController.svg?style=flat)](http://cocoadocs.org/docsets/LocationPickerViewController/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![License](https://img.shields.io/github/license/JeromeTan1997/LocationPicker.svg?style=flat)

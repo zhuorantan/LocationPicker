@@ -338,16 +338,14 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Attributes
     
-    fileprivate let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
-    fileprivate var selectedLocationItem: LocationItem?
-    fileprivate var searchResultLocations = [LocationItem]()
+    private var selectedLocationItem: LocationItem?
+    private var searchResultLocations = [LocationItem]()
     
-    fileprivate var alternativeLocationCount: Int {
-        get {
-            return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
-        }
+    private var alternativeLocationCount: Int {
+        return alternativeLocations?.count ?? dataSource?.numberOfAlternativeLocations() ?? 0
     }
     
     
@@ -360,16 +358,12 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     private var mapViewHeightConstraint: NSLayoutConstraint!
     private var mapViewHeight: CGFloat {
-        get {
-            return view.frame.width / 3 * 2
-        }
+        return view.frame.width / 3 * 2
     }
     
     private var pinViewCenterYConstraint: NSLayoutConstraint!
-    fileprivate var pinViewImageHeight: CGFloat {
-        get {
-            return pinView.image!.size.height
-        }
+    private var pinViewImageHeight: CGFloat {
+        return pinView.image!.size.height
     }
     
     
@@ -654,14 +648,14 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: Buttons
     
-    @objc func doneButtonDidTap(barButtonItem: UIBarButtonItem) {
+    @objc private func doneButtonDidTap(barButtonItem: UIBarButtonItem) {
         if let locationItem = selectedLocationItem {
             dismiss(animated: true, completion: nil)
             locationDidPick(locationItem: locationItem)
         }
     }
     
-    @objc func cancelButtonDidTap(barButtonItem: UIBarButtonItem) {
+    @objc private func cancelButtonDidTap(barButtonItem: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -675,7 +669,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    fileprivate func closeMapView() {
+    private func closeMapView() {
         mapViewHeightConstraint.constant = 0
     }
     
@@ -700,7 +694,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
         locationDidSelect(locationItem: locationItem)
     }
     
-    fileprivate func reverseGeocodeLocation(_ location: CLLocation) {
+    private func reverseGeocodeLocation(_ location: CLLocation) {
         geocoder.cancelGeocode()
         geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
             guard error == nil else {

@@ -60,56 +60,44 @@ open class LocationItem: NSObject, NSCoding {
     
     /// The name of the location. A reference to `MKMapItem` object's property `name`.
     open var name: String {
-        get {
-            return mapItem.name ?? ""
-        }
+        return mapItem.name ?? ""
     }
     
     /// The coordinate of the location. A reference to `MKMapItem` object's property `placemark.coordinate` and converted to tuple. Only when the `allowArbitraryLocation` property of `LocationPicker` class is set to `true`, can this property be `nil`.
     open var coordinate: (latitude: Double, longitude: Double)? {
-        get {
-            let coordinate = mapItem.placemark.coordinate
-            if CLLocationCoordinate2DIsValid(coordinate) {
-                return coordinateTuple(fromObject: coordinate)
-            } else {
-                return nil
-            }
+        let coordinate = mapItem.placemark.coordinate
+        if CLLocationCoordinate2DIsValid(coordinate) {
+            return coordinateTuple(fromObject: coordinate)
+        } else {
+            return nil
         }
     }
     
     /// The address dictionary of the location. A reference to `MKMapItem` object's property `placemark.addressDictionary`
     /// - Note: This dictionary along with a coordinate can be used to create a `MKPlacemark` object which can create a `MKMapItem` object.
     open var addressDictionary: [AnyHashable: Any]? {
-        get {
-            return mapItem.placemark.addressDictionary
-        }
+        return mapItem.placemark.addressDictionary
     }
     
     /// The address of the location. This is the value to the key _"FormattedAddressLines"_ in `addressDictionary`. It is the address text formatted according to user's region.
     /// - Note: If you would like to format the address yourself, you can use `addressDictionary` property to create one.
     
     open var formattedAddressString: String? {
-        get {
-            guard let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String]) else { return nil }
-            return addressParts.count > 1 ? addressParts[1] : addressParts[0]
-        }
+        guard let addressParts = (addressDictionary?["FormattedAddressLines"] as? [String]) else { return nil }
+        return addressParts.count > 1 ? addressParts[1] : addressParts[0]
     }
     
     
     open override var hashValue: Int {
-        get {
-            if let coordinate = coordinate {
-                return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
-            } else {
-                return mapItem.name?.hashValue ?? "".hashValue
-            }
+        if let coordinate = coordinate {
+            return "\(coordinate.latitude), \(coordinate.longitude)".hashValue
+        } else {
+            return mapItem.name?.hashValue ?? "".hashValue
         }
     }
     
     open override var description: String {
-        get {
-            return "Location item with map item: " + mapItem.description
-        }
+        return "Location item with map item: " + mapItem.description
     }
     
     
