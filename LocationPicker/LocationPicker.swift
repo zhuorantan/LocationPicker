@@ -665,7 +665,7 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     private func showMapView(withCenter coordinate: CLLocationCoordinate2D, distance: Double) {
         mapViewHeightConstraint.constant = mapViewHeight
         
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, 0 , distance)
+        let coordinateRegion = MKCoordinateRegion.init(center: coordinate, latitudinalMeters: 0 , longitudinalMeters: distance)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
@@ -876,7 +876,7 @@ extension LocationPicker {
             } else {
                 let alertController = UIAlertController(title: locationDeniedAlertTitle, message: locationDeniedAlertMessage, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: locationDeniedGrantText, style: .default, handler: { (alertAction) in
-                    if let url = URL(string: UIApplicationOpenSettingsURLString) {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.openURL(url)
                     }
                 }))
@@ -895,13 +895,13 @@ extension LocationPicker: UISearchBarDelegate {
     
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 0 {
-            let localSearchRequest = MKLocalSearchRequest()
+            let localSearchRequest = MKLocalSearch.Request()
             localSearchRequest.naturalLanguageQuery = searchText
             
             if let currentCoordinate = locationManager.location?.coordinate {
-                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(currentCoordinate, searchDistance, searchDistance)
+                localSearchRequest.region = MKCoordinateRegion.init(center: currentCoordinate, latitudinalMeters: searchDistance, longitudinalMeters: searchDistance)
             } else if let defaultSearchCoordinate = defaultSearchCoordinate, CLLocationCoordinate2DIsValid(defaultSearchCoordinate) {
-                localSearchRequest.region = MKCoordinateRegionMakeWithDistance(defaultSearchCoordinate, searchDistance, searchDistance)
+                localSearchRequest.region = MKCoordinateRegion.init(center: defaultSearchCoordinate, latitudinalMeters: searchDistance, longitudinalMeters: searchDistance)
             }
             MKLocalSearch(request: localSearchRequest).start(completionHandler: { (localSearchResponse, error) -> Void in
                 guard searchText == searchBar.text else {
@@ -1027,7 +1027,7 @@ extension LocationPicker: UITableViewDelegate, UITableViewDataSource {
         return isAlternativeLocationEditable && indexPath.row > searchResultLocations.count && indexPath.row <= alternativeLocationCount + searchResultLocations.count
     }
     
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath) as! LocationCell
             let locationItem = cell.locationItem!

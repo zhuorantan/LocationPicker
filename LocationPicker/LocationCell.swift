@@ -33,10 +33,10 @@ public class LocationCell: UITableViewCell {
     open var locationItem: LocationItem?
     open var locationType: LocationPicker.LocationType!
     
-    open let iconView = UIImageView()
-    open let locationNameLabel = UILabel()
-    open let locationAddressLabel = UILabel()
-    open let containerView = UIView()
+    public let iconView = UIImageView()
+    public let locationNameLabel = UILabel()
+    public let locationAddressLabel = UILabel()
+    public let containerView = UIView()
     
     public convenience init(locationType: LocationPicker.LocationType, locationItem: LocationItem?) {
         self.init()
