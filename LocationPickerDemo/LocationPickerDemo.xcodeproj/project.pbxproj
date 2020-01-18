@@ -120,7 +120,7 @@
 					022E3F691CB11C87006BF665 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeamName = "Zhuoran Tan";
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -129,6 +129,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -306,7 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JeromeTan.LocationPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -326,7 +327,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

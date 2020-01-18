@@ -86,7 +86,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
             self.storeLocation(locationItem: pickedLocationItem)
         }
         locationPicker.deleteCompletion = { locationItem in
-            self.historyLocationList.remove(at: self.historyLocationList.index(of: locationItem)!)
+            self.historyLocationList.remove(at: self.historyLocationList.firstIndex(of: locationItem)!)
         }
         navigationController!.pushViewController(locationPicker, animated: true)
     }
@@ -117,7 +117,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     }
     
     func commitAlternativeLocationDeletion(locationItem: LocationItem) {
-        historyLocationList.remove(at: historyLocationList.index(of: locationItem)!)
+        historyLocationList.remove(at: historyLocationList.firstIndex(of: locationItem)!)
     }
     
     
@@ -128,7 +128,7 @@ class ViewController: UIViewController, LocationPickerDelegate, LocationPickerDa
     }
     
     func storeLocation(locationItem: LocationItem) {
-        if let index = historyLocationList.index(of: locationItem) {
+        if let index = historyLocationList.firstIndex(of: locationItem) {
             historyLocationList.remove(at: index)
         }
         historyLocationList.append(locationItem)
