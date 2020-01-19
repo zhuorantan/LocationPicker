@@ -14,6 +14,8 @@
 		0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0228892B1CACE58A00D7E11A /* Helpers.swift */; };
 		0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268267C1CAF94A900B18185 /* LocationCell.swift */; };
 		0268268A1CAFB74A00B18185 /* StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026826891CAFB74A00B18185 /* StyleKit.swift */; };
+		6C3EB60F23D3D2C5009918A1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3EB60E23D3D2C5009918A1 /* Colors.swift */; };
+		6C3EB61123D3D30B009918A1 /* DynamicUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3EB61023D3D30A009918A1 /* DynamicUIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		0228892B1CACE58A00D7E11A /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0268267C1CAF94A900B18185 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		026826891CAFB74A00B18185 /* StyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleKit.swift; sourceTree = "<group>"; };
+		6C3EB60E23D3D2C5009918A1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		6C3EB61023D3D30A009918A1 /* DynamicUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicUIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 				0228892B1CACE58A00D7E11A /* Helpers.swift */,
 				026826891CAFB74A00B18185 /* StyleKit.swift */,
 				0228887C1CA9398D00D7E11A /* Info.plist */,
+				6C3EB60E23D3D2C5009918A1 /* Colors.swift */,
+				6C3EB61023D3D30A009918A1 /* DynamicUIColor.swift */,
 			);
 			path = LocationPicker;
 			sourceTree = "<group>";
@@ -153,8 +159,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0268268A1CAFB74A00B18185 /* StyleKit.swift in Sources */,
+				6C3EB61123D3D30B009918A1 /* DynamicUIColor.swift in Sources */,
 				0228892A1CAC297E00D7E11A /* Protocol.swift in Sources */,
 				0268267D1CAF94A900B18185 /* LocationCell.swift in Sources */,
+				6C3EB60F23D3D2C5009918A1 /* Colors.swift in Sources */,
 				022889121CA939FB00D7E11A /* LocationPicker.swift in Sources */,
 				022889281CABDAF500D7E11A /* LocationItem.swift in Sources */,
 				0228892C1CACE58A00D7E11A /* Helpers.swift in Sources */,

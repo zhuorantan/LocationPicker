@@ -288,9 +288,9 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     open var isForceReverseGeocoding = false
     
     
-    /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.whiteColor()`__
-    open var tableViewBackgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    
+    /// `tableView.backgroundColor` is set to this property's value afte view is loaded. __Default__ is __`UIColor.white` for light mode and `UIColor.black for dark mode__
+    open var tableViewBackgroundColor = Colors.background
+
     /// The color of the icon showed in current location cell. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     open var currentLocationIconColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
@@ -303,11 +303,11 @@ open class LocationPicker: UIViewController, UIGestureRecognizerDelegate {
     /// The color of the pin showed in the center of map view. __Default__ is __`UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1)`__
     open var pinColor = #colorLiteral(red: 0.1176470588, green: 0.5098039216, blue: 0.3568627451, alpha: 1)
     
-    /// The color of primary text color. __Default__ is __`UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)`__
-    open var primaryTextColor = #colorLiteral(red: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1)
+    /// The color of primary text color. __Default__ is __`UIColor.black for light mode and UIColor.white for dark mode `__
+    open var primaryTextColor = Colors.text
     
-    /// The color of secondary text color. __Default__ is __`UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)`__
-    open var secondaryTextColor = #colorLiteral(red: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1)
+    /// The color of secondary text color. __Default__ is __`UIColor.gray for light mode and UIColor.lightGray for dark mode`__
+    open var secondaryTextColor = Colors.secondaryText
     
     
     /// The image of the icon showed in current location cell. If this property is set, the `var currentLocationIconColor` won't be adopted.

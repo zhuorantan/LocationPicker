@@ -177,7 +177,7 @@ After this method is called, these two buttons can be accessed via `barButtonIte
 
 ##### `func setColors`
 
-This method aims to set colors more conveniently. `themColor` will be set to `currentLocationIconColor`, `searchResultLocationIconColor`, `alternativeLocationIconColor`, `pinColor`. `primaryTextColor` and `secondaryTextColor` can also be set by this method.
+This method aims to set colors more conveniently. `themeColor` will be set to `currentLocationIconColor`, `searchResultLocationIconColor`, `alternativeLocationIconColor`, `pinColor`. `primaryTextColor` and `secondaryTextColor` can also be set by this method.
 
 ##### `func setLocationDeniedAlertControllerTitle`
 
@@ -218,13 +218,13 @@ __Note__: If `alternativeLocationEditable` is set to true, please adopt __Locati
 
 | Property name | Default | Target | Remark |
 | ------------- |:-------:| ------ | ------ |
-| tableViewBackgroundColor | UIColor.whiteColor() | tableView.backgroundColor | The background color of the table view |
+| tableViewBackgroundColor | UIColor.white for light mode, UIColor.black for dark mode | tableView.backgroundColor | The background color of the table view |
 | currentLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in current location cell, the icon image can be changed via property `currentLocationIconImage` |
 | searchResultLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in search result location cells, the icon image can be changed via property `searchResultLocationIconImage` |
 | alternativeLocationIconColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the icon showed in alternative location cells, the icon image can be changed via property 'alternativeLocationIconImage' |
 | pinColor | UIColor(hue: 0.447, saturation: 0.731, brightness: 0.569, alpha: 1) | UIImage() | The color of the pin showed in the center of map view, the pin image can be changed via property `pinImage` |
-| primaryTextColor | UIColor(colorLiteralRed: 0.34902, green: 0.384314, blue: 0.427451, alpha: 1) | Multiple | The text color of search bar and location name label in location cells |
-| secondaryTextColor | UIColor(colorLiteralRed: 0.541176, green: 0.568627, blue: 0.584314, alpha: 1) | Multiple | The text color of location address label in location cells |
+| primaryTextColor | UIColor.black for light mode, UIColor.white for dark mode | Multiple | The text color of search bar and location name label in location cells |
+| secondaryTextColor | UIColor.gray for light mode, UIColor.lightGray for dark mode | Multiple | The text color of location address label in location cells |
 
 ### Image
 
